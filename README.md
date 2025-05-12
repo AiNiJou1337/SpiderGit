@@ -1,3 +1,5 @@
+#(本项目全文为AI生成，仅作为学习MCP参考使用，侵删）
+
 # GitHub Trending 数据抓取项目
 
 这是一个基于Next.js和Python的GitHub趋势项目抓取系统，可以实时追踪GitHub上最热门的开源项目，并支持按时间段和编程语言进行筛选。
