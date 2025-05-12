@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Repository {
+  id          Int      @id @default(autoincrement())
+  name        String
+  owner       String
+  fullName    String   @unique @map("full_name") // owner/name
+  description String?
+  language    String?
+  stars       Int      @default(0)
+  forks       Int      @default(0)
+  todayStars  Int      @default(0) @map("today_stars")
+  url         String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  trending    Boolean  @default(true)
+  trendDate   DateTime @default(now()) @map("trend_date")
+  trendPeriod String   @default("daily") @map("trend_period") // daily, weekly, monthly
+
+  @@map("repositories")
+}
