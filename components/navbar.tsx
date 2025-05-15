@@ -9,6 +9,7 @@ const navItems = [
   { name: "每日趋势", href: "/daily" },
   { name: "每周趋势", href: "/weekly" },
   { name: "每月趋势", href: "/monthly" },
+  { name: "关键词搜索", href: "/keywords" },
   { name: "关于项目", href: "/about" },
 ]
 

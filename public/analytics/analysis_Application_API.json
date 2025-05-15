@@ -1,0 +1,37 @@
+{
+  "keyword": "Application API",
+  "repository_count": 80,
+  "analysis_date": "2025-05-15T20:06:40.398327",
+  "charts": {
+    "language_distribution": {
+      "data": {
+        "Python": 50,
+        "Java": 30
+      },
+      "chart_path": "/analytics/language_Application_API.png"
+    },
+    "stars_distribution": {
+      "data": {
+        "mean": 947.25,
+        "min": 140,
+        "max": 28643,
+        "total": 75780
+      },
+      "chart_path": "/analytics/stars_Application_API.png"
+    },
+    "common_packages": {
+      "data": {},
+      "chart_path": "/analytics/packages_Application_API.png"
+    },
+    "common_functions": {
+      "data": {},
+      "chart_path": "/analytics/functions_Application_API.png"
+    },
+    "comment_wordcloud": {
+      "chart_path": "/analytics/wordcloud_Application_API.png"
+    },
+    "comment_keywords": {
+      "data": {}
+    }
+  }
+}

@@ -1,0 +1,132 @@
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
+import { exec } from 'child_process';
+import path from 'path';
+
+// 提交关键词搜索请求
+export async function POST(request: Request) {
+  try {
+    const data = await request.json();
+    const { keyword } = data;
+    
+    if (!keyword || typeof keyword !== 'string' || keyword.trim() === '') {
+      return NextResponse.json(
+        { error: '关键词不能为空' },
+        { status: 400 }
+      );
+    }
+    
+    // 检查关键词是否已存在
+    let keywordRecord = await prisma.keyword.findUnique({
+      where: {
+        text: keyword
+      },
+      include: {
+        crawlTasks: {
+          where: {
+            OR: [
+              { status: 'pending' },
+              { status: 'running' }
+            ]
+          },
+          orderBy: {
+            startedAt: 'desc'
+          },
+          take: 1
+        }
+      }
+    });
+    
+    // 如果关键词已存在且有正在进行的任务
+    if (keywordRecord && keywordRecord.crawlTasks.length > 0) {
+      const runningTask = keywordRecord.crawlTasks[0];
+      return NextResponse.json({
+        success: true,
+        message: '该关键词正在处理中，可以查看任务进度',
+        taskId: runningTask.id
+      });
+    }
+    
+    // 如果关键词不存在，创建新关键词记录
+    if (!keywordRecord) {
+      keywordRecord = await prisma.keyword.create({
+        data: {
+          text: keyword
+        }
+      });
+    }
+    
+    // 创建爬虫任务记录
+    const crawlTask = await prisma.crawlTask.create({
+      data: {
+        status: 'pending',
+        progress: 0,
+        message: '爬虫任务已创建，正在启动...',
+        keywordId: keywordRecord.id,
+      }
+    });
+    
+    // 运行爬虫脚本 (异步执行，不等待完成)
+    const scraperPath = path.join(process.cwd(), 'scraper', 'keyword_scraper.py');
+    
+    exec(`D:\\IT_software\\miniconda\\python.exe "${scraperPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`爬虫执行错误: ${error.message}`);
+        // 更新任务状态为失败
+        updateTaskStatus(crawlTask.id, 'failed', 0, `执行错误: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`爬虫错误输出: ${stderr}`);
+      }
+      console.log(`爬虫输出: ${stdout}`);
+      
+      // 爬虫完成后运行数据分析
+      const analysisPath = path.join(process.cwd(), 'scraper', 'data_analysis.py');
+      exec(`D:\\IT_software\\miniconda\\python.exe "${analysisPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`数据分析执行错误: ${error.message}`);
+          // 更新任务状态
+          updateTaskStatus(crawlTask.id, 'failed', 80, `分析错误: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          console.error(`数据分析错误输出: ${stderr}`);
+        }
+        console.log(`数据分析输出: ${stdout}`);
+        
+        // 完成后更新任务状态
+        updateTaskStatus(crawlTask.id, 'completed', 100, '爬取和分析已完成');
+      });
+    });
+    
+    return NextResponse.json({
+      success: true,
+      message: '爬取请求已提交，这可能需要一些时间',
+      taskId: crawlTask.id
+    });
+  } catch (error) {
+    console.error('提交关键词搜索请求失败:', error);
+    return NextResponse.json(
+      { error: '提交搜索请求失败' },
+      { status: 500 }
+    );
+  }
+}
+
+// 更新任务状态的辅助函数
+async function updateTaskStatus(taskId: number, status: string, progress: number, message?: string) {
+  try {
+    await prisma.crawlTask.update({
+      where: { id: taskId },
+      data: {
+        status,
+        progress,
+        message,
+        ...(status === 'completed' || status === 'failed' ? { completedAt: new Date() } : {})
+      }
+    });
+  } catch (error) {
+    console.error(`更新任务状态失败 (ID: ${taskId}):`, error);
+  }
+} 
