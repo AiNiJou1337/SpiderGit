@@ -62,19 +62,20 @@ model CrawlTask {
 }
 
 model CodeFile {
-  id           Int        @id @default(autoincrement())
-  filename     String
-  path         String
-  content      String?
-  comments     String?
-  functions    String[]
-  packages     String[]
-  components   String[]
-  createdAt    DateTime   @default(now()) @map("created_at")
-  updatedAt    DateTime   @updatedAt @map("updated_at")
-  apiEndpoints String[]   @map("api_endpoints")
-  repositoryId Int        @map("repository_id")
-  repository   Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  id                Int        @id @default(autoincrement())
+  filename          String
+  path              String
+  content           String?
+  comments          String?
+  functions         String[]
+  packages          String[]
+  components        String[]
+  createdAt         DateTime   @default(now()) @map("created_at")
+  updatedAt         DateTime   @updatedAt @map("updated_at")
+  apiEndpoints      String[]   @map("api_endpoints")
+  repositoryId      Int        @map("repository_id")
+  importedLibraries String[]
+  repository        Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
 
   @@index([repositoryId])
   @@map("code_files")
@@ -98,13 +99,13 @@ model Analytics {
   id                Int      @id @default(autoincrement())
   date              DateTime @default(now())
   keywordId         Int
-  totalStars        Int      @default(0)
   totalRepositories Int      @default(0)
   avgStars          Float    @default(0)
   avgForks          Float    @default(0)
   topLanguages      Json
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @updatedAt @map("updated_at")
+  totalStars        Int      @default(0)
   keyword           Keyword  @relation(fields: [keywordId], references: [id], onDelete: Cascade)
 
   @@index([keywordId])

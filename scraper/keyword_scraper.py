@@ -17,6 +17,9 @@ from pathlib import Path
 import re
 import logging
 
+# 导入代码分析器
+from code_analyzer import CodeAnalyzer
+
 # 设置日志
 logging.basicConfig(
     level=logging.INFO,
@@ -52,10 +55,6 @@ HEADERS = {
 
 # GitHub搜索API
 GITHUB_SEARCH_URL = 'https://api.github.com/search/repositories?q={query}&sort=stars&order=desc&per_page=100'
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
-
-if GITHUB_TOKEN:
-    HEADERS['Authorization'] = f'token {GITHUB_TOKEN}'
 
 # 爬取时的延迟（秒）
 REQUEST_DELAY = 2
@@ -107,20 +106,166 @@ def update_task_status(conn, task_id, status, progress, message=None, python_rep
         logger.error(f"更新任务状态失败: {e}")
         conn.rollback()
 
-# 获取GitHub认证的API请求函数
-def github_api_request(url, params=None):
-    headers = HEADERS.copy()
-    # 确保请求GitHub API时使用正确的Accept头
-    headers['Accept'] = 'application/json'
+# 修改GitHub API认证相关的代码
+class GitHubTokenManager:
+    def __init__(self):
+        self.tokens = [
+            ('PQG', os.environ.get('GITHUB_TOKEN_PQG', '')),
+            ('LR', os.environ.get('GITHUB_TOKEN_LR', '')),
+            ('HXZ', os.environ.get('GITHUB_TOKEN_HXZ', ''))
+        ]
+        # 过滤掉空token
+        self.tokens = [(name, token) for name, token in self.tokens if token]
+        
+        if not self.tokens:
+            logger.error("没有配置任何GitHub Token，请在.env文件中配置至少一个token")
+            raise ValueError("未配置GitHub Token")
+            
+        self.current_index = 0
+        self.rate_limits = {}
+        self.last_used = {}
+        self.error_counts = {}  # 记录每个token的错误次数
+        
+        logger.info(f"成功初始化 {len(self.tokens)} 个GitHub Token")
+        
+    def get_next_token(self):
+        """获取下一个可用的token"""
+        if not self.tokens:
+            logger.error("没有可用的GitHub Token")
+            return None
+            
+        # 轮换选择token
+        initial_index = self.current_index
+        while True:
+            token_info = self.tokens[self.current_index]
+            self.current_index = (self.current_index + 1) % len(self.tokens)
+            
+            token_name, token = token_info
+            # 检查token是否有太多错误
+            if self.error_counts.get(token, 0) >= 5:
+                logger.warning(f"Token {token_name} 已达到最大错误次数，跳过")
+                if self.current_index == initial_index:
+                    logger.error("所有Token都已达到错误限制")
+                    return None
+                continue
+                
+            self.last_used[token] = time.time()
+            logger.info(f"使用Token: {token_name}")
+            return token
+            
+    def record_error(self, token):
+        """记录token的错误"""
+        self.error_counts[token] = self.error_counts.get(token, 0) + 1
+        logger.warning(f"Token错误次数: {self.error_counts[token]}")
+        
+    def record_success(self, token):
+        """记录token的成功使用"""
+        if token in self.error_counts:
+            self.error_counts[token] = max(0, self.error_counts[token] - 1)
+            
+    def check_rate_limit(self, token):
+        """检查token的使用限制"""
+        headers = HEADERS.copy()
+        headers['Authorization'] = f'token {token}'
+        
+        try:
+            response = requests.get('https://api.github.com/rate_limit', headers=headers)
+            if response.ok:
+                data = response.json()
+                limits = data['resources']['core']
+                self.rate_limits[token] = limits
+                
+                # 记录详细的限制信息
+                logger.info(f"Rate Limit - 剩余: {limits['remaining']}, 总量: {limits['limit']}, "
+                          f"重置时间: {datetime.datetime.fromtimestamp(limits['reset'])}")
+                
+                return limits['remaining']
+            else:
+                logger.error(f"检查速率限制失败: {response.status_code} - {response.text}")
+                return 0
+        except Exception as e:
+            logger.error(f"检查速率限制时发生错误: {e}")
+            return 0
+            
+    def get_available_token(self):
+        """获取当前可用的token"""
+        for _ in range(len(self.tokens)):
+            token = self.get_next_token()
+            if not token:
+                continue
+                
+            remaining = self.check_rate_limit(token)
+            if remaining > 0:
+                return token
+            else:
+                reset_time = self.rate_limits[token]['reset']
+                wait_time = reset_time - time.time()
+                if wait_time > 0:
+                    logger.warning(f"Token速率限制将在 {wait_time:.2f} 秒后重置")
+                    
+        return None
+
+# 创建token管理器实例
+token_manager = GitHubTokenManager()
+
+# 修改API请求函数
+def github_api_request(url, params=None, raw_content=False):
+    max_retries = 3
+    retry_count = 0
     
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        # 实际项目中应检查API速率限制，并处理限制超过情况
-        return response.json()
-    except Exception as e:
-        logger.error(f"GitHub API请求失败: {e}")
-        raise
+    while retry_count < max_retries:
+        token = token_manager.get_available_token()
+        if not token:
+            wait_time = 60  # 默认等待时间
+            logger.warning(f"所有Token都已达到限制，等待 {wait_time} 秒后重试")
+            time.sleep(wait_time)
+            retry_count += 1
+            continue
+            
+        headers = HEADERS.copy()
+        headers['Authorization'] = f'token {token}'
+        
+        if raw_content:
+            headers['Accept'] = 'application/vnd.github.v3.raw'
+        else:
+            headers['Accept'] = 'application/json'
+        
+        try:
+            response = requests.get(url, headers=headers, params=params)
+            response.raise_for_status()
+            
+            # 记录成功使用
+            token_manager.record_success(token)
+            
+            # 如果请求成功，返回结果
+            if raw_content:
+                return response.text
+            return response.json()
+            
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 403:
+                if 'rate limit exceeded' in str(e.response.content):
+                    logger.warning(f"Token速率限制已达到，尝试使用下一个token")
+                    retry_count += 1
+                    continue
+                elif 'abuse detection' in str(e.response.content):
+                    logger.warning(f"触发滥用检测，等待后重试")
+                    time.sleep(30)
+                    retry_count += 1
+                    continue
+            token_manager.record_error(token)
+            raise
+        except requests.exceptions.RequestException as e:
+            logger.error(f"请求失败: {e}")
+            token_manager.record_error(token)
+            retry_count += 1
+            continue
+        except Exception as e:
+            logger.error(f"未知错误: {e}")
+            token_manager.record_error(token)
+            raise
+            
+    raise Exception("达到最大重试次数，所有Token都不可用")
 
 # 根据关键词搜索GitHub仓库
 def search_github_repositories(keyword, language=None, min_stars=0, max_results=100):
@@ -153,7 +298,127 @@ def search_github_repositories(keyword, language=None, min_stars=0, max_results=
     # 限制最大结果数
     return items[:max_results]
 
-# 将仓库数据保存到数据库
+# 从仓库获取代码文件并分析
+def fetch_and_analyze_code(repo_data, repo_id, conn):
+    try:
+        repo_full_name = repo_data['full_name']
+        logger.info(f"分析仓库代码: {repo_full_name}")
+        
+        # 获取仓库内容列表
+        contents_url = f"https://api.github.com/repos/{repo_full_name}/contents"
+        contents = github_api_request(contents_url)
+        
+        if not isinstance(contents, list):
+            logger.warning(f"获取仓库内容失败: {repo_full_name}")
+            return
+            
+        # 过滤出代码文件
+        code_files = []
+        for item in contents:
+            if item['type'] == 'file' and _is_code_file(item['name']):
+                code_files.append(item)
+            
+        # 限制分析的文件数量
+        if len(code_files) > 10:
+            code_files = code_files[:10]  # 只分析前10个文件
+            
+        # 初始化代码分析器
+        analyzer = CodeAnalyzer()
+        
+        # 分析每个代码文件
+        for file_item in code_files:
+            try:
+                # 获取文件内容 - 修改为获取原始内容
+                file_content = github_api_request(file_item['download_url'], raw_content=True)
+                
+                if not file_content:
+                    continue
+                    
+                # 分析代码
+                analysis_result = analyzer.analyze_file(file_item['path'], file_content)
+                
+                if not analysis_result:
+                    continue
+                    
+                # 保存到数据库
+                save_code_file(conn, repo_id, file_item['name'], file_item['path'], file_content, analysis_result)
+                
+                # 延迟避免请求过快
+                time.sleep(1)
+                
+            except Exception as e:
+                logger.error(f"分析文件失败: {file_item['path']} - {e}")
+                continue
+                
+    except Exception as e:
+        logger.error(f"获取仓库代码失败: {repo_full_name} - {e}")
+
+# 判断是否为代码文件
+def _is_code_file(filename):
+    code_extensions = ['.py', '.java', '.js', '.jsx', '.ts', '.tsx', '.php', '.rb', '.go', '.c', '.cpp', '.h', '.hpp', '.cs']
+    ext = os.path.splitext(filename)[1].lower()
+    return ext in code_extensions
+
+# 保存代码文件分析结果到数据库
+def save_code_file(conn, repo_id, filename, file_path, content, analysis_result):
+    try:
+        with conn.cursor() as cursor:
+            # 检查文件是否已存在
+            cursor.execute('SELECT id FROM "code_files" WHERE "repository_id" = %s AND "path" = %s', (repo_id, file_path))
+            existing_file = cursor.fetchone()
+            
+            # 提取内容的前5000个字符作为片段
+            content_sample = content[:5000] if content else None
+            
+            if existing_file:
+                # 更新现有文件
+                file_id = existing_file[0]
+                cursor.execute('''
+                    UPDATE "code_files" 
+                    SET "content" = %s, 
+                        "importedLibraries" = %s,
+                        "functions" = %s,
+                        "api_endpoints" = %s,
+                        "updated_at" = %s
+                    WHERE id = %s
+                ''', (
+                    content_sample,
+                    analysis_result.get('importedLibraries', []),
+                    analysis_result.get('functions', []),
+                    analysis_result.get('api_endpoints', []),
+                    datetime.datetime.now(),
+                    file_id
+                ))
+            else:
+                # 插入新文件记录
+                cursor.execute('''
+                    INSERT INTO "code_files" (
+                        "repository_id", "filename", "path", "content", 
+                        "importedLibraries", "functions", "api_endpoints", 
+                        "created_at", "updated_at", "packages", "components"
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ''', (
+                    repo_id,
+                    filename,
+                    file_path,
+                    content_sample,
+                    analysis_result.get('importedLibraries', []),
+                    analysis_result.get('functions', []),
+                    analysis_result.get('api_endpoints', []),
+                    datetime.datetime.now(),
+                    datetime.datetime.now(),
+                    [],  # 保留原有packages字段
+                    []   # 保留原有components字段
+                ))
+                
+            conn.commit()
+            logger.info(f"已保存文件分析结果: {file_path}")
+            
+    except Exception as e:
+        logger.error(f"保存代码文件失败: {e}")
+        conn.rollback()
+
+# 将仓库数据保存到数据库，添加代码分析功能
 def save_repository(conn, repo_data, keyword_id, task_id=None):
     try:
         with conn.cursor() as cursor:
@@ -225,6 +490,10 @@ def save_repository(conn, repo_data, keyword_id, task_id=None):
                 )
                 
             conn.commit()
+            
+            # 分析代码文件（新增）
+            fetch_and_analyze_code(repo_data, repo_id, conn)
+            
             return repo_id
     except Exception as e:
         logger.error(f"保存仓库失败: {e}")
@@ -246,8 +515,15 @@ def format_repository_data(item):
     }
 
 # 按关键词爬取GitHub仓库
-def crawl_by_keyword(keyword, conn, task_id=None):
+def crawl_by_keyword(keyword, conn, task_id=None, languages=None, limits=None):
     try:
+        # 设置默认值
+        if not languages:
+            languages = ["python", "java"]
+        
+        if not limits:
+            limits = {"python": 50, "java": 30}
+        
         # 获取关键词ID
         with conn.cursor() as cursor:
             cursor.execute('SELECT id FROM "keywords" WHERE "text" = %s', (keyword,))
@@ -265,85 +541,105 @@ def crawl_by_keyword(keyword, conn, task_id=None):
         if task_id:
             update_task_status(conn, task_id, 'running', 5, f"开始爬取关键词 '{keyword}' 相关的GitHub仓库")
         
-        # Python项目搜索
-        logger.info(f"搜索关键词 '{keyword}' 的Python项目")
-        python_repos = search_github_repositories(keyword, language="python", max_results=50)
+        language_counts = {}
+        total_repos = 0
+        progress_base = 5
         
-        if task_id:
-            update_task_status(conn, task_id, 'running', 30, f"找到 {len(python_repos)} 个Python项目，正在处理...", 
-                              python_repos=len(python_repos))
+        # 爬取部分最多占85%的进度
+        max_crawl_progress = 85
+        progress_per_language = max_crawl_progress / len(languages)
         
-        # 保存Python项目
-        for i, repo in enumerate(python_repos):
-            repo_data = format_repository_data(repo)
-            save_repository(conn, repo_data, keyword_id, task_id)
+        # 遍历所有要爬取的语言
+        for i, language in enumerate(languages):
+            max_results = limits.get(language.lower(), 30)  # 默认每种语言30个
             
-            # 每5个仓库更新一次进度
-            if task_id and i % 5 == 0:
-                progress = 30 + int((i / len(python_repos)) * 30)
-                update_task_status(conn, task_id, 'running', progress, 
-                                 f"已处理 {i+1}/{len(python_repos)} 个Python项目")
+            logger.info(f"搜索关键词 '{keyword}' 的 {language} 项目，数量限制: {max_results}")
+            repos = search_github_repositories(keyword, language=language, max_results=max_results)
+            language_counts[language] = len(repos)
             
-            # 延迟，避免请求过快
-            time.sleep(REQUEST_DELAY)
-        
-        # Java项目搜索
-        logger.info(f"搜索关键词 '{keyword}' 的Java项目")
-        java_repos = search_github_repositories(keyword, language="java", max_results=30)
-        
-        if task_id:
-            update_task_status(conn, task_id, 'running', 60, 
-                             f"找到 {len(java_repos)} 个Java项目，正在处理...",
-                             java_repos=len(java_repos))
-        
-        # 保存Java项目
-        for i, repo in enumerate(java_repos):
-            repo_data = format_repository_data(repo)
-            save_repository(conn, repo_data, keyword_id, task_id)
+            # 当前语言开始时的进度
+            language_start_progress = progress_base + i * progress_per_language
             
-            # 每5个仓库更新一次进度
-            if task_id and i % 5 == 0:
-                progress = 60 + int((i / len(java_repos)) * 30)
-                update_task_status(conn, task_id, 'running', progress, 
-                                 f"已处理 {i+1}/{len(java_repos)} 个Java项目")
+            if task_id:
+                update_task_status(conn, task_id, 'running', 
+                                 language_start_progress, 
+                                 f"找到 {len(repos)} 个 {language} 项目，正在处理...")
             
-            # 延迟，避免请求过快
-            time.sleep(REQUEST_DELAY)
+            # 保存项目
+            for j, repo in enumerate(repos):
+                repo_data = format_repository_data(repo)
+                save_repository(conn, repo_data, keyword_id, task_id)
+                
+                # 每5个仓库更新一次进度，确保不超过下一个语言的起始进度
+                if task_id and j % 5 == 0 and len(repos) > 0:
+                    sub_progress_ratio = j / len(repos)
+                    current_progress = language_start_progress + (sub_progress_ratio * progress_per_language)
+                    # 确保进度不会超过当前语言分配的最大进度
+                    max_current_language_progress = language_start_progress + progress_per_language
+                    current_progress = min(current_progress, max_current_language_progress)
+                    
+                    update_task_status(conn, task_id, 'running', 
+                                    current_progress, 
+                                    f"已处理 {j+1}/{len(repos)} 个 {language} 项目")
+                
+                # 延迟，避免请求过快
+                time.sleep(REQUEST_DELAY)
+            
+            # 更新总数
+            total_repos += len(repos)
+            # 不再累加progress_base，因为我们现在使用语言索引计算进度
         
-        total_repos = len(python_repos) + len(java_repos)
-        
-        # 更新任务状态为完成
+        # 更新任务状态为完成，进度固定为90%，为数据分析留出10%
         if task_id:
             update_task_status(conn, task_id, 'running', 90, 
-        f"爬取完成，共处理 {total_repos} 个项目，正在准备分析...",
-                             python_repos=len(python_repos),
-                             java_repos=len(java_repos),
+                             f"爬取完成，共处理 {total_repos} 个项目，正在准备分析...",
                              total_repos=total_repos)
         
         logger.info(f"关键词 '{keyword}' 爬取完成，共保存 {total_repos} 个仓库")
+        return language_counts
     except Exception as e:
         logger.error(f"爬取失败: {e}")
         logger.error(traceback.format_exc())
         
         if task_id:
             update_task_status(conn, task_id, 'failed', 0, f"爬取过程出错: {str(e)[:200]}")
+        return None
 
 # 主函数
 def main():
     parser = argparse.ArgumentParser(description='GitHub关键词爬虫')
     parser.add_argument('--keywords', type=str, required=True, help='要搜索的关键词，多个关键词用逗号分隔')
     parser.add_argument('--task-id', type=int, help='任务ID，用于更新任务状态')
+    parser.add_argument('--languages', type=str, help='要搜索的编程语言，多个语言用逗号分隔，例如: python,java,javascript')
+    parser.add_argument('--limits', type=str, help='各语言的爬取数量限制，例如: python=50,java=30,javascript=20')
     
     args = parser.parse_args()
     keywords = [k.strip() for k in args.keywords.split(',')]
     task_id = args.task_id
+    
+    # 处理语言和数量限制
+    languages = None
+    limits = None
+    
+    if args.languages:
+        languages = [lang.strip().lower() for lang in args.languages.split(',')]
+    
+    if args.limits:
+        limits = {}
+        for limit_item in args.limits.split(','):
+            if '=' in limit_item:
+                lang, count = limit_item.split('=')
+                try:
+                    limits[lang.strip().lower()] = int(count.strip())
+                except ValueError:
+                    logger.warning(f"无效的数量限制: {limit_item}，将使用默认值")
     
     conn = get_db_connection()
     
     try:
         for keyword in keywords:
             logger.info(f"开始爬取关键词: {keyword}")
-            crawl_by_keyword(keyword, conn, task_id)
+            crawl_by_keyword(keyword, conn, task_id, languages, limits)
     except Exception as e:
         logger.error(f"未处理的异常: {e}")
         logger.error(traceback.format_exc())

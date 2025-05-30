@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Navbar } from '@/components/navbar'
+import { TrendsNavbar } from '@/components/trends-navbar'
 import { RepositoryCard } from '@/components/repository-card'
 
 async function getRepositories() {
@@ -32,7 +32,7 @@ export default async function MonthlyTrending() {
       <h1 className="text-3xl font-bold mb-2">GitHub 每月趋势</h1>
       <p className="text-muted-foreground mb-6">展示过去一个月内最受欢迎的GitHub项目</p>
       
-      <Navbar />
+      <TrendsNavbar />
       
       {repositories && repositories.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,28 +50,7 @@ export default async function MonthlyTrending() {
         </div>
       )}
       
-      {languages && languages.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">按语言筛选</h2>
-          <div className="flex flex-wrap gap-2">
-            <Link 
-              href="/monthly"
-              className="bg-primary/10 hover:bg-primary/20 px-3 py-1 rounded-full text-sm"
-            >
-              全部
-            </Link>
-            {languages.map((lang: any) => (
-              <Link 
-                key={lang.language} 
-                href={`/monthly?language=${lang.language}`}
-                className="bg-primary/10 hover:bg-primary/20 px-3 py-1 rounded-full text-sm"
-              >
-                {lang.language}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+     
     </div>
   )
 }

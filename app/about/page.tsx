@@ -1,12 +1,8 @@
-import { Navbar } from '@/components/navbar'
-
 export default function About() {
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-3xl font-bold mb-2">关于项目</h1>
       <p className="text-muted-foreground mb-6">GitHub Trending 数据抓取项目介绍</p>
-      
-      <Navbar />
       
       <div className="prose max-w-none">
         <h2 className="text-2xl font-semibold mt-8 mb-4">项目概述</h2>

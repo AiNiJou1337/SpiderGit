@@ -1,69 +1,53 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 
-// 使用lib/db.ts中的prisma实例
-
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    // 获取URL参数
-    const { searchParams } = new URL(request.url);
-    const period = searchParams.get('period') || 'daily';
-    const language = searchParams.get('language');
-    const limit = parseInt(searchParams.get('limit') || '25');
+    // 获取查询参数
+    const searchParams = request.nextUrl.searchParams
+    const period = searchParams.get('period') || 'daily' // 默认为每日趋势
+    const language = searchParams.get('language')
     
-    // 构建查询条件
-    const where: any = {
-      trending: true,
-      trendPeriod: period,
-    };
+    // 读取趋势数据
+    const dataPath = path.join(process.cwd(), 'public', 'analytics', 'trends.json')
     
-    // 如果指定了语言，添加语言过滤条件
-    if (language && language !== 'all') {
-      where.language = language;
-      
-      // 支持模糊匹配，例如搜索'java'也能匹配'javascript'
-      // 如果需要精确匹配，可以使用 where.language = language;
-      // where.language = {
-      //   contains: language,
-      //   mode: 'insensitive' // 不区分大小写
-      // };
+    if (!fs.existsSync(dataPath)) {
+      return NextResponse.json({
+        repositories: [],
+        languages: []
+      }, { status: 404 })
     }
     
-    // 查询数据库
-    const repositories = await prisma.repository.findMany({
-      where,
-      orderBy: {
-        stars: 'desc',
-      },
-      take: limit,
-    });
+    const trendsData = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
     
-    // 获取可用的语言列表
-    const languages = await prisma.repository.findMany({
-      where: {
-        trending: true,
-        trendPeriod: period,
-        language: {
-          not: null,
-        },
-      },
-      select: {
-        language: true,
-      },
-      distinct: ['language'],
-    });
+    // 获取对应时间段的趋势数据
+    let repositories = trendsData[period] || []
+    
+    // 如果指定了语言，进行筛选
+    if (language) {
+      repositories = repositories.filter((repo: any) => 
+        repo.language && repo.language.toLowerCase() === language.toLowerCase()
+      )
+    }
+    
+    // 提取所有可用的语言列表
+    const allLanguages = new Set<string>()
+    trendsData[period]?.forEach((repo: any) => {
+      if (repo.language) {
+        allLanguages.add(repo.language)
+      }
+    })
     
     return NextResponse.json({
       repositories,
-      languages: languages.map(l => l.language).filter(Boolean),
-      period,
-      total: repositories.length,
-    });
+      languages: Array.from(allLanguages)
+    })
   } catch (error) {
-    console.error('获取趋势仓库失败:', error);
-    return NextResponse.json(
-      { error: '获取趋势仓库失败' },
-      { status: 500 }
-    );
+    console.error('获取趋势数据失败:', error)
+    return NextResponse.json({
+      repositories: [],
+      languages: []
+    }, { status: 500 })
   }
 }

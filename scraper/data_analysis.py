@@ -23,6 +23,32 @@ logging.basicConfig(
 )
 logger = logging.getLogger('data_analysis')
 
+# 配置中文字体支持（添加在import后）
+# try:
+#     # 首先尝试使用微软雅黑
+#     matplotlib.rc('font', family='Microsoft YaHei')
+# except:
+#     try:
+#         # 如果没有微软雅黑，尝试使用其他中文字体
+#         matplotlib.rc('font', family='SimHei')  # 黑体
+#     except:
+#         try:
+#             # 再尝试使用宋体
+#             matplotlib.rc('font', family='SimSun')  # 宋体
+#         except:
+#             # 如果都不行，使用Arial Unicode MS (支持中文)
+#             try:
+#                 matplotlib.rc('font', family='Arial Unicode MS')
+#             except:
+#                 logger.warning("无法找到适合的中文字体，图表中的中文可能无法正常显示")
+
+# 修复负号显示问题
+# matplotlib.rcParams['axes.unicode_minus'] = False
+
+# 获取合适的中文字体
+# def get_suitable_font():
+    # ...
+
 # 数据库连接信息
 DB_URL = os.environ.get('DATABASE_URL')
 if not DB_URL:
@@ -166,7 +192,93 @@ def get_code_files(conn, repository_ids):
         logger.error(f"获取代码文件数据失败: {e}")
         return []
 
-# 生成简化版的分析结果（不使用matplotlib）
+# 分析项目描述中的关键词
+def analyze_descriptions(repositories):
+    # 提取所有项目描述文本
+    all_descriptions = ' '.join([repo['description'] for repo in repositories if repo['description']])
+    
+    # 分析关键词
+    description_keywords = {}
+    if all_descriptions:
+        try:
+            # 分词处理
+            import re
+            from collections import Counter
+            
+            # 移除特殊字符
+            cleaned_text = re.sub(r'[^\w\s]', ' ', all_descriptions.lower())
+            
+            # 分词并计数
+            words = cleaned_text.split()
+            
+            # 过滤掉停用词和太短的词
+            stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'if', 'then', 'else', 'when', 
+                          'at', 'from', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 
+                          'through', 'during', 'before', 'after', 'above', 'below', 'to', 'of', 'in',
+                          'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here',
+                          'there', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other',
+                          'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
+                          'too', 'very', 'can', 'will', 'just', 'should', 'now', 'this', 'that',
+                          'these', 'those', 'new', 'old', 'high', 'low'}
+            
+            filtered_words = [word for word in words if word not in stop_words and len(word) > 3]
+            
+            # 获取词频前50的词
+            word_counts = Counter(filtered_words).most_common(50)
+            for word, count in word_counts:
+                description_keywords[word] = count
+                
+        except Exception as e:
+            logger.error(f"分析项目描述关键词失败: {e}")
+            logger.error(traceback.format_exc())
+    
+    return description_keywords
+
+# 分析项目标签
+def analyze_tags(repositories):
+    # 提取所有标签
+    all_tags = []
+    for repo in repositories:
+        if repo['tags']:
+            all_tags.extend(repo['tags'])
+    
+    # 计算标签频率
+    tag_counter = Counter(all_tags)
+    
+    # 返回前15个最常用的标签
+    return dict(tag_counter.most_common(15))
+
+# 获取导入的库数据
+def get_imported_libraries(conn, repository_ids):
+    """获取仓库中使用的库/包统计"""
+    imported_libraries = {}
+    
+    try:
+        if not repository_ids:
+            return imported_libraries
+            
+        with conn.cursor() as cursor:
+            # 修复SQL注入风险，使用正确的参数化查询
+            placeholder = ','.join(['%s'] * len(repository_ids))
+            cursor.execute(f'''
+                SELECT lib
+                FROM code_files c, 
+                     LATERAL unnest(c."importedLibraries") as lib
+                WHERE c.repository_id IN ({placeholder})
+            ''', repository_ids)
+            
+            for row in cursor.fetchall():
+                lib = row[0]
+                if lib:
+                    imported_libraries[lib] = imported_libraries.get(lib, 0) + 1
+                        
+    except Exception as e:
+        logger.error(f"获取导入库数据失败: {e}")
+        logger.error(traceback.format_exc())
+        
+    return imported_libraries
+
+# 生成简化版的分析结果（移除图片生成部分）
 def generate_and_save_analysis(data, output_dir, keyword, task_id=None, conn=None):
     try:
         # 更新进度到91%
@@ -205,6 +317,15 @@ def generate_and_save_analysis(data, output_dir, keyword, task_id=None, conn=Non
         # 更新进度到96%
         if task_id and conn:
             update_task_status(conn, task_id, 'running', 96, f"统计包和函数使用情况...")
+        
+        # 获取导入的库数据（新增）
+        imported_libraries = get_imported_libraries(conn, repository_ids)
+        
+        # 分析项目描述关键词（新增）
+        description_keywords = analyze_descriptions(repositories)
+        
+        # 分析项目标签（新增）
+        tag_analysis = analyze_tags(repositories)
         
         # 统计包/库使用情况
         packages = {}
@@ -272,96 +393,54 @@ def generate_and_save_analysis(data, output_dir, keyword, task_id=None, conn=Non
             'analysis_date': datetime.datetime.now().isoformat(),
             'charts': {
                 'language_distribution': {
-                    'data': language_distribution,
-                    'chart_path': f'/analytics/language_{safe_keyword}.png' 
+                    'data': language_distribution
                 },
                 'stars_distribution': {
-                    'data': stars_stats,
-                    'chart_path': f'/analytics/stars_{safe_keyword}.png'
+                    'data': stars_stats
                 },
                 'common_packages': {
-                    'data': dict(Counter(packages).most_common(20)),
-                    'chart_path': f'/analytics/packages_{safe_keyword}.png'
+                    'data': dict(Counter(packages).most_common(20))
+                },
+                'imported_libraries': {
+                    'data': dict(Counter(imported_libraries).most_common(20))
                 },
                 'common_functions': {
-                    'data': dict(Counter(functions).most_common(20)),
-                    'chart_path': f'/analytics/functions_{safe_keyword}.png'
+                    'data': dict(Counter(functions).most_common(20))
                 },
-                'comment_wordcloud': {
-                    'chart_path': f'/analytics/wordcloud_{safe_keyword}.png'
+                'tag_analysis': {
+                    'data': tag_analysis
                 },
                 'comment_keywords': {
                     'data': comment_keywords
+                },
+                'description_keywords': {
+                    'data': description_keywords
                 }
-            }
+            },
+            'repositories': [
+                {
+                    'id': repo['id'],
+                    'name': repo['name'],
+                    'owner': repo['owner'],
+                    'fullName': repo['full_name'],
+                    'description': repo['description'],
+                    'language': repo['language'],
+                    'stars': repo['stars'],
+                    'forks': repo['forks'],
+                    'url': repo['url'],
+                    'tags': repo['tags']
+                }
+                for repo in sorted(repositories, key=lambda x: x['stars'], reverse=True)  # 显示所有仓库，不限制数量
+            ]
         }
+        
+        # 确保完整的repositories字段存在，以防万一前面的处理有问题
+        analysis_result['repositories'] = sorted(repositories, key=lambda x: x['stars'], reverse=True)
         
         # 保存分析结果到JSON文件
         result_file = os.path.join(output_dir, f'analysis_{safe_keyword}.json')
         with open(result_file, 'w', encoding='utf-8') as f:
             json.dump(analysis_result, f, ensure_ascii=False, indent=2)
-        
-        # 生成图表
-        try:
-            import matplotlib.pyplot as plt
-            from wordcloud import WordCloud
-            
-            # 创建语言分布图
-            if language_distribution:
-                plt.figure(figsize=(10, 6))
-                plt.bar(language_distribution.keys(), language_distribution.values())
-                plt.title(f'语言分布 - {keyword}')
-                plt.xlabel('编程语言')
-                plt.ylabel('仓库数量')
-                plt.xticks(rotation=45)
-                plt.tight_layout()
-                plt.savefig(os.path.join(output_dir, f'language_{safe_keyword}.png'))
-                plt.close()
-            
-            # 创建星标分布图
-            if stars:
-                plt.figure(figsize=(8, 5))
-                plt.bar(['最小值', '平均值', '最大值'], [stars_stats['min'], stars_stats['mean'], stars_stats['max']])
-                plt.title(f'星标统计 - {keyword}')
-                plt.ylabel('星标数')
-                plt.savefig(os.path.join(output_dir, f'stars_{safe_keyword}.png'))
-                plt.close()
-            
-            # 创建常用包图表
-            if packages:
-                top_packages = dict(Counter(packages).most_common(10))
-                plt.figure(figsize=(10, 6))
-                plt.barh(list(reversed(list(top_packages.keys()))), list(reversed(list(top_packages.values()))))
-                plt.title(f'常用包/库 - {keyword}')
-                plt.xlabel('使用数量')
-                plt.tight_layout()
-                plt.savefig(os.path.join(output_dir, f'packages_{safe_keyword}.png'))
-                plt.close()
-            
-            # 创建常用函数图表
-            if functions:
-                top_functions = dict(Counter(functions).most_common(10))
-                plt.figure(figsize=(10, 6))
-                plt.barh(list(reversed(list(top_functions.keys()))), list(reversed(list(top_functions.values()))))
-                plt.title(f'常用函数 - {keyword}')
-                plt.xlabel('使用数量')
-                plt.tight_layout()
-                plt.savefig(os.path.join(output_dir, f'functions_{safe_keyword}.png'))
-                plt.close()
-            
-            # 创建词云
-            if comments:
-                wordcloud = WordCloud(width=800, height=400, background_color='white').generate(comments)
-                plt.figure(figsize=(10, 5))
-                plt.imshow(wordcloud, interpolation='bilinear')
-                plt.axis('off')
-                plt.savefig(os.path.join(output_dir, f'wordcloud_{safe_keyword}.png'))
-                plt.close()
-                
-            logger.info("图表生成完成")
-        except Exception as e:
-            logger.error(f"生成图表时出错: {e}")
-            logger.error(traceback.format_exc())
         
         # 更新任务状态
         if task_id and conn:

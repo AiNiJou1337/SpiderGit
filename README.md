@@ -1,187 +1,172 @@
-#(本项目全文为AI生成，仅作为学习MCP参考使用，侵删）
+# (本项目全文为AI生成，仅作为学习参考使用，侵删）
 
-# GitHub Trending 数据抓取项目
+# GitHub趋势爬虫
 
-这是一个基于Next.js和Python的GitHub趋势项目抓取系统，可以实时追踪GitHub上最热门的开源项目，并支持按时间段和编程语言进行筛选。
+一个用于抓取和分析GitHub趋势数据的系统，提供数据可视化和趋势分析功能。
 
-## 功能特点
+## 项目概述
 
-- 抓取GitHub每日、每周和每月趋势仓库数据
-- 支持按编程语言筛选热门项目
-- 数据持久化存储到PostgreSQL数据库
-- 响应式Web界面展示趋势数据
-- 定时自动更新数据
+该项目通过爬虫自动抓取GitHub上各种关键词相关的仓库，分析它们的代码、语言分布、使用的库/包等信息，生成分析报告和可视化图表。系统包括爬虫、数据分析和前端展示三个主要部分。
 
-## 技术栈
+### 主要特性
 
-- **前端**: Next.js, React, Tailwind CSS, ShadcnUI
-- **后端**: Next.js API Routes, Prisma ORM
-- **数据库**: PostgreSQL
-- **爬虫**: Python, BeautifulSoup4
-- **调度**: Python Schedule
+- 自动抓取GitHub仓库数据
+- 分析代码文件和使用的库/包
+- 生成趋势图表和分析报告
+- 交互式数据可视化
+- 支持按关键词和语言筛选
 
-## 安装步骤
+## 项目结构
+
+```
+github-trend-crawler/
+├── app/                   # Next.js应用程序目录
+├── components/            # 共享UI组件
+├── lib/                   # 工具库和共享函数
+├── public/                # 静态资源
+│   └── analytics/         # 分析数据文件
+├── prisma/                # Prisma数据库模型
+├── scraper/               # 爬虫代码
+├── analysis/              # 数据分析代码
+└── tools/                 # 工具和脚本
+```
+
+有关项目架构的详细说明，请参阅 [ARCHITECTURE.md](ARCHITECTURE.md)。
+
+## 安装
 
 ### 前提条件
 
-- Node.js 16+
-- Python 3.7+
-- PostgreSQL 数据库
+- Node.js (16.x 或更高版本)
+- Python 3.8+
+- PostgreSQL 12+
 
-### 安装过程
+### 安装步骤
 
-1. 克隆项目并安装依赖
+1. 克隆仓库
+   ```bash
+   git clone https://github.com/your-username/github-trend-crawler.git
+   cd github-trend-crawler
+   ```
 
-```bash
-npm install
-```
+2. 安装前端依赖
+   ```bash
+   npm install
+   ```
 
-2. 配置环境变量
+3. 安装Python依赖
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-确保`.env`文件中包含正确的数据库连接信息：
+4. 配置环境变量
+   - 复制`.env.example`为`.env`
+   - 填写必要的环境变量，包括数据库连接信息
 
-```
-DATABASE_URL="postgresql://用户名:密码@localhost:5432/github_trending"
-NODE_ENV="development"
-PORT=3000
-```
+5. 初始化数据库
+   ```bash
+   npx prisma db push
+   ```
 
-3. 初始化数据库并运行爬虫
+## 使用方法
 
-```bash
-npm run init-db
-```
-
-4. 启动开发服务器
+### 启动开发服务器
 
 ```bash
 npm run dev
 ```
 
-访问 http://localhost:3000 查看应用。
-
-## 项目结构
-
-```
-├── app/                  # Next.js 应用目录
-│   ├── api/              # API 路由
-│   │   └── trending/     # 趋势数据API
-│   ├── page.tsx          # 主页面
-│   └── ...
-├── components/           # React组件
-├── lib/                  # 工具库
-│   └── db.ts            # 数据库连接
-├── prisma/               # Prisma ORM配置
-│   └── schema.prisma    # 数据库模型定义
-├── scraper/              # Python爬虫脚本
-│   ├── main.py          # 爬虫主程序
-│   └── scheduler.py     # 定时任务调度器
-└── scripts/              # 辅助脚本
-    └── init-db.js       # 数据库初始化脚本
-```
-
-## 使用说明
-
-### 查看趋势数据
-
-应用首页展示GitHub趋势数据，可以通过顶部标签切换不同时间段（今日、本周、本月）的趋势数据。
-
-### 按语言筛选
-
-在每个时间段的页面底部，可以看到语言筛选选项，点击对应的语言标签可以筛选出特定编程语言的热门项目。
-
-### 手动更新数据
-
-如需手动更新数据，可以运行：
+### 运行爬虫
 
 ```bash
-python scraper/main.py
+python scraper/crawler.py --keyword "机器学习"
 ```
 
-### 设置定时更新
-
-启动定时任务调度器：
+### 生成分析数据
 
 ```bash
-python scraper/scheduler.py
+python analysis/data_analysis.py --keyword "机器学习"
 ```
 
-## 项目结构
-
-```
-├── app/                  # Next.js前端应用
-├── prisma/               # Prisma数据库模型和迁移
-├── components/           # React组件
-├── lib/                  # 工具函数
-├── public/               # 静态资源
-├── scraper/              # Python爬虫脚本
-│   ├── main.py           # 爬虫主程序
-│   ├── requirements.txt  # Python依赖
-│   └── scheduler.py      # 定时任务调度器
-├── .env                  # 环境变量
-├── next.config.js        # Next.js配置
-├── package.json          # 项目依赖
-└── tsconfig.json         # TypeScript配置
-```
-
-## 技术栈
-
-- **前端**: Next.js 13 (App Router), React, TypeScript, TailwindCSS, ShadcnUI
-- **后端**: Python (爬虫), Next.js API Routes
-- **数据库**: PostgreSQL, Prisma ORM
-- **部署**: 可部署在Vercel (前端) 和任何支持Python的服务器 (爬虫)
-
-## 功能特性
-
-- 自动抓取GitHub Trending页面数据
-- 数据存储在PostgreSQL数据库中
-- 美观的用户界面展示趋势项目
-- 支持按语言、时间段筛选
-- 定时任务自动更新数据
-
-## 快速开始
-
-### 前端应用
+### 生成趋势数据
 
 ```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
+python analysis/analyze_trends.py
 ```
 
-### 数据库设置
+### 构建生产版本
 
 ```bash
-# 初始化Prisma
-npx prisma migrate dev --name init
+npm run build
+npm start
 ```
 
-### 爬虫脚本
+## 工具和脚本
 
-```bash
-# 安装Python依赖
-cd scraper
-pip install -r requirements.txt
+项目包含多个实用工具脚本，位于`tools/`目录：
 
-# 运行爬虫
-python main.py
-```
+- **clean_analytics.py**: 清理临时文件和旧分析数据
+  ```bash
+  python tools/clean_analytics.py
+  ```
 
-## 环境变量
+- **regenerate_analytics.py**: 重新生成分析数据
+  ```bash
+  python tools/regenerate_analytics.py
+  ```
 
-创建一个`.env`文件，包含以下内容：
+## API参考
 
-```
-DATABASE_URL="postgresql://username:password@localhost:5432/github_trending"
-```
+系统提供以下主要API:
 
-## 开发计划
+- `/api/trends`: 获取趋势数据
+- `/api/keywords`: 管理关键词
+- `/api/repositories`: 获取仓库数据
+- `/api/libraries`: 获取库分析数据
+- `/api/crawl`: 控制爬虫任务
 
-- [x] 项目初始化
-- [ ] 数据库模型设计
-- [ ] Python爬虫实现
-- [ ] 前端界面开发
-- [ ] 定时任务系统
-- [ ] 部署文档
+有关API详细用法，请参考API文档。
+
+## 开发指南
+
+### 添加新的关键词
+
+1. 通过管理界面添加
+2. 或直接插入数据库:
+   ```sql
+   INSERT INTO keywords (text, created_at) VALUES ('新关键词', NOW());
+   ```
+
+### 添加新的分析图表
+
+1. 在`components/`目录下创建新的图表组件
+2. 更新相关页面引用该组件
+3. 如需新的数据格式，更新数据分析模块
+
+### 修改爬虫逻辑
+
+爬虫代码位于`scraper/`目录，主要文件:
+
+- `crawler.py`: 爬虫主程序
+- `code_analysis.py`: 代码分析
+
+## 贡献指南
+
+欢迎贡献代码、报告问题或提出改进建议！
+
+1. Fork本仓库
+2. 创建您的功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开Pull Request
+
+## 许可证
+
+本项目采用MIT许可证 - 详情请参阅[LICENSE](LICENSE)文件。
+
+## 项目清理
+
+项目版本迭代过程中，以下文件已被整合或移除：
+
+- 根目录的`analyze_trends.py`已移除，请使用`analysis/analyze_trends.py`
+- `/app/api/analytics/route.ts`已合并到`/app/api/analysis/route.ts`

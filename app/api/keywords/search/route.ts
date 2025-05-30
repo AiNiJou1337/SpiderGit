@@ -7,7 +7,11 @@ import path from 'path';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { keyword } = data;
+    const { 
+      keyword, 
+      languages, 
+      limits 
+    } = data;
     
     if (!keyword || typeof keyword !== 'string' || keyword.trim() === '') {
       return NextResponse.json(
@@ -66,10 +70,29 @@ export async function POST(request: Request) {
       }
     });
     
-    // 运行爬虫脚本 (异步执行，不等待完成)
-    const scraperPath = path.join(process.cwd(), 'scraper', 'keyword_scraper.py');
+    // 准备爬虫命令参数
+    let cmd = `D:\\IT_software\\miniconda\\python.exe "${path.join(process.cwd(), 'scraper', 'keyword_scraper.py')}" --keywords "${keyword}" --task-id ${crawlTask.id}`;
     
-    exec(`D:\\IT_software\\miniconda\\python.exe "${scraperPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`, (error, stdout, stderr) => {
+    // 添加语言参数
+    if (languages && Array.isArray(languages) && languages.length > 0) {
+      cmd += ` --languages "${languages.join(',')}"`;
+    }
+    
+    // 添加数量限制参数
+    if (limits && typeof limits === 'object') {
+      const limitsStr = Object.entries(limits)
+        .map(([lang, limit]) => `${lang}=${limit}`)
+        .join(',');
+      
+      if (limitsStr) {
+        cmd += ` --limits "${limitsStr}"`;
+      }
+    }
+    
+    console.log(`执行爬虫命令: ${cmd}`);
+    
+    // 运行爬虫脚本 (异步执行，不等待完成)
+    exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(`爬虫执行错误: ${error.message}`);
         // 更新任务状态为失败
@@ -130,3 +153,4 @@ async function updateTaskStatus(taskId: number, status: string, progress: number
     console.error(`更新任务状态失败 (ID: ${taskId}):`, error);
   }
 } 
+ 
