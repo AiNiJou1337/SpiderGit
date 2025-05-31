@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TrendsNavbar } from '@/components/trends-navbar'
 import { RepositoryCard } from '@/components/repository-card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 async function getRepositories() {
   // 在实际部署环境中使用绝对URL
@@ -29,13 +30,20 @@ export default async function MonthlyTrending() {
   
   return (
     <div className="container mx-auto py-6">
-      <h1 className="text-3xl font-bold mb-2">GitHub 每月趋势</h1>
-      <p className="text-muted-foreground mb-6">展示过去一个月内最受欢迎的GitHub项目</p>
+      {/* 标题区域使用卡片和渐变背景 */}
+      <Card className="glass-card bg-gradient-to-br from-green-500/10 to-emerald-500/10 mb-6">
+        <CardHeader>
+          <CardTitle className="text-3xl font-bold">GitHub 每月趋势</CardTitle>
+          <CardDescription className="text-lg">
+            展示过去一个月内最受欢迎的GitHub项目
+          </CardDescription>
+        </CardHeader>
+      </Card>
       
       <TrendsNavbar />
       
       {repositories && repositories.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {repositories.map((repo: any) => (
             <RepositoryCard 
               key={repo.fullName} 
@@ -49,8 +57,6 @@ export default async function MonthlyTrending() {
           <p className="text-muted-foreground">暂无数据或正在加载中...</p>
         </div>
       )}
-      
-     
     </div>
   )
 }

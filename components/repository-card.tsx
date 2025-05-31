@@ -42,8 +42,30 @@ export function RepositoryCard({ repository, periodLabel = "今日新增" }: Rep
     return styles[language] || "bg-gray-100 text-gray-800"
   }
   
+  // 根据语言生成渐变色
+  const getGradientByLanguage = (language: string | null): string => {
+    if (!language) return "from-gray-500/10 to-slate-500/10"
+    
+    const gradients: Record<string, string> = {
+      JavaScript: "from-yellow-500/10 to-amber-500/10",
+      TypeScript: "from-blue-500/10 to-indigo-500/10",
+      Python: "from-green-500/10 to-emerald-500/10",
+      Java: "from-orange-500/10 to-amber-500/10",
+      "C++": "from-purple-500/10 to-violet-500/10",
+      "C#": "from-indigo-500/10 to-blue-500/10",
+      Go: "from-cyan-500/10 to-blue-500/10",
+      Rust: "from-red-500/10 to-rose-500/10",
+      PHP: "from-pink-500/10 to-purple-500/10",
+      Ruby: "from-rose-500/10 to-pink-500/10",
+    }
+    
+    return gradients[language] || "from-gray-500/10 to-slate-500/10"
+  }
+  
+  const gradient = getGradientByLanguage(repository.language)
+  
   return (
-    <Card className="h-full flex flex-col">
+    <Card className={`h-full flex flex-col glass-card bg-gradient-to-br ${gradient}`}>
       <CardHeader>
         <CardTitle className="truncate">{repository.name}</CardTitle>
         <CardDescription>{repository.owner}</CardDescription>

@@ -797,12 +797,21 @@ function KeywordsPage() {
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <Card>
+      {/* 标题区域 */}
+      <Card className="glass-card bg-gradient-to-br from-purple-500/10 to-pink-500/10">
         <CardHeader>
-          <CardTitle>GitHub 关键词爬取与分析</CardTitle>
-          <CardDescription>
-            输入关键词，分析 GitHub 上相关仓库的信息
+          <CardTitle className="text-3xl font-bold">GitHub 关键词分析</CardTitle>
+          <CardDescription className="text-lg">
+            探索GitHub上与特定技术关键词相关的仓库数据
           </CardDescription>
+        </CardHeader>
+      </Card>
+
+      {/* 关键词搜索区域 */}
+      <Card className="glass-card bg-gradient-to-br from-blue-500/10 to-indigo-500/10">
+        <CardHeader>
+          <CardTitle>关键词搜索</CardTitle>
+          <CardDescription>输入技术关键词，我们将为您分析相关GitHub仓库</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col space-y-4">
@@ -830,7 +839,7 @@ function KeywordsPage() {
                 {isLoading ? '处理中...' : '搜索并分析'}
               </Button>
             </div>
-            
+  
             {showAdvancedOptions && (
               <div className="mt-4 border rounded-md p-4">
                 <h3 className="text-lg font-medium mb-2">配置爬取选项</h3>
@@ -839,7 +848,7 @@ function KeywordsPage() {
                   <h4 className="text-sm font-medium mb-2">选择编程语言</h4>
                   <div className="flex flex-wrap gap-2">
                     {availableLanguages.map(language => (
-                      <Badge 
+                      <Badge
                         key={language}
                         variant={selectedLanguages.includes(language) ? "default" : "outline"}
                         className="cursor-pointer"
@@ -903,9 +912,34 @@ function KeywordsPage() {
           </div>
         </CardContent>
       </Card>
-      
+
+      {/* 已有关键词列表 */}
+      <Card className="glass-card bg-gradient-to-br from-amber-500/10 to-orange-500/10">
+        <CardHeader>
+          <CardTitle>已分析关键词</CardTitle>
+          <CardDescription>选择一个已分析的关键词查看详细数据</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2">
+            {availableKeywords.map((kw) => (
+              <Badge
+                key={kw.id}
+                variant={selectedKeyword === kw.name ? "default" : "outline"}
+                className="cursor-pointer"
+                onClick={() => handleKeywordChange(kw.name)}
+              >
+                {kw.name} ({kw.count})
+              </Badge>
+            ))}
+            {availableKeywords.length === 0 && (
+              <p className="text-muted-foreground">暂无分析数据，请先搜索一个关键词</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {availableKeywords.length > 0 && (
-        <Card>
+        <Card className="glass-card bg-gradient-to-br from-indigo-500/10 to-purple-500/10">
           <CardHeader>
             <CardTitle>分析结果</CardTitle>
             <CardDescription>选择分析主题查看结果</CardDescription>
@@ -1113,7 +1147,7 @@ function KeywordsPage() {
                             </CardContent>
                           </Card>
                         )}
-                        
+
                         {/* 关键词云组件 */}
                         {analysisResults.charts && (
                           <Card>
@@ -1156,5 +1190,5 @@ function KeywordsPage() {
         </Card>
       )}
     </div>
-  )
+  );
 }
