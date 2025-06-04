@@ -4,6 +4,7 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { Github, Code, Star, GitFork, UserCheck, BarChart3, LineChart, Layers, Database, Cpu } from 'lucide-react'
+import Image from 'next/image'
 
 export default function IntroductionPage() {
   return (
@@ -11,10 +12,12 @@ export default function IntroductionPage() {
       <div className="flex flex-col gap-8">
         {/* 项目标题和简介 */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">GitHub趋势爬虫与分析平台</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            探索GitHub热门项目，挖掘编程语言与开源趋势
-          </p>
+          <div className="flex flex-col items-center mb-4">
+            <h1 className="text-4xl font-bold mb-4">GitHub趋势爬虫与分析平台</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              探索GitHub热门项目，挖掘编程语言与开源趋势
+            </p>
+          </div>
         </div>
         
         {/* 主要特性 */}

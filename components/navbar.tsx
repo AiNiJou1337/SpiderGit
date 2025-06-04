@@ -4,8 +4,23 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Home, BarChart2, Search, Info, Settings, TrendingUp } from "lucide-react"
+import Image from "next/image"
+import { LucideIcon } from "lucide-react"
 
-const navItems = [
+type SubItem = {
+  name: string
+  href: string
+  icon: LucideIcon
+}
+
+type NavItem = {
+  name: string
+  href: string
+  icon: LucideIcon
+  subItems?: SubItem[]
+}
+
+const navItems: NavItem[] = [
   { name: "首页", href: "/", icon: Home },
   {
     name: "趋势分析", 
@@ -21,6 +36,17 @@ export function Navbar() {
 
   return (
     <aside className="h-full w-48 min-w-[160px] bg-muted/40 border-r flex flex-col py-8 px-2">
+      <div className="flex flex-col items-center mb-6">
+        <Link href="/">
+          <Image 
+            src="/logo.png" 
+            alt="GitHub 趋势爬虫 Logo" 
+            width={48} 
+            height={48} 
+            className="mb-2"
+          />
+        </Link>
+      </div>
       <div className="flex flex-col gap-2">
         {navItems.map((item) => {
           const Icon = item.icon

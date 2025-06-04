@@ -3,12 +3,16 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { ThemeProvider } from '@/components/theme-provider'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'GitHub 趋势爬虫',
   description: '探索GitHub热门项目，挖掘编程语言与开源趋势',
+  icons: {
+    icon: '/logo.png',
+  },
 }
 
 export default function RootLayout({
@@ -28,7 +32,14 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col">
             <header className="border-b glass-effect sticky top-0 z-10">
               <div className="container mx-auto py-4 flex justify-between items-center">
-                <Link href="/" className="font-bold text-lg">
+                <Link href="/" className="font-bold text-lg flex items-center">
+                  <Image 
+                    src="/logo.png" 
+                    alt="GitHub 趋势爬虫 Logo" 
+                    width={36} 
+                    height={36} 
+                    className="mr-2"
+                  />
                   GitHub 趋势爬虫
                 </Link>
                 <nav className="flex space-x-6">
