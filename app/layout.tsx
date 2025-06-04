@@ -1,13 +1,18 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 import { ThemeProvider } from '@/components/theme-provider'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'GitHub Trending 数据抓取',
-  description: '使用Next.js、Prisma、ShadcnUI、Python和PostgreSQL构建的GitHub Trending数据抓取和展示系统',
+  title: 'GitHub 趋势爬虫',
+  description: '探索GitHub热门项目，挖掘编程语言与开源趋势',
+  icons: {
+    icon: '/logo.png',
+  },
 }
 
 export default function RootLayout({
@@ -24,7 +29,48 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <header className="border-b glass-effect sticky top-0 z-10">
+              <div className="container mx-auto py-4 flex justify-between items-center">
+                <Link href="/" className="font-bold text-lg flex items-center">
+                  <Image 
+                    src="/logo.png" 
+                    alt="GitHub 趋势爬虫 Logo" 
+                    width={36} 
+                    height={36} 
+                    className="mr-2"
+                  />
+                  GitHub 趋势爬虫
+                </Link>
+                <nav className="flex space-x-6">
+                  <Link href="/" className="hover:text-primary transition-colors">
+                    项目介绍
+                  </Link>
+                  <Link href="/dashboard" className="hover:text-primary transition-colors">
+                    数据仪表盘
+                  </Link>
+                  <Link href="/daily" className="hover:text-primary transition-colors">
+                    趋势分析
+                  </Link>
+                  <Link href="/keywords" className="hover:text-primary transition-colors">
+                    关键词分析
+                  </Link>
+                  <Link href="/about" className="hover:text-primary transition-colors">
+                    关于项目
+                  </Link>
+                </nav>
+              </div>
+            </header>
+            <main className="flex-1">
+              {children}
+            </main>
+            <footer className="py-6 border-t glass-effect">
+              <div className="container mx-auto text-center text-sm text-muted-foreground">
+                <p>用❤️打造 | 基于Next.js, Python和PostgreSQL</p>
+                <p>© 2025 GitHub趋势爬虫团队</p>
+              </div>
+            </footer>
+          </div>
         </ThemeProvider>
       </body>
     </html>
