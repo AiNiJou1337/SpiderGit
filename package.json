@@ -3,11 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "init-db": "node scripts/init-db.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:all": "npm test && cd scraper && pytest",
+    "test:frontend": "jest",
+    "test:backend": "cd scraper && pytest",
+    "ci:check": "npm run lint && npm run type-check && npm run build && cd scraper && flake8 . && black --check .",
+    "setup:test": "node scripts/test-setup.js",
+    "restructure": "node tools/scripts/restructure-project.js",
+    "restructure:dry-run": "node tools/scripts/restructure-project.js --dry-run",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "init-db": "prisma db push && prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
@@ -35,15 +51,44 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/jest": "^29.5.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prisma": "^5.4.2",
     "tailwindcss": "^3",
     "typescript": "^5"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/scraper/"
+    ],
+    "moduleNameMapping": {
+      "^@/(.*)$": "<rootDir>/$1"
+    },
+    "collectCoverageFrom": [
+      "app/**/*.{js,jsx,ts,tsx}",
+      "components/**/*.{js,jsx,ts,tsx}",
+      "lib/**/*.{js,jsx,ts,tsx}",
+      "!**/*.d.ts",
+      "!**/node_modules/**",
+      "!app/layout.tsx",
+      "!app/globals.css"
+    ],
+    "testTimeout": 10000,
+    "verbose": true
   }
 }

@@ -1,0 +1,54 @@
+name: Simple CI (个人开发版)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 基础检查 - 确保代码能正常构建和运行
+  basic-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+    
+    - name: 设置 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: 安装依赖
+      run: |
+        npm ci
+        pip install -r scraper/requirements.txt
+    
+    - name: 代码格式检查
+      run: |
+        npm run lint
+        npx tsc --noEmit
+    
+    - name: 构建检查
+      run: npm run build
+      env:
+        DATABASE_URL: postgresql://test:test@localhost:5432/test_db
+    
+    - name: Python 语法检查
+      run: |
+        pip install flake8
+        flake8 scraper/ --max-line-length=88 --extend-ignore=E203,W503
+    
+    - name: 安全检查（非阻塞）
+      run: |
+        npm audit --audit-level high || echo "发现安全问题，请检查"
+        pip install safety
+        safety check -r scraper/requirements.txt || echo "发现 Python 安全问题，请检查"
+      continue-on-error: true

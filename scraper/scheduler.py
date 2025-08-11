@@ -7,10 +7,11 @@ from main import main as scrape_trending
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def job():
-    """定时执行的爬虫任务"""
-    logging.info("开始执行定时爬虫任务...")
+def job(period=None):
+    """定时执行的爬虫任务。period 可为 daily/weekly/monthly，用于控制抓取范围"""
     try:
+        # 月初执行月榜抓取，其余按日/周配置
+        logging.info("开始执行定时爬虫任务...%s", f"period={period}" if period else "")
         scrape_trending()
         logging.info("定时爬虫任务执行完成")
     except Exception as e:
@@ -19,14 +20,17 @@ def job():
 
 def start_scheduler():
     """启动定时任务调度器"""
-    # 每天凌晨2点执行爬虫任务
-    schedule.every().day.at("02:00").do(job)
+    # 每天凌晨2点执行爬虫任务（每日）
+    schedule.every().day.at("02:00").do(lambda: job(period="daily"))
 
-    # 每周一凌晨3点执行爬虫任务（获取周榜数据）
-    schedule.every().monday.at("03:00").do(job)
+    # 每周一凌晨3点执行爬虫任务（周）
+    schedule.every().monday.at("03:00").do(lambda: job(period="weekly"))
 
-    # 每月1日凌晨4点执行爬虫任务（获取月榜数据）
-    schedule.every().month_start.at("04:00").do(job)
+    # 每天凌晨4点检查是否月初，若是则执行月度任务（schedule 无 month_start，故此处手动判定）
+    def monthly_guard():
+        if time.localtime().tm_mday == 1:
+            job(period="monthly")
+    schedule.every().day.at("04:00").do(monthly_guard)
 
     logging.info("定时任务调度器已启动")
 

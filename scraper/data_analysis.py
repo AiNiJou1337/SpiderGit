@@ -23,32 +23,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger('data_analysis')
 
-# 配置中文字体支持（添加在import后）
-# try:
-#     # 首先尝试使用微软雅黑
-#     matplotlib.rc('font', family='Microsoft YaHei')
-# except:
-#     try:
-#         # 如果没有微软雅黑，尝试使用其他中文字体
-#         matplotlib.rc('font', family='SimHei')  # 黑体
-#     except:
-#         try:
-#             # 再尝试使用宋体
-#             matplotlib.rc('font', family='SimSun')  # 宋体
-#         except:
-#             # 如果都不行，使用Arial Unicode MS (支持中文)
-#             try:
-#                 matplotlib.rc('font', family='Arial Unicode MS')
-#             except:
-#                 logger.warning("无法找到适合的中文字体，图表中的中文可能无法正常显示")
-
-# 修复负号显示问题
-# matplotlib.rcParams['axes.unicode_minus'] = False
-
-# 获取合适的中文字体
-# def get_suitable_font():
-    # ...
-
 # 数据库连接信息
 DB_URL = os.environ.get('DATABASE_URL')
 if not DB_URL:

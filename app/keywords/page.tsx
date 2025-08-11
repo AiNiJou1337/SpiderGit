@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { SafeTabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/safe-tabs'
 import { RefreshCw } from 'lucide-react'
-import { 
+import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts'
@@ -26,7 +26,7 @@ import { ChartsDisplay } from '@/components/charts-display'
 
 // 颜色配置
 const COLORS = [
-  '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28CFF', 
+  '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28CFF',
   '#FF6B6B', '#4BC0C0', '#FF9F40', '#9966FF', '#FF6699',
   '#36A2EB', '#FF6384', '#4BC0C0', '#FF9F40', '#9966FF'
 ];
@@ -77,8 +77,8 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
         <div className="p-4 text-center">
           <h2 className="text-xl font-bold text-red-600 mb-2">页面出现错误</h2>
           <p className="text-gray-600">请尝试刷新页面</p>
-          <Button 
-            onClick={() => window.location.reload()} 
+          <Button
+            onClick={() => window.location.reload()}
             className="mt-4"
           >
             刷新页面
@@ -112,10 +112,26 @@ function KeywordsPage() {
   const [isRegenerating, setIsRegenerating] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
   const [isRecrawling, setIsRecrawling] = useState(false)
-  
+
   // 使用ref存储当前爬取的关键词，避免闭包问题
   const currentTaskKeyword = useRef('')
-  
+
+  // 统一轮询控制：使用 ref 存储 interval，避免重复轮询
+  const pollRef = useRef<any>(null)
+  const stopPolling = () => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current)
+      pollRef.current = null
+    }
+  }
+  const startPolling = (kw: string, intervalMs = 3000) => {
+    stopPolling()
+    currentTaskKeyword.current = kw
+    pollRef.current = setInterval(() => {
+      fetchTaskStatus(currentTaskKeyword.current)
+    }, intervalMs)
+  }
+
   // 自定义语言和数量设置
   const [selectedLanguages, setSelectedLanguages] = useState(['python', 'java'])
   const [languageLimits, setLanguageLimits] = useState({
@@ -123,10 +139,10 @@ function KeywordsPage() {
     java: 30
   })
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
-  
+
   // 可选语言列表
   const availableLanguages = [
-    'python', 'java', 'javascript', 'typescript', 'go', 'rust', 
+    'python', 'java', 'javascript', 'typescript', 'go', 'rust',
     'c', 'cpp', 'csharp', 'php', 'ruby', 'swift', 'kotlin'
   ]
 
@@ -138,7 +154,7 @@ function KeywordsPage() {
     try {
       const response = await fetch('/api/keywords')
       const data = await response.json()
-      
+
       if (data.keywords && data.keywords.length > 0) {
         setAvailableKeywords(data.keywords)
         // 默认选择第一个关键词
@@ -159,20 +175,17 @@ function KeywordsPage() {
     try {
       const response = await fetch(`/api/keywords/task?keyword=${encodeURIComponent(keyword)}`);
       const data = await response.json();
-      
+
       if (!data.error) {
         setTaskStatus(data);
-        
+
         // 任务完成或失败时
         if (data.status === 'completed' || data.status === 'failed') {
-          // 清除轮询
-          if (pollingInterval) {
-            clearInterval(pollingInterval);
-            setPollingInterval(null);
-          }
-          
+          // 清除轮询（统一用 ref 控制）
+          stopPolling()
+
           if (data.status === 'completed') {
-            // 直接调用刷新,不使用requestAnimationFrame
+            // 直接调用刷新
             await forceRefreshResults(keyword);
             setTaskStatus(null);
           }
@@ -212,24 +225,24 @@ function KeywordsPage() {
       console.error('文件路径为空');
       return;
     }
-    
+
     let isMounted = true;
     console.log('尝试加载分析文件:', file);
     setIsLoading(true);
-    
+
     try {
       const response = await fetch(file);
       if (!isMounted) return;
-      
+
       if (!response.ok) {
         throw new Error(`加载分析结果失败: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       if (!isMounted) return;
-      
+
       console.log('成功加载分析结果');
-      
+
       // 检查并处理数据结构
       const processedData = processAnalysisData(data, file);
       if (isMounted) {
@@ -246,7 +259,7 @@ function KeywordsPage() {
         setIsLoading(false);
       }
     }
-    
+
     return () => {
       isMounted = false;
     };
@@ -255,16 +268,16 @@ function KeywordsPage() {
   // 处理和规范化分析数据
   function processAnalysisData(data, filePath) {
     console.log('处理分析数据，检查结构');
-    
+
     // 如果数据为空，返回null
     if (!data) return null;
-    
+
     // 确保基本结构存在
     if (!data.charts) {
       console.log('数据结构异常：缺少charts字段');
       data.charts = {};
     }
-    
+
     // 提取关键词 - 如果没有keyword字段，尝试从文件路径中提取
     if (!data.keyword && filePath) {
       const match = filePath.match(/analysis_([^/.]+)\.json/);
@@ -273,12 +286,12 @@ function KeywordsPage() {
         console.log('从文件路径提取关键词:', data.keyword);
       }
     }
-    
+
     // 处理语言分布数据
     if (!data.charts.language_distribution) {
       console.log('缺少语言分布数据，尝试从仓库信息创建');
       data.charts.language_distribution = { data: {} };
-      
+
       // 如果有仓库数据，尝试从中构建语言分布
       if (data.repositories && Array.isArray(data.repositories)) {
         const languages = {};
@@ -290,12 +303,12 @@ function KeywordsPage() {
         data.charts.language_distribution.data = languages;
       }
     }
-    
+
     // 处理星标分布数据
     if (!data.charts.stars_distribution) {
       console.log('缺少星标分布数据，尝试从仓库信息创建');
       data.charts.stars_distribution = { data: { mean: 0, min: 0, max: 0, total: 0 } };
-      
+
       // 如果有仓库数据，尝试从中构建星标分布
       if (data.repositories && Array.isArray(data.repositories)) {
         const stars = data.repositories.map(repo => repo.stars || 0);
@@ -310,12 +323,12 @@ function KeywordsPage() {
         }
       }
     }
-    
+
     // 处理标签分析数据
     if (!data.charts.tag_analysis) {
       console.log('缺少标签分析数据，尝试从仓库标签创建');
       data.charts.tag_analysis = { data: {} };
-      
+
       // 如果有仓库数据，尝试从中构建标签分析
       if (data.repositories && Array.isArray(data.repositories)) {
         const tags = {};
@@ -329,18 +342,18 @@ function KeywordsPage() {
         data.charts.tag_analysis.data = tags;
       }
     }
-    
+
     // 处理库导入数据
     if (!data.charts.imported_libraries) {
       console.log('缺少库导入数据，创建空数据');
       data.charts.imported_libraries = { data: {} };
     }
-    
+
     // 处理描述关键词数据
     if (!data.charts.description_keywords) {
       console.log('缺少描述关键词数据，尝试从仓库描述创建');
       data.charts.description_keywords = { data: {} };
-      
+
       // 如果有仓库数据，尝试从中提取关键词
       // 这只是一个简单实现，实际上需要更复杂的文本处理
       if (data.repositories && Array.isArray(data.repositories)) {
@@ -352,13 +365,13 @@ function KeywordsPage() {
               .replace(/[^\w\s]/g, '')
               .split(/\s+/)
               .filter(word => word.length > 3);
-            
+
             words.forEach(word => {
               keywords[word] = (keywords[word] || 0) + 1;
             });
           }
         });
-        
+
         // 只保留出现频率最高的前30个关键词
         const sortedKeywords = Object.entries(keywords)
           .sort((a, b) => b[1] - a[1])
@@ -367,11 +380,11 @@ function KeywordsPage() {
             obj[key] = value;
             return obj;
           }, {});
-        
+
         data.charts.description_keywords.data = sortedKeywords;
       }
     }
-    
+
     return data;
   }
 
@@ -384,17 +397,17 @@ function KeywordsPage() {
 
     setIsLoading(true)
     setSearchMessage('正在提交爬取请求，这可能需要一些时间...')
-    
+
     // 设置当前任务关键词
     currentTaskKeyword.current = keyword
-    
+
     // 准备请求数据
-    const requestData = { 
+    const requestData = {
       keyword,
       languages: selectedLanguages,
       limits: languageLimits
     }
-    
+
     try {
       const response = await fetch('/api/keywords/search', {
         method: 'POST',
@@ -403,9 +416,9 @@ function KeywordsPage() {
         },
         body: JSON.stringify(requestData),
       })
-      
+
       const data = await response.json()
-      
+
       if (data.success) {
         setSearchMessage(`爬取请求已提交! ${data.message || ''}`)
         // 更新当前选中的关键词
@@ -414,23 +427,12 @@ function KeywordsPage() {
         setAnalysisResults(null)
         // 设置活动标签为总览
         setActiveTab('overview')
-        
+
         // 刷新关键词列表
         await fetchKeywords()
-        
-        // 开始轮询任务状态
-        if (pollingInterval) {
-          clearInterval(pollingInterval)
-        }
-        
-        // 每3秒检查一次任务状态
-        const interval = setInterval(() => {
-          // 使用ref中存储的关键词，而不是闭包中的
-          console.log('轮询任务状态，当前关键词:', currentTaskKeyword.current);
-          fetchTaskStatus(currentTaskKeyword.current)
-        }, 3000)
-        
-        setPollingInterval(interval)
+
+        // 开始轮询任务状态（统一用 startPolling，避免重复 setInterval）
+        startPolling(keyword, 3000)
       } else {
         setSearchMessage(`爬取请求失败: ${data.error || '未知错误'}`)
       }
@@ -441,13 +443,13 @@ function KeywordsPage() {
       setIsLoading(false)
     }
   }
-  
+
   // 任务状态展示的辅助函数
   function getStatusBadgeColor(status) {
     switch(status) {
       case 'pending': return 'bg-yellow-200 text-yellow-800'
       case 'running': return 'bg-blue-200 text-blue-800'
-      case 'completed': return 'bg-green-200 text-green-800' 
+      case 'completed': return 'bg-green-200 text-green-800'
       case 'failed': return 'bg-red-200 text-red-800'
       default: return 'bg-gray-200 text-gray-800'
     }
@@ -456,11 +458,9 @@ function KeywordsPage() {
   // 清理轮询interval
   useEffect(() => {
     return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval)
-      }
+      stopPolling()
     }
-  }, [pollingInterval])
+  }, [])
 
   // 页面加载时获取关键词列表
   useEffect(() => {
@@ -501,28 +501,28 @@ function KeywordsPage() {
       value
     }));
   };
-  
+
   // 准备语言数据，保留原始数据但调整显示百分比
   const prepareLanguageData = () => {
     if (!analysisResults || !analysisResults.charts || !analysisResults.charts.language_distribution) {
       return [];
     }
-    
+
     // 获取原始数据
     const rawData = analysisResults.charts.language_distribution.data || {};
-    
+
     // 计算总和
     const total = Object.values(rawData).reduce((sum: number, count: any) => sum + Number(count), 0);
-    
+
     // 如果总和为0，返回空数组
     if (total === 0) return [];
-    
+
     // 计算准确的百分比，确保总和为100%
     return Object.entries(rawData).map(([name, value]) => {
       const numValue = Number(value);
       // 计算真实百分比
       const realPercent = (numValue / total) * 100;
-      
+
       // 返回原始数据，但添加额外属性用于显示
       return {
         name,
@@ -533,30 +533,30 @@ function KeywordsPage() {
       };
     });
   };
-  
+
   // 添加新函数，调整百分比显示使总和为100%，保留两位小数
   const adjustPercentages = (data) => {
     if (!data || data.length === 0) return data;
-    
+
     // 计算所有显示百分比的总和
     const totalPercent = data.reduce((sum, item) => sum + item.percent, 0);
-    
+
     // 如果总和已经是100%左右，不需要调整
     if (Math.abs(totalPercent - 100) < 0.01) return data;
-    
+
     // 复制数据以进行调整
     const adjustedData = [...data];
-    
+
     // 对于两个项目的特殊情况（如Python和Java）
     if (adjustedData.length === 2) {
       // 根据项目数量分配百分比
       const totalCount = adjustedData[0].count + adjustedData[1].count;
-      
+
       // 计算模糊的百分比，确保总和为100%
       // 使用项目数量的比例，但稍微调整以使总和为100%
       let percent1 = Number(((adjustedData[0].count / totalCount) * 99.99).toFixed(2)); // 保留两位小数
       let percent2 = Number((100 - percent1).toFixed(2));
-      
+
       // 确保较大的值获得较大的百分比
       if (adjustedData[0].count > adjustedData[1].count && percent1 < percent2) {
         percent1 = 62.50; // 对于Python 50个项目
@@ -565,33 +565,33 @@ function KeywordsPage() {
         percent1 = 37.50; // 如果Java在前面
         percent2 = 62.50; // 如果Python在前面
       }
-      
+
       adjustedData[0].displayPercent = percent1;
       adjustedData[1].displayPercent = percent2;
     } else {
       // 对于更多项目的一般情况，按比例调整
       const adjustmentFactor = 100 / totalPercent;
       let totalDisplayPercent = 0;
-      
+
       // 先计算所有项的百分比，但最后一项除外
       for (let i = 0; i < adjustedData.length - 1; i++) {
         const displayPercent = Number((adjustedData[i].percent * adjustmentFactor).toFixed(2));
         adjustedData[i].displayPercent = displayPercent;
         totalDisplayPercent += displayPercent;
       }
-      
+
       // 最后一项确保总和为100%
-      adjustedData[adjustedData.length - 1].displayPercent = 
+      adjustedData[adjustedData.length - 1].displayPercent =
         Number((100 - totalDisplayPercent).toFixed(2));
     }
-    
+
     return adjustedData;
   };
 
   // 准备星标数据
   const prepareStarsData = (starsData) => {
     if (!starsData) return [];
-    
+
     return [
       { name: '最小值', value: starsData.min },
       { name: '平均值', value: starsData.mean },
@@ -605,17 +605,17 @@ function KeywordsPage() {
   // 添加重新爬取功能
   async function recrawlRepository() {
     if (!selectedKeyword || isRecrawling) return
-    
+
     setIsRecrawling(true)
     setSearchMessage('正在提交重新爬取请求...')
-    
+
     try {
-      const requestData = { 
+      const requestData = {
         keyword: selectedKeyword,
         languages: selectedLanguages,
         limits: languageLimits
       }
-      
+
       const response = await fetch('/api/keywords/recrawl', {
         method: 'POST',
         headers: {
@@ -623,23 +623,14 @@ function KeywordsPage() {
         },
         body: JSON.stringify(requestData),
       })
-      
+
       const data = await response.json()
-      
+
       if (data.success) {
         setSearchMessage(`重新爬取请求已提交! ${data.message || ''}`)
-        
-        // 开始轮询任务状态
-        if (pollingInterval) {
-          clearInterval(pollingInterval)
-        }
-        
-        // 每3秒检查一次任务状态
-        const interval = setInterval(() => {
-          fetchTaskStatus(selectedKeyword)
-        }, 3000)
-        
-        setPollingInterval(interval)
+
+        // 开始轮询任务状态（统一控制）
+        startPolling(selectedKeyword, 3000)
       } else {
         setSearchMessage(`重新爬取请求失败: ${data.error || '未知错误'}`)
       }
@@ -655,14 +646,14 @@ function KeywordsPage() {
   const handleLanguageChange = (language) => {
     if (selectedLanguages.includes(language)) {
       setSelectedLanguages(selectedLanguages.filter(lang => lang !== language))
-      
+
       // 从限制中移除该语言
       const newLimits = {...languageLimits}
       delete newLimits[language]
       setLanguageLimits(newLimits)
     } else {
       setSelectedLanguages([...selectedLanguages, language])
-      
+
       // 添加默认限制
       setLanguageLimits({
         ...languageLimits,
@@ -670,7 +661,7 @@ function KeywordsPage() {
       })
     }
   }
-  
+
   // 处理语言数量限制变化
   const handleLimitChange = (language, value) => {
     const numValue = parseInt(value, 10)
@@ -685,11 +676,11 @@ function KeywordsPage() {
   // 切换关键词时加载对应分析文件
   const handleKeywordChange = (name) => {
     if (name === selectedKeyword) return; // 避免相同关键词重复加载
-    
+
     setSelectedKeyword(name);
     setAnalysisResults(null); // 重置分析结果，避免使用旧数据
     setActiveTab('overview'); // 重置为默认标签页
-    
+
     const file = analysisFiles.find(f => f.name === name)?.file;
     if (file) fetchAnalysisByFile(file);
   }
@@ -697,33 +688,22 @@ function KeywordsPage() {
   // 修改轮询相关的 useEffect
   useEffect(() => {
     let isSubscribed = true;
-    
-    // 如果有任务正在运行,启动轮询
+
     if (taskStatus && currentTaskKeyword.current) {
-      console.log('启动轮询:', currentTaskKeyword.current);
-      
-      // 立即执行一次
+      // 立即获取一次最新状态
       fetchTaskStatus(currentTaskKeyword.current);
-      
-      // 设置更频繁的轮询间隔(1秒)
-      const interval = setInterval(() => {
-        if (isSubscribed) {
-          fetchTaskStatus(currentTaskKeyword.current);
-        }
-      }, 1000);
-      
-      setPollingInterval(interval);
+      // 使用统一的轮询控制（1秒）
+      startPolling(currentTaskKeyword.current, 1000)
+    } else {
+      // 没有任务时停止轮询
+      stopPolling()
     }
 
-    // 清理函数
     return () => {
       isSubscribed = false;
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-        setPollingInterval(null);
-      }
+      stopPolling()
     };
-  }, [taskStatus?.status]); // 只在任务状态改变时重新设置轮询
+  }, [taskStatus?.status]);
 
   // 监控selectedKeyword变化，更新当前任务关键词
   useEffect(() => {
@@ -736,27 +716,27 @@ function KeywordsPage() {
   async function forceRefreshResults(targetKeyword) {
     const keyword = targetKeyword || selectedKeyword;
     if (!keyword) return false;
-    
+
     setIsLoading(true);
     setSearchMessage('正在刷新分析结果...');
-    
+
     try {
       // 刷新文件列表
       const res = await fetch('/api/analysis/list');
       if (!res.ok) throw new Error('获取文件列表失败');
-      
+
       const filesData = await res.json();
       setAnalysisFiles(filesData);
-      
+
       // 尝试多种匹配方式查找文件
       const keywordUnderscore = keyword.replace(/ /g, '_');
-      const keywordFile = filesData.find(f => 
+      const keywordFile = filesData.find(f =>
         f.name === keyword ||
         f.name === keywordUnderscore ||
-        f.file.includes(`analysis_${keyword}`) || 
+        f.file.includes(`analysis_${keyword}`) ||
         f.file.includes(`analysis_${keywordUnderscore}`)
       );
-      
+
       if (keywordFile?.file) {
         await fetchAnalysisByFile(keywordFile.file);
         setSearchMessage('分析结果已刷新!');
@@ -778,13 +758,7 @@ function KeywordsPage() {
   useEffect(() => {
     // 组件挂载时加载关键词列表
     fetchKeywords();
-    
-    // 组件卸载时清理
-    return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-    };
+    return () => { stopPolling() };
   }, []);
 
   if (isLoading) {
@@ -824,26 +798,26 @@ function KeywordsPage() {
                   className="w-full"
                 />
               </div>
-              <Button 
+              <Button
                 onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
                 variant="outline"
                 className="md:w-auto w-full"
               >
                 {showAdvancedOptions ? '隐藏高级选项' : '显示高级选项'}
               </Button>
-              <Button 
-                onClick={submitSearch} 
+              <Button
+                onClick={submitSearch}
                 disabled={isLoading || !keyword.trim()}
                 className="md:w-auto w-full"
               >
                 {isLoading ? '处理中...' : '搜索并分析'}
               </Button>
             </div>
-  
+
             {showAdvancedOptions && (
               <div className="mt-4 border rounded-md p-4">
                 <h3 className="text-lg font-medium mb-2">配置爬取选项</h3>
-                
+
                 <div className="mb-4">
                   <h4 className="text-sm font-medium mb-2">选择编程语言</h4>
                   <div className="flex flex-wrap gap-2">
@@ -859,7 +833,7 @@ function KeywordsPage() {
                     ))}
                   </div>
                 </div>
-                
+
                 {selectedLanguages.length > 0 && (
                   <div>
                     <h4 className="text-sm font-medium mb-2">每种语言的爬取数量</h4>
@@ -883,21 +857,21 @@ function KeywordsPage() {
                 )}
               </div>
             )}
-            
+
             {searchMessage && (
               <div className="mt-4 p-3 bg-blue-50 text-blue-600 rounded-md">
                 {searchMessage}
               </div>
             )}
-            
+
             {taskStatus && taskStatus.status !== 'completed' && (
               <div className="mt-4 border rounded-md p-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm font-medium">
-                    任务状态: 
+                    任务状态:
                     <Badge className={`ml-2 ${getStatusBadgeColor(taskStatus.status)}`}>
-                      {taskStatus.status === 'pending' ? '等待中' : 
-                       taskStatus.status === 'running' ? '运行中' : 
+                      {taskStatus.status === 'pending' ? '等待中' :
+                       taskStatus.status === 'running' ? '运行中' :
                        taskStatus.status === 'completed' ? '已完成' : '失败'}
                     </Badge>
                   </span>
@@ -959,7 +933,7 @@ function KeywordsPage() {
                   ))}
                 </SelectContent>
               </Select>
-              
+
               <Button
                 variant="default"
                 size="sm"
@@ -970,7 +944,7 @@ function KeywordsPage() {
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
                 刷新分析结果
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -983,7 +957,7 @@ function KeywordsPage() {
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
                 刷新缓存数据
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="sm"
@@ -994,7 +968,7 @@ function KeywordsPage() {
                 重新生成分析
               </Button>
             </div>
-            
+
             {selectedKeyword && (
               <div className="tabs-container" key={`tabs-container-${selectedKeyword}`}>
                 <h3 className="analysis-section-title mb-4">
@@ -1007,7 +981,7 @@ function KeywordsPage() {
                     <TabsTrigger value="libraries">库分析</TabsTrigger>
                     <TabsTrigger value="keywords">关键词分析</TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent key={`overview-${selectedKeyword}-${activeTab === 'overview'}`} value="overview">
                     {analysisResults ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
@@ -1040,7 +1014,7 @@ function KeywordsPage() {
                             </CardContent>
                           </Card>
                         )}
-                        
+
                         {analysisResults.charts && analysisResults.charts.stars_distribution && (
                           <Card>
                             <CardHeader>
@@ -1063,7 +1037,7 @@ function KeywordsPage() {
                             </CardContent>
                           </Card>
                         )}
-                        
+
                         {/* 标签分析 - 添加回概览页面 */}
                         {analysisResults.charts && analysisResults.charts.tag_analysis && (
                           <Card>
@@ -1084,7 +1058,7 @@ function KeywordsPage() {
                       </div>
                     )}
                   </TabsContent>
-                  
+
                   <TabsContent key={`repositories-${selectedKeyword}-${activeTab === 'repositories'}`} value="repositories">
                     {analysisResults && analysisResults.repositories ? (
                       <RepositoryList repositories={analysisResults.repositories} keyword={selectedKeyword} />
@@ -1096,13 +1070,13 @@ function KeywordsPage() {
                       </div>
                     )}
                   </TabsContent>
-                  
+
                   <TabsContent key={`libraries-${selectedKeyword}-${activeTab === 'libraries'}`} value="libraries">
                     {analysisResults ? (
                       <div className="grid grid-cols-1 gap-6">
                         {/* 增强库分析组件 */}
                         {analysisResults && selectedKeyword && (
-                          <EnhancedLibraryAnalysis 
+                          <EnhancedLibraryAnalysis
                             keyword={selectedKeyword}
                             key={`lib-analysis-${selectedKeyword}`}
                             title="常用库/包分析"
@@ -1117,7 +1091,7 @@ function KeywordsPage() {
                       </div>
                     )}
                   </TabsContent>
-                  
+
                   <TabsContent key={`keywords-${selectedKeyword}-${activeTab === 'keywords'}`} value="keywords">
                     {analysisResults ? (
                       <div className="grid grid-cols-1 gap-6 py-4">
@@ -1128,13 +1102,13 @@ function KeywordsPage() {
                               <CardTitle>标签分析</CardTitle>
                               <CardDescription>
                                 项目中使用的标签统计
-                                {!analysisResults.charts.tag_analysis?.data || 
-                                 Object.keys(analysisResults.charts.tag_analysis.data).length === 0 ? 
+                                {!analysisResults.charts.tag_analysis?.data ||
+                                 Object.keys(analysisResults.charts.tag_analysis.data).length === 0 ?
                                   ' (已自动从仓库标签生成)' : ''}
                               </CardDescription>
                             </CardHeader>
                             <CardContent>
-                              {analysisResults.charts.tag_analysis?.data && 
+                              {analysisResults.charts.tag_analysis?.data &&
                                Object.keys(analysisResults.charts.tag_analysis.data).length > 0 ? (
                                 <TagAnalysis data={analysisResults.charts.tag_analysis.data} />
                               ) : (
@@ -1156,12 +1130,12 @@ function KeywordsPage() {
                               <CardDescription>
                                 项目描述中出现的关键词统计
                                 {!analysisResults.charts.description_keywords?.data ||
-                                 Object.keys(analysisResults.charts.description_keywords.data).length === 0 ? 
+                                 Object.keys(analysisResults.charts.description_keywords.data).length === 0 ?
                                   ' (已自动从仓库描述生成)' : ''}
                               </CardDescription>
                             </CardHeader>
                             <CardContent>
-                              {analysisResults.charts.description_keywords?.data && 
+                              {analysisResults.charts.description_keywords?.data &&
                                Object.keys(analysisResults.charts.description_keywords.data).length > 0 ? (
                                 <KeywordCloud data={analysisResults.charts.description_keywords.data} />
                               ) : (

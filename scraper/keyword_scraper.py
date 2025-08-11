@@ -106,166 +106,293 @@ def update_task_status(conn, task_id, status, progress, message=None, python_rep
         logger.error(f"更新任务状态失败: {e}")
         conn.rollback()
 
-# 修改GitHub API认证相关的代码
+# 重新设计的 GitHub Token 管理器
 class GitHubTokenManager:
     def __init__(self):
-        self.tokens = [
-            ('PQG', os.environ.get('GITHUB_TOKEN_PQG', '')),
-            ('LR', os.environ.get('GITHUB_TOKEN_LR', '')),
-            ('HXZ', os.environ.get('GITHUB_TOKEN_HXZ', ''))
-        ]
-        # 过滤掉空token
-        self.tokens = [(name, token) for name, token in self.tokens if token]
-        
-        if not self.tokens:
-            logger.error("没有配置任何GitHub Token，请在.env文件中配置至少一个token")
-            raise ValueError("未配置GitHub Token")
-            
+        """初始化 Token 管理器，支持动态 Token 配置"""
+        self.tokens = []
         self.current_index = 0
         self.rate_limits = {}
         self.last_used = {}
-        self.error_counts = {}  # 记录每个token的错误次数
-        
-        logger.info(f"成功初始化 {len(self.tokens)} 个GitHub Token")
-        
-    def get_next_token(self):
-        """获取下一个可用的token"""
+        self.error_counts = {}
+        self.token_status = {}  # 记录每个 Token 的状态
+
+        # 动态加载所有 GITHUB_TOKEN_ 开头的环境变量
+        self._load_tokens_from_env()
+
+        # 验证所有 Token 的有效性
+        self._validate_tokens()
+
+        logger.info(f"Token 管理器初始化完成: {len(self.tokens)} 个有效 Token")
+
+    def _load_tokens_from_env(self):
+        """从环境变量动态加载所有 GitHub Token"""
+        token_prefix = 'GITHUB_TOKEN_'
+
+        for key, value in os.environ.items():
+            if key.startswith(token_prefix) and value.strip():
+                token_name = key[len(token_prefix):]  # 移除前缀
+                self.tokens.append((token_name, value.strip()))
+                logger.info(f"发现 Token: {token_name}")
+
         if not self.tokens:
-            logger.error("没有可用的GitHub Token")
-            return None
-            
-        # 轮换选择token
-        initial_index = self.current_index
-        while True:
-            token_info = self.tokens[self.current_index]
-            self.current_index = (self.current_index + 1) % len(self.tokens)
-            
-            token_name, token = token_info
-            # 检查token是否有太多错误
-            if self.error_counts.get(token, 0) >= 5:
-                logger.warning(f"Token {token_name} 已达到最大错误次数，跳过")
-                if self.current_index == initial_index:
-                    logger.error("所有Token都已达到错误限制")
-                    return None
-                continue
-                
-            self.last_used[token] = time.time()
-            logger.info(f"使用Token: {token_name}")
-            return token
-            
-    def record_error(self, token):
-        """记录token的错误"""
-        self.error_counts[token] = self.error_counts.get(token, 0) + 1
-        logger.warning(f"Token错误次数: {self.error_counts[token]}")
-        
-    def record_success(self, token):
-        """记录token的成功使用"""
-        if token in self.error_counts:
-            self.error_counts[token] = max(0, self.error_counts[token] - 1)
-            
-    def check_rate_limit(self, token):
-        """检查token的使用限制"""
+            logger.warning("未发现任何 GitHub Token，将使用无认证模式")
+
+    def _validate_tokens(self):
+        """验证所有 Token 的有效性"""
+        valid_tokens = []
+
+        for token_name, token in self.tokens:
+            if self._is_token_valid(token):
+                valid_tokens.append((token_name, token))
+                self.token_status[token] = 'valid'
+                logger.info(f"Token {token_name} 验证通过")
+            else:
+                self.token_status[token] = 'invalid'
+                logger.warning(f"Token {token_name} 无效或已过期")
+
+        self.tokens = valid_tokens
+
+    def _is_token_valid(self, token):
+        """验证单个 Token 是否有效"""
         headers = HEADERS.copy()
         headers['Authorization'] = f'token {token}'
-        
+
         try:
-            response = requests.get('https://api.github.com/rate_limit', headers=headers)
-            if response.ok:
+            response = requests.get('https://api.github.com/rate_limit', headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                # 存储速率限制信息
+                self.rate_limits[token] = data['resources']['core']
+                return True
+            elif response.status_code == 401:
+                logger.warning(f"Token 认证失败: {response.json().get('message', 'Unknown error')}")
+                return False
+            else:
+                logger.warning(f"Token 验证返回状态码: {response.status_code}")
+                return False
+        except Exception as e:
+            logger.error(f"Token 验证时发生错误: {e}")
+            return False
+
+    def get_available_token(self):
+        """获取当前可用的 Token"""
+        if not self.tokens:
+            return None
+
+        # 尝试所有 Token
+        attempts = 0
+        max_attempts = len(self.tokens)
+
+        while attempts < max_attempts:
+            token_name, token = self.tokens[self.current_index]
+            self.current_index = (self.current_index + 1) % len(self.tokens)
+            attempts += 1
+
+            # 检查错误次数
+            if self.error_counts.get(token, 0) >= 5:
+                logger.warning(f"Token {token_name} 错误次数过多，跳过")
+                continue
+
+            # 检查速率限制
+            remaining = self._check_rate_limit(token)
+            if remaining > 0:
+                self.last_used[token] = time.time()
+                logger.info(f"使用 Token: {token_name} (剩余: {remaining})")
+                return token
+            else:
+                logger.warning(f"Token {token_name} 速率限制已达上限")
+                continue
+
+        logger.warning("所有 Token 都不可用")
+        return None
+
+    def _check_rate_limit(self, token):
+        """检查 Token 的速率限制"""
+        # 如果已有缓存的速率限制信息，且时间未过期，直接使用
+        if token in self.rate_limits:
+            limits = self.rate_limits[token]
+            if time.time() < limits['reset']:
+                return limits['remaining']
+
+        # 重新获取速率限制信息
+        headers = HEADERS.copy()
+        headers['Authorization'] = f'token {token}'
+
+        try:
+            response = requests.get('https://api.github.com/rate_limit', headers=headers, timeout=5)
+            if response.status_code == 200:
                 data = response.json()
                 limits = data['resources']['core']
                 self.rate_limits[token] = limits
-                
-                # 记录详细的限制信息
-                logger.info(f"Rate Limit - 剩余: {limits['remaining']}, 总量: {limits['limit']}, "
-                          f"重置时间: {datetime.datetime.fromtimestamp(limits['reset'])}")
-                
                 return limits['remaining']
             else:
-                logger.error(f"检查速率限制失败: {response.status_code} - {response.text}")
+                logger.warning(f"获取速率限制失败: {response.status_code}")
                 return 0
         except Exception as e:
             logger.error(f"检查速率限制时发生错误: {e}")
             return 0
-            
-    def get_available_token(self):
-        """获取当前可用的token"""
-        for _ in range(len(self.tokens)):
-            token = self.get_next_token()
-            if not token:
-                continue
-                
-            remaining = self.check_rate_limit(token)
-            if remaining > 0:
-                return token
-            else:
-                reset_time = self.rate_limits[token]['reset']
-                wait_time = reset_time - time.time()
-                if wait_time > 0:
-                    logger.warning(f"Token速率限制将在 {wait_time:.2f} 秒后重置")
-                    
-        return None
 
-# 创建token管理器实例
+    def record_success(self, token):
+        """记录 Token 成功使用"""
+        if token in self.error_counts:
+            self.error_counts[token] = max(0, self.error_counts[token] - 1)
+
+    def record_error(self, token):
+        """记录 Token 错误"""
+        self.error_counts[token] = self.error_counts.get(token, 0) + 1
+        logger.warning(f"Token 错误计数: {self.error_counts[token]}")
+
+        # 如果错误次数过多，标记为无效
+        if self.error_counts[token] >= 5:
+            self.token_status[token] = 'error_limit_exceeded'
+
+    def get_status_summary(self):
+        """获取 Token 状态摘要"""
+        summary = {
+            'total_tokens': len(self.tokens),
+            'valid_tokens': len([t for t in self.tokens if self.token_status.get(t[1]) == 'valid']),
+            'rate_limits': {}
+        }
+
+        for token_name, token in self.tokens:
+            if token in self.rate_limits:
+                limits = self.rate_limits[token]
+                summary['rate_limits'][token_name] = {
+                    'remaining': limits['remaining'],
+                    'limit': limits['limit'],
+                    'reset_time': datetime.datetime.fromtimestamp(limits['reset']).isoformat()
+                }
+
+        return summary
+
+# 创建全局 Token 管理器实例
 token_manager = GitHubTokenManager()
 
-# 修改API请求函数
-def github_api_request(url, params=None, raw_content=False):
-    max_retries = 3
+# 重新设计的 API 请求函数
+def github_api_request(url, params=None, raw_content=False, max_retries=3):
+    """
+    发送 GitHub API 请求，支持 Token 认证和无认证降级
+
+    Args:
+        url: API 端点 URL
+        params: 请求参数
+        raw_content: 是否返回原始内容
+        max_retries: 最大重试次数
+
+    Returns:
+        API 响应数据
+    """
     retry_count = 0
-    
+    last_error = None
+
     while retry_count < max_retries:
+        # 尝试获取可用 Token
         token = token_manager.get_available_token()
-        if not token:
-            wait_time = 60  # 默认等待时间
-            logger.warning(f"所有Token都已达到限制，等待 {wait_time} 秒后重试")
-            time.sleep(wait_time)
-            retry_count += 1
-            continue
-            
+
         headers = HEADERS.copy()
-        headers['Authorization'] = f'token {token}'
-        
+
+        if token:
+            headers['Authorization'] = f'token {token}'
+        else:
+            # 无 Token 时使用无认证请求
+            if retry_count == 0:
+                logger.warning("使用无认证请求访问 GitHub API（速率限制：60次/小时）")
+
         if raw_content:
             headers['Accept'] = 'application/vnd.github.v3.raw'
         else:
             headers['Accept'] = 'application/json'
-        
+
         try:
-            response = requests.get(url, headers=headers, params=params)
-            response.raise_for_status()
-            
-            # 记录成功使用
-            token_manager.record_success(token)
-            
-            # 如果请求成功，返回结果
-            if raw_content:
-                return response.text
-            return response.json()
-            
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
-                if 'rate limit exceeded' in str(e.response.content):
-                    logger.warning(f"Token速率限制已达到，尝试使用下一个token")
+            response = requests.get(url, headers=headers, params=params, timeout=30)
+
+            # 处理不同的响应状态
+            if response.status_code == 200:
+                # 成功
+                if token:
+                    token_manager.record_success(token)
+
+                if raw_content:
+                    return response.text
+                return response.json()
+
+            elif response.status_code == 401:
+                # 认证失败
+                if token:
+                    logger.error(f"Token 认证失败: {response.json().get('message', 'Unknown error')}")
+                    token_manager.record_error(token)
+                    # 尝试下一个 Token
                     retry_count += 1
                     continue
-                elif 'abuse detection' in str(e.response.content):
-                    logger.warning(f"触发滥用检测，等待后重试")
+                else:
+                    # 无认证请求也失败，可能是需要认证的端点
+                    raise requests.exceptions.HTTPError(f"需要认证访问: {response.status_code}")
+
+            elif response.status_code == 403:
+                # 速率限制或其他限制
+                error_msg = response.json().get('message', '')
+
+                if 'rate limit exceeded' in error_msg.lower():
+                    if token:
+                        logger.warning("Token 速率限制已达上限，尝试其他 Token")
+                        token_manager.record_error(token)
+                    else:
+                        logger.warning("无认证请求速率限制已达上限，等待重置")
+                        time.sleep(60)  # 等待无认证速率限制重置
+
+                    retry_count += 1
+                    continue
+
+                elif 'abuse detection' in error_msg.lower():
+                    logger.warning("触发 GitHub 滥用检测，等待后重试")
                     time.sleep(30)
                     retry_count += 1
                     continue
-            token_manager.record_error(token)
-            raise
-        except requests.exceptions.RequestException as e:
-            logger.error(f"请求失败: {e}")
-            token_manager.record_error(token)
+                else:
+                    # 其他 403 错误
+                    raise requests.exceptions.HTTPError(f"访问被拒绝: {error_msg}")
+
+            elif response.status_code == 404:
+                # 资源不存在
+                logger.warning(f"资源不存在: {url}")
+                return None
+
+            else:
+                # 其他错误
+                response.raise_for_status()
+
+        except requests.exceptions.Timeout:
+            logger.warning(f"请求超时，重试中... ({retry_count + 1}/{max_retries})")
+            last_error = "请求超时"
             retry_count += 1
+            time.sleep(2 ** retry_count)  # 指数退避
             continue
+
+        except requests.exceptions.ConnectionError:
+            logger.warning(f"连接错误，重试中... ({retry_count + 1}/{max_retries})")
+            last_error = "连接错误"
+            retry_count += 1
+            time.sleep(2 ** retry_count)
+            continue
+
+        except requests.exceptions.HTTPError as e:
+            if token:
+                token_manager.record_error(token)
+            raise e
+
         except Exception as e:
             logger.error(f"未知错误: {e}")
-            token_manager.record_error(token)
-            raise
-            
-    raise Exception("达到最大重试次数，所有Token都不可用")
+            if token:
+                token_manager.record_error(token)
+            last_error = str(e)
+            retry_count += 1
+            continue
+
+    # 所有重试都失败
+    error_msg = f"达到最大重试次数 ({max_retries})，最后错误: {last_error}"
+    logger.error(error_msg)
+    raise Exception(error_msg)
 
 # 根据关键词搜索GitHub仓库
 def search_github_repositories(keyword, language=None, min_stars=0, max_results=100):
@@ -276,11 +403,11 @@ def search_github_repositories(keyword, language=None, min_stars=0, max_results=
         "order": "desc",
         "per_page": 100
     }
-    
+
     # 添加语言过滤
     if language:
         params["q"] += f" language:{language}"
-    
+
     # 添加星标过滤
     if min_stars > 0:
         params["q"] += f" stars:>={min_stars}"

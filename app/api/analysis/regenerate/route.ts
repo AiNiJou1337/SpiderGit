@@ -7,6 +7,30 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
+async function resolvePythonBin(requiredMajor = 3, requiredMinor = 12): Promise<string> {
+  const envBin = process.env.PYTHON_BIN;
+  const candidates: string[] = [];
+  if (envBin && envBin.trim()) candidates.push(envBin.trim());
+  if (process.platform === 'win32') {
+    candidates.push('py -3.12', 'python3.12', 'python');
+  } else {
+    candidates.push('python3.12', 'python3', 'python');
+  }
+  for (const bin of candidates) {
+    try {
+      const { stdout } = await execAsync(`${bin} -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"`);
+      const ver = (stdout || '').trim();
+      const [maj, min] = ver.split('.').map(v => parseInt(v, 10));
+      if (!isNaN(maj) && !isNaN(min)) {
+        if (maj > requiredMajor || (maj === requiredMajor && min >= requiredMinor)) {
+          return bin;
+        }
+      }
+    } catch (_) {}
+  }
+  throw new Error(`未找到可用的 Python ${requiredMajor}.${requiredMinor}+ 解释器，请在 .env 设置 PYTHON_BIN。`);
+}
+
 // 重新生成特定关键词的分析结果
 export async function POST(request: NextRequest) {
   try {
@@ -63,8 +87,9 @@ export async function POST(request: NextRequest) {
       // 使用data_analysis.py而不是regenerate_all.py，以确保完整的分析流程
       const scriptPath = path.join(process.cwd(), 'scraper', 'data_analysis.py');
       
-      // 执行Python脚本，传递数据库连接信息和关键词参数
-      const { stdout, stderr } = await execAsync(`D:\\IT_software\\miniconda\\python.exe "${scriptPath}" --keywords "${keyword}"`, {
+      // 执行Python脚本前，解析并校验 Python 解释器 (>=3.12)
+      const PYTHON_BIN = await resolvePythonBin(3, 12);
+      const { stdout, stderr } = await execAsync(`${PYTHON_BIN} "${scriptPath}" --keywords "${keyword}"`, {
         env: {
           ...process.env,
           DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/github_trending'

@@ -35,10 +35,10 @@ def scrape_github_trending(period="daily", language=None):
     Returns:
         包含仓库信息的列表
     """
-    # 构建URL，添加语言筛选参数
+    # 构建URL，添加语言筛选参数（GitHub Trending 使用 l= 作为编程语言过滤）
     url = f"https://github.com/trending?since={period}"
     if language:
-        url += f"&spoken_language_code={language}"
+        url += f"&l={language}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }

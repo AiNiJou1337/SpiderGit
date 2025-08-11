@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import prisma from '../../../lib/prisma'
+import { prisma } from '@/lib/db'
 
 // 定义仓库数据接口
 interface Repository {
@@ -20,7 +20,7 @@ interface StatsResponse {
   totalRepositories: number
   totalStars: number
   totalForks: number
-  trendData: Array<{
+  trendData: Array<{  
     date: string
     [key: string]: string | number
   }>
