@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 获取与特定关键词相关的仓库列表
 export async function GET(request: Request) {

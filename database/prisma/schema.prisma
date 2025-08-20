@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Repository {
+  id           Int                 @id @default(autoincrement())
+  name         String
+  owner        String
+  full_name    String              @unique
+  description  String?
+  language     String?
+  stars        Int                 @default(0)
+  forks        Int                 @default(0)
+  today_stars  Int                 @default(0)
+  url          String
+  created_at   DateTime            @default(now())
+  updated_at   DateTime            @updatedAt
+  trending     Boolean             @default(false)
+  trend_date   DateTime
+  trend_period String
+  last_updated DateTime?
+  published_at DateTime?
+  readme       String?
+  tags         String[]
+  code_files   CodeFile[]
+  keywords     RepositoryKeyword[]
+  crawl_tasks  CrawlTask[]         @relation("CrawlTaskToRepository")
+
+  @@map("repositories")
+}
+
+model Keyword {
+  id           Int                 @id @default(autoincrement())
+  text         String              @unique
+  created_at   DateTime            @default(now()) @map("created_at")
+  analytics    Analytics[]
+  crawl_tasks  CrawlTask[]
+  repositories RepositoryKeyword[]
+
+  @@map("keywords")
+}
+
+model RepositoryKeyword {
+  id            Int        @id @default(autoincrement())
+  repositoryId  Int
+  keywordId     Int
+  created_at    DateTime   @default(now()) @map("created_at")
+  repository_id Int?
+  keyword_id    Int?
+  keyword       Keyword    @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  repository    Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+
+  @@unique([repositoryId, keywordId])
+  @@map("repository_keywords")
+}
+
+model CrawlTask {
+  id                  Int          @id @default(autoincrement())
+  status              String       @default("pending")
+  progress            Int          @default(0)
+  message             String?
+  started_at          DateTime     @map("started_at")
+  completed_at        DateTime?    @map("completed_at")
+  keywordId           Int
+  total_repositories  Int          @default(0)
+  python_repositories Int          @default(0)
+  java_repositories   Int          @default(0)
+  keyword             Keyword      @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  repositories        Repository[] @relation("CrawlTaskToRepository")
+
+  @@map("crawl_tasks")
+}
+
+model CodeFile {
+  id                Int        @id @default(autoincrement())
+  filename          String
+  path              String
+  content           String?
+  comments          String?
+  functions         String[]
+  packages          String[]
+  components        String[]
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @updatedAt
+  api_endpoints     String[]
+  repository_id     Int
+  importedLibraries String[]
+  repository        Repository @relation(fields: [repository_id], references: [id], onDelete: Cascade)
+
+  @@unique([repository_id, path])
+  @@map("code_files")
+}
+
+model Analytics {
+  id                Int      @id @default(autoincrement())
+  date              DateTime
+  keywordId         Int
+  totalRepositories Int
+  avgStars          Float
+  avgForks          Float
+  topLanguages      Json
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  totalStars        Int
+  keyword           Keyword  @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+
+  @@map("analytics")
+}

@@ -1,0 +1,19 @@
+# 基础依赖
+requests==2.31.0
+beautifulsoup4==4.12.2
+python-dotenv==1.0.0
+
+# 数据库
+psycopg2-binary==2.9.9
+
+# 异步支持
+aiohttp==3.9.1
+asyncio-throttle==1.0.2
+
+# 数据处理
+pandas==1.5.3
+numpy==1.24.3
+
+# 日志和配置
+pyyaml==6.0.1
+click==8.1.7

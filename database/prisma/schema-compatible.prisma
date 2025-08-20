@@ -1,0 +1,123 @@
+// 兼容现有数据的Prisma Schema
+// 这个版本不会要求重置数据库
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 保持与现有数据兼容的Repository模型
+model Repository {
+  id                Int      @id @default(autoincrement())
+  name              String
+  full_name         String   @unique
+  description       String?
+  language          String?
+  stargazers_count  Int      @default(0)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  scraped_at        DateTime @default(now())
+  
+  // 新增字段（可选，避免迁移问题）
+  github_id         Int?     @unique
+  owner             String?
+  html_url          String?
+  forks_count       Int?     @default(0)
+  watchers_count    Int?     @default(0)
+  size              Int?     @default(0)
+  pushed_at         DateTime?
+  
+  // 关联关系
+  keywords          RepositoryKeyword[]
+  crawl_tasks       CrawlTask[]
+  imported_libraries ImportedLibrary[]
+  
+  @@map("repositories")
+}
+
+// 保持与现有数据兼容的Keyword模型
+model Keyword {
+  id          Int      @id @default(autoincrement())
+  category    String   @default("general")
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  
+  // 兼容字段（保留两个版本）
+  name        String?  @unique  // 新版本
+  text        String?  @unique  // 旧版本
+  updated_at  DateTime? @updatedAt  // 可选，避免迁移问题
+  
+  // 关联关系
+  repositories RepositoryKeyword[]
+  crawl_tasks  CrawlTask[]
+  
+  @@map("keywords")
+}
+
+// RepositoryKeyword关联表
+model RepositoryKeyword {
+  id            Int        @id @default(autoincrement())
+  created_at    DateTime   @default(now())
+  
+  // 兼容字段（保留两个版本）
+  repository_id Int?       // 新版本
+  repositoryId  Int?       // 旧版本
+  keyword_id    Int?       // 新版本
+  keywordId     Int?       // 旧版本
+  
+  // 关联关系（使用可选字段）
+  repository    Repository? @relation(fields: [repository_id], references: [id], onDelete: Cascade)
+  keyword       Keyword?    @relation(fields: [keyword_id], references: [id], onDelete: Cascade)
+  
+  @@map("repository_keywords")
+}
+
+// 保持与现有数据兼容的CrawlTask模型
+model CrawlTask {
+  id                    Int      @id @default(autoincrement())
+  status                String   @default("pending")
+  created_at            DateTime @default(now())
+  
+  // 兼容字段（保留两个版本）
+  keyword_id            Int?     // 新版本
+  keywordId             Int?     // 旧版本
+  started_at            DateTime? // 新版本
+  startedAt             DateTime? // 旧版本
+  completed_at          DateTime? // 新版本
+  completedAt           DateTime? // 旧版本
+  updated_at            DateTime? @updatedAt // 新版本
+  updatedAt             DateTime? // 旧版本
+  
+  // 新增字段（可选）
+  progress              Int?     @default(0)
+  message               String?
+  total_repositories    Int?     @default(0)
+  python_repositories   Int?     @default(0)
+  java_repositories     Int?     @default(0)
+  
+  // 关联关系（使用可选字段）
+  keyword       Keyword?     @relation(fields: [keyword_id], references: [id], onDelete: Cascade)
+  repositories  Repository[]
+  
+  @@map("crawl_tasks")
+}
+
+// ImportedLibrary模型
+model ImportedLibrary {
+  id            Int        @id @default(autoincrement())
+  name          String
+  language      String
+  file_path     String
+  repository_id Int
+  created_at    DateTime   @default(now())
+  
+  // 关联关系
+  repository    Repository @relation(fields: [repository_id], references: [id], onDelete: Cascade)
+  
+  @@unique([repository_id, name, file_path])
+  @@map("imported_libraries")
+}

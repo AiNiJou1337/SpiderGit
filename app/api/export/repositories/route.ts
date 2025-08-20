@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 将对象数组转换为CSV字符串
 function convertToCSV(arr: any[]) {

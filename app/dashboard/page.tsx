@@ -7,7 +7,7 @@ import { RefreshCw, Github, Code, GitFork, Star, Zap, FileCode, CheckCircle, Clo
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Progress } from '@/components/ui/progress'
-import { LanguageTrendsChart } from '@/components/language-trends-chart'
+import LanguageTrendsChart from '@/components/charts/language-trends-chart'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -395,9 +395,27 @@ export default function Dashboard() {
       const link = document.createElement('a');
       link.href = url;
       link.target = '_blank';
+      link.style.display = 'none'; // 隐藏链接
+      
+      // 安全地添加到DOM
       document.body.appendChild(link);
+      
+      // 触发点击
       link.click();
-      document.body.removeChild(link);
+      
+      // 使用setTimeout延迟移除，确保下载开始
+      setTimeout(() => {
+        try {
+          // 检查元素是否仍然在DOM中
+          if (link.parentNode === document.body) {
+            document.body.removeChild(link);
+          }
+        } catch (error) {
+          console.warn('移除下载链接时出错:', error);
+          // 忽略错误，不影响功能
+        }
+      }, 100);
+      
     } catch (error) {
       console.error('导出数据失败:', error);
       alert('导出数据失败，请稍后重试');

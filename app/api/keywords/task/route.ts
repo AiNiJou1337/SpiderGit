@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 获取特定关键词的爬虫任务状态
 export async function GET(request: Request) {
@@ -22,9 +22,9 @@ export async function GET(request: Request) {
       },
       include: {
         // 查询最近的爬虫任务
-        crawlTasks: {
+        crawl_tasks: {
           orderBy: {
-            startedAt: 'desc'
+            started_at: 'desc'
           },
           take: 1
         }
@@ -65,17 +65,17 @@ export async function GET(request: Request) {
     }
     
     // 返回最近的任务状态
-    const task = keywordRecord.crawlTasks[0];
+    const task = keywordRecord.crawl_tasks[0];
     
     return NextResponse.json({
       status: task.status,
       progress: task.progress,
       message: task.message || undefined,
-      totalRepositories: task.totalRepositories,
-      pythonRepositories: task.pythonRepositories,
-      javaRepositories: task.javaRepositories,
-      startedAt: task.startedAt,
-      completedAt: task.completedAt || undefined
+      totalRepositories: task.total_repositories,
+      pythonRepositories: task.python_repositories,
+      javaRepositories: task.java_repositories,
+      startedAt: task.started_at,
+      completedAt: task.completed_at || undefined
     });
   } catch (error) {
     console.error('获取爬虫任务状态失败:', error);

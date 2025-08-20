@@ -85,8 +85,8 @@ export async function POST(request: NextRequest) {
     // 调用Python脚本重新生成分析数据
     try {
       // 使用data_analysis.py而不是regenerate_all.py，以确保完整的分析流程
-      const scriptPath = path.join(process.cwd(), 'scraper', 'data_analysis.py');
-      
+      const scriptPath = path.join(process.cwd(), 'backend', 'scraper', 'analyzers', 'data_analysis.py');
+
       // 执行Python脚本前，解析并校验 Python 解释器 (>=3.12)
       const PYTHON_BIN = await resolvePythonBin(3, 12);
       const { stdout, stderr } = await execAsync(`${PYTHON_BIN} "${scriptPath}" --keywords "${keyword}"`, {
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         );
       }
-      
+
       console.log('Python脚本执行输出:', stdout);
       
       return NextResponse.json({

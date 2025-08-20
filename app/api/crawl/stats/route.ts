@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 获取爬虫任务统计数据
 export async function GET() {
@@ -31,7 +31,7 @@ export async function GET() {
     const recentTasks = await prisma.crawlTask.findMany({
       take: 5,
       orderBy: {
-        startedAt: 'desc'
+        started_at: 'desc'
       },
       include: {
         keyword: true
@@ -44,8 +44,8 @@ export async function GET() {
       keyword: task.keyword.text,
       status: task.status,
       progress: task.progress,
-      startedAt: task.startedAt,
-      completedAt: task.completedAt
+      startedAt: task.started_at,
+      completedAt: task.completed_at
     }));
     
     return NextResponse.json({

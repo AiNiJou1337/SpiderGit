@@ -1,13 +1,16 @@
 'use client'
 
-import { useState, useEffect, useRef, Component, ErrorInfo, ReactNode } from 'react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { flushSync } from 'react-dom'
+
+import { useState, useEffect, useRef, Component, ErrorInfo, ReactNode, useMemo, useCallback } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { SafeTabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/safe-tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RefreshCw } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -16,13 +19,14 @@ import {
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { BarChartComponent, PieChartComponent } from '@/components/ui/charts'
+import CrawlerMonitor from '@/components/CrawlerMonitor'
 
 // 导入新组件
-import { RepositoryList } from '@/components/repository-list'
-import { TagAnalysis } from '@/components/tag-analysis'
-import { KeywordCloud } from '@/components/keyword-cloud'
-import { EnhancedLibraryAnalysis } from '@/components/enhanced-library-analysis'
-import { ChartsDisplay } from '@/components/charts-display'
+import RepositoryList from '@/components/features/repository-list'
+import { TagAnalysis } from '@/components/features/tag-analysis'
+import { KeywordCloud } from '@/components/features/keyword-cloud'
+import { EnhancedLibraryAnalysis } from '@/components/features/enhanced-library-analysis'
+import ChartsDisplay from '@/components/charts/charts-display'
 
 // 颜色配置
 const COLORS = [
@@ -48,31 +52,89 @@ interface StarsData {
   count: number
 }
 
-// 新增：静态分析文件列表
-const ANALYSIS_FILES = [
-  { name: 'Application API', file: '/analytics/analysis_Application_API.json' },
-  { name: 'Cryptography API', file: '/analytics/analysis_Cryptography_API.json' },
-  { name: 'Messaging API', file: '/analytics/analysis_Messaging_API.json' },
-  { name: 'Monitoring API', file: '/analytics/analysis_Monitoring_API.json' },
-]
+
 
 // 添加错误边界组件
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean, errorType: string, errorCount: number }> {
   constructor(props: { children: ReactNode }) {
     super(props)
-    this.state = { hasError: false }
+    this.state = { hasError: false, errorType: '', errorCount: 0 }
   }
 
-  static getDerivedStateFromError(_: Error) {
-    return { hasError: true }
+  static getDerivedStateFromError(error: Error) {
+    // 检查是否是 removeChild 或 DOM 相关错误
+    if (error.message.includes('removeChild') ||
+        error.message.includes('Node') ||
+        error.message.includes('DOM') ||
+        error.message.includes('NotFoundError')) {
+      console.warn('捕获到 DOM 操作错误，尝试自动恢复:', error.message)
+      // 对于 DOM 错误，不显示错误页面，尝试自动恢复
+      return { hasError: false, errorType: 'dom', errorCount: 0 }
+    }
+    return { hasError: true, errorType: 'other', errorCount: 0 }
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('组件错误:', error, errorInfo)
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('=== ErrorBoundary 捕获到错误 ===')
+    console.error('错误消息:', error.message)
+    console.error('错误堆栈:', error.stack)
+    console.error('组件堆栈:', errorInfo.componentStack)
+    console.error('错误时间:', new Date().toISOString())
+    console.error('当前URL:', window.location.href)
+    console.error('====================')
+
+    // 如果是 DOM 错误，尝试自动恢复
+    if (error.message.includes('removeChild') ||
+        error.message.includes('Node') ||
+        error.message.includes('DOM') ||
+        error.message.includes('NotFoundError')) {
+      console.log('尝试从 DOM 错误中恢复...')
+      
+      // 增加错误计数
+      this.setState(prev => ({ 
+        errorCount: prev.errorCount + 1,
+        errorType: 'dom'
+      }))
+      
+      // 更激进的恢复策略
+      if (this.state.errorCount > 2) {
+        console.log('DOM 错误次数过多，强制刷新页面...')
+        setTimeout(() => {
+          window.location.reload()
+        }, 500)
+        return
+      }
+      
+      // 尝试清理可能的 DOM 残留
+      try {
+        // 清理所有可能的定时器
+        const highestTimeoutId = setTimeout(";");
+        for (let i = 0; i < highestTimeoutId; i++) {
+          clearTimeout(i);
+        }
+        
+        // 清理所有可能的 interval
+        const highestIntervalId = setInterval(";");
+        for (let i = 0; i < highestIntervalId; i++) {
+          clearInterval(i);
+        }
+      } catch (e) {
+        console.warn('清理定时器失败:', e)
+      }
+      
+      // 强制重新渲染
+      setTimeout(() => {
+        this.setState({ hasError: false, errorType: '' })
+        // 触发全局重新渲染
+        window.dispatchEvent(new Event('resize'))
+        // 强制重新计算布局
+        window.dispatchEvent(new Event('resize'))
+      }, 100)
+    }
   }
 
-  render() {
-    if (this.state.hasError) {
+  override render() {
+    if (this.state.hasError && this.state.errorType !== 'dom') {
       return (
         <div className="p-4 text-center">
           <h2 className="text-xl font-bold text-red-600 mb-2">页面出现错误</h2>
@@ -101,20 +163,78 @@ export default function KeywordsPageWrapper() {
 }
 
 function KeywordsPage() {
+  // 添加 Radix UI 组件的错误防护
+  useEffect(() => {
+    // 已移除全局捕获以避免干扰组件内部事件
+    return () => {}
+  }, [])
+  
+  // DOM 错误防护状态
+  const [domErrorCount, setDomErrorCount] = useState(0)
+  const [lastErrorTime, setLastErrorTime] = useState<number>(0)
+  
+  // 如果DOM错误过多，强制刷新
+  useEffect(() => {
+    if (domErrorCount > 3) {
+      console.warn('DOM错误次数过多，强制刷新页面')
+      window.location.reload()
+    }
+  }, [domErrorCount])
+  
+  // 重置错误计数（每5分钟）
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const now = Date.now()
+      if (now - lastErrorTime > 5 * 60 * 1000) { // 5分钟
+        setDomErrorCount(0)
+      }
+    }, 60000) // 每分钟检查一次
+    
+    return () => window.clearInterval(timer)
+  }, [lastErrorTime])
+
   const [keyword, setKeyword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [searchMessage, setSearchMessage] = useState('')
-  const [analysisResults, setAnalysisResults] = useState(null)
+  const [analysisResults, setAnalysisResults] = useState<any | null>(null)
   const [selectedKeyword, setSelectedKeyword] = useState('')
   const [availableKeywords, setAvailableKeywords] = useState<Keyword[]>([])
-  const [taskStatus, setTaskStatus] = useState(null)
-  const [pollingInterval, setPollingInterval] = useState(null)
+  const [taskStatus, setTaskStatus] = useState<any | null>(null)
+  const [pollingInterval, setPollingInterval] = useState<number | null>(null)
   const [isRegenerating, setIsRegenerating] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
   const [isRecrawling, setIsRecrawling] = useState(false)
+  const [analysisFiles, setAnalysisFiles] = useState<{name: string, file: string}[]>([])
+  const [isEditMode, setIsEditMode] = useState(false)
+  const [selectedForDeletion, setSelectedForDeletion] = useState<Set<string>>(new Set())
+  const [isLongPressing, setIsLongPressing] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [keywordToDelete, setKeywordToDelete] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   // 使用ref存储当前爬取的关键词，避免闭包问题
   const currentTaskKeyword = useRef('')
+
+  // 防抖定时器引用
+  const debounceTimerRef = useRef<number | null>(null)
+
+  // 事件监听器引用，用于清理
+  const eventListenersRef = useRef<{
+    mouseup?: (e: MouseEvent) => void;
+    touchend?: (e: TouchEvent) => void;
+    touchcancel?: (e: TouchEvent) => void;
+  }>({})
+
+  // 长按定时器引用
+  const longPressTimersRef = useRef<Map<string, number>>(new Map())
+
+  // 防抖函数
+  const debounce = (func: Function, delay: number) => {
+    if (debounceTimerRef.current !== null) {
+      window.clearTimeout(debounceTimerRef.current)
+    }
+    debounceTimerRef.current = window.setTimeout(() => func(), delay)
+  }
 
   // 统一轮询控制：使用 ref 存储 interval，避免重复轮询
   const pollRef = useRef<any>(null)
@@ -132,9 +252,41 @@ function KeywordsPage() {
     }, intervalMs)
   }
 
+  // 添加全局错误处理器
+  useEffect(() => {
+    const handleGlobalError = (event: ErrorEvent) => {
+      if (event.error && (
+        event.error.message?.includes('removeChild') ||
+        event.error.message?.includes('NotFoundError')
+      )) {
+        // 仅记录日志，避免在此处更改 React 状态以干扰提交阶段
+        console.warn('捕获到全局 DOM 错误:', event.error?.message)
+        setDomErrorCount(prev => prev + 1)
+        setLastErrorTime(Date.now())
+      }
+    }
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      const msg = event.reason?.message as string | undefined
+      if (msg && (msg.includes('removeChild') || msg.includes('NotFoundError'))) {
+        console.warn('捕获到未处理的 Promise 拒绝:', msg)
+        setDomErrorCount(prev => prev + 1)
+        setLastErrorTime(Date.now())
+      }
+    }
+
+    window.addEventListener('error', handleGlobalError)
+    window.addEventListener('unhandledrejection', handleUnhandledRejection)
+
+    return () => {
+      window.removeEventListener('error', handleGlobalError)
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
+    }
+  }, [])
+
   // 自定义语言和数量设置
   const [selectedLanguages, setSelectedLanguages] = useState(['python', 'java'])
-  const [languageLimits, setLanguageLimits] = useState({
+  const [languageLimits, setLanguageLimits] = useState<Record<string, number>>({
     python: 50,
     java: 30
   })
@@ -146,8 +298,7 @@ function KeywordsPage() {
     'c', 'cpp', 'csharp', 'php', 'ruby', 'swift', 'kotlin'
   ]
 
-  // 动态加载分析文件列表
-  const [analysisFiles, setAnalysisFiles] = useState([])
+  // 动态加载分析文件列表 (已在上面定义)
 
   // 从后端获取已有的关键词列表
   async function fetchKeywords() {
@@ -157,10 +308,28 @@ function KeywordsPage() {
 
       if (data.keywords && data.keywords.length > 0) {
         setAvailableKeywords(data.keywords)
-        // 默认选择第一个关键词
-        if (!selectedKeyword && data.keywords.length > 0) {
-          setSelectedKeyword(data.keywords[0].name)
-          fetchAnalysisByFile(data.keywords[0].file)
+
+        // 同时获取分析文件列表，确保数据一致性
+        const analysisResponse = await fetch('/api/analysis/list')
+        const analysisData = await analysisResponse.json()
+        setAnalysisFiles(analysisData)
+
+        console.log('关键词列表:', data.keywords.map((k: any) => k.name))
+        console.log('分析文件列表:', analysisData.map((f: {name: string}) => f.name))
+
+        // 默认选择第一个有分析文件的关键词
+        if (!selectedKeyword) {
+          const firstKeywordWithFile = data.keywords.find((kw: any) =>
+            analysisData.some((file: {name: string}) => file.name === kw.name)
+          )
+
+          if (firstKeywordWithFile) {
+            const file = analysisData.find((f: {name: string; file: string}) => f.name === firstKeywordWithFile.name)?.file
+            if (file) {
+              setSelectedKeyword(firstKeywordWithFile.name)
+              fetchAnalysisByFile(file)
+            }
+          }
         }
       }
     } catch (error) {
@@ -169,7 +338,7 @@ function KeywordsPage() {
   }
 
   // 从后端获取任务状态
-  async function fetchTaskStatus(keyword) {
+  async function fetchTaskStatus(keyword: string) {
     if (!keyword) return;
 
     try {
@@ -201,72 +370,43 @@ function KeywordsPage() {
     }
   }
 
-  // 动态加载分析文件列表
-  useEffect(() => {
-    async function fetchAnalysisFiles() {
-      try {
-        const res = await fetch('/api/analysis/list')
-        const data = await res.json()
-        setAnalysisFiles(data)
-        if (data.length > 0) {
-          setSelectedKeyword(data[0].name)
-          fetchAnalysisByFile(data[0].file)
-        }
-      } catch (e) {
-        setAnalysisFiles([])
-      }
-    }
-    fetchAnalysisFiles()
-  }, [])
+  // 分析文件列表现在在 fetchKeywords 中一起获取，避免数据不一致
 
   // 加载分析结果
-  async function fetchAnalysisByFile(file) {
+  async function fetchAnalysisByFile(file: string) {
     if (!file) {
       console.error('文件路径为空');
       return;
     }
 
-    let isMounted = true;
-    console.log('尝试加载分析文件:', file);
+    console.log('开始加载分析文件:', file);
     setIsLoading(true);
 
     try {
       const response = await fetch(file);
-      if (!isMounted) return;
 
       if (!response.ok) {
         throw new Error(`加载分析结果失败: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      if (!isMounted) return;
-
-      console.log('成功加载分析结果');
+      console.log('成功加载分析结果:', file);
 
       // 检查并处理数据结构
       const processedData = processAnalysisData(data, file);
-      if (isMounted) {
-        setAnalysisResults(processedData);
-      }
-    } catch (error) {
-      if (isMounted) {
-        console.error('加载分析结果失败:', error);
-        setAnalysisResults(null);
-        setSearchMessage(`加载分析结果失败: ${error.message}`);
-      }
-    } finally {
-      if (isMounted) {
-        setIsLoading(false);
-      }
-    }
+      setAnalysisResults(processedData);
 
-    return () => {
-      isMounted = false;
-    };
+    } catch (error: any) {
+      console.error('加载分析结果失败:', error);
+      setAnalysisResults(null);
+      setSearchMessage(`加载分析结果失败: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // 处理和规范化分析数据
-  function processAnalysisData(data, filePath) {
+  function processAnalysisData(data: any, filePath: string) {
     console.log('处理分析数据，检查结构');
 
     // 如果数据为空，返回null
@@ -294,8 +434,8 @@ function KeywordsPage() {
 
       // 如果有仓库数据，尝试从中构建语言分布
       if (data.repositories && Array.isArray(data.repositories)) {
-        const languages = {};
-        data.repositories.forEach(repo => {
+        const languages: Record<string, number> = {};
+        data.repositories.forEach((repo: any) => {
           if (repo.language) {
             languages[repo.language] = (languages[repo.language] || 0) + 1;
           }
@@ -311,9 +451,9 @@ function KeywordsPage() {
 
       // 如果有仓库数据，尝试从中构建星标分布
       if (data.repositories && Array.isArray(data.repositories)) {
-        const stars = data.repositories.map(repo => repo.stars || 0);
+        const stars = data.repositories.map((repo: any) => repo.stars || 0);
         if (stars.length > 0) {
-          const total = stars.reduce((a, b) => a + b, 0);
+          const total = (stars as number[]).reduce((a: number, b: number) => a + b, 0);
           data.charts.stars_distribution.data = {
             mean: total / stars.length,
             min: Math.min(...stars),
@@ -331,10 +471,10 @@ function KeywordsPage() {
 
       // 如果有仓库数据，尝试从中构建标签分析
       if (data.repositories && Array.isArray(data.repositories)) {
-        const tags = {};
-        data.repositories.forEach(repo => {
+        const tags: Record<string, number> = {};
+        data.repositories.forEach((repo: any) => {
           if (repo.tags && Array.isArray(repo.tags)) {
-            repo.tags.forEach(tag => {
+            repo.tags.forEach((tag: string) => {
               tags[tag] = (tags[tag] || 0) + 1;
             });
           }
@@ -357,16 +497,16 @@ function KeywordsPage() {
       // 如果有仓库数据，尝试从中提取关键词
       // 这只是一个简单实现，实际上需要更复杂的文本处理
       if (data.repositories && Array.isArray(data.repositories)) {
-        const keywords = {};
-        data.repositories.forEach(repo => {
+        const keywords: Record<string, number> = {};
+        data.repositories.forEach((repo: any) => {
           if (repo.description) {
             const words = repo.description
               .toLowerCase()
               .replace(/[^\w\s]/g, '')
               .split(/\s+/)
-              .filter(word => word.length > 3);
+              .filter((word: string) => word.length > 3);
 
-            words.forEach(word => {
+            words.forEach((word: string) => {
               keywords[word] = (keywords[word] || 0) + 1;
             });
           }
@@ -374,12 +514,12 @@ function KeywordsPage() {
 
         // 只保留出现频率最高的前30个关键词
         const sortedKeywords = Object.entries(keywords)
-          .sort((a, b) => b[1] - a[1])
+          .sort((a: [string, number], b: [string, number]) => b[1] - a[1])
           .slice(0, 30)
-          .reduce((obj, [key, value]) => {
+          .reduce((obj: Record<string, number>, [key, value]) => {
             obj[key] = value;
             return obj;
-          }, {});
+          }, {} as Record<string, number>);
 
         data.charts.description_keywords.data = sortedKeywords;
       }
@@ -445,7 +585,7 @@ function KeywordsPage() {
   }
 
   // 任务状态展示的辅助函数
-  function getStatusBadgeColor(status) {
+  function getStatusBadgeColor(status: string) {
     switch(status) {
       case 'pending': return 'bg-yellow-200 text-yellow-800'
       case 'running': return 'bg-blue-200 text-blue-800'
@@ -454,18 +594,6 @@ function KeywordsPage() {
       default: return 'bg-gray-200 text-gray-800'
     }
   }
-
-  // 清理轮询interval
-  useEffect(() => {
-    return () => {
-      stopPolling()
-    }
-  }, [])
-
-  // 页面加载时获取关键词列表
-  useEffect(() => {
-    fetchKeywords()
-  }, [])
 
   // 重新生成分析
   async function regenerateCharts() {
@@ -495,7 +623,7 @@ function KeywordsPage() {
   }
 
   // 图表数据准备函数
-  const prepareChartData = (dataObject) => {
+  const prepareChartData = (dataObject: any) => {
     return Object.entries(dataObject || {}).map(([name, value]) => ({
       name,
       value
@@ -535,7 +663,7 @@ function KeywordsPage() {
   };
 
   // 添加新函数，调整百分比显示使总和为100%，保留两位小数
-  const adjustPercentages = (data) => {
+  const adjustPercentages = (data: any[]) => {
     if (!data || data.length === 0) return data;
 
     // 计算所有显示百分比的总和
@@ -589,7 +717,7 @@ function KeywordsPage() {
   };
 
   // 准备星标数据
-  const prepareStarsData = (starsData) => {
+  const prepareStarsData = (starsData: any) => {
     if (!starsData) return [];
 
     return [
@@ -642,78 +770,315 @@ function KeywordsPage() {
     }
   }
 
-  // 处理语言选择变化
-  const handleLanguageChange = (language) => {
-    if (selectedLanguages.includes(language)) {
-      setSelectedLanguages(selectedLanguages.filter(lang => lang !== language))
+  // 删除单个关键词
+  const handleDeleteKeyword = async (keywordName: string) => {
+    if (isDeleting) return // 防止重复删除
 
-      // 从限制中移除该语言
-      const newLimits = {...languageLimits}
-      delete newLimits[language]
-      setLanguageLimits(newLimits)
-    } else {
-      setSelectedLanguages([...selectedLanguages, language])
-
-      // 添加默认限制
-      setLanguageLimits({
-        ...languageLimits,
-        [language]: 30 // 默认每种语言30个
+    setIsDeleting(true)
+    try {
+      const response = await fetch(`/api/keywords/${encodeURIComponent(keywordName)}`, {
+        method: 'DELETE',
       })
+
+      if (response.ok) {
+        // 立即清空相关状态，避免DOM引用问题
+        if (selectedKeyword === keywordName) {
+          setSelectedKeyword('')
+          setAnalysisResults(null)
+          setActiveTab('overview')
+        }
+
+        // 使用函数式更新确保状态同步
+        setAvailableKeywords(prev => {
+          const filtered = prev.filter(kw => kw.name !== keywordName)
+          console.log(`删除关键词后，剩余关键词数量: ${filtered.length}`)
+          return filtered
+        })
+        
+        setAnalysisFiles(prev => {
+          const filtered = prev.filter(file => file.name !== keywordName)
+          console.log(`删除关键词后，剩余分析文件数量: ${filtered.length}`)
+          return filtered
+        })
+
+        // 清除删除选择状态
+        setSelectedForDeletion(prev => {
+          const newSet = new Set(prev)
+          newSet.delete(keywordName)
+          return newSet
+        })
+
+        // 清除任务状态（如果存在）
+        if (taskStatus && currentTaskKeyword.current === keywordName) {
+          setTaskStatus(null)
+          stopPolling()
+        }
+
+        setSearchMessage(`关键词 "${keywordName}" 已删除`)
+        
+        // 使用防抖机制强制重新渲染，确保DOM完全更新
+        debounce(() => {
+          window.dispatchEvent(new Event('resize'))
+        }, 100)
+        
+        // 额外的状态同步检查
+        debounce(() => {
+          // 再次检查状态一致性
+          if (selectedKeyword === keywordName) {
+            console.warn('检测到状态不一致，强制清理选中状态')
+            setSelectedKeyword('')
+            setAnalysisResults(null)
+            setActiveTab('overview')
+          }
+          
+          // 清理任何可能的残留引用
+          if (currentTaskKeyword.current === keywordName) {
+            currentTaskKeyword.current = ''
+          }
+        }, 200)
+      } else {
+        throw new Error('删除失败')
+      }
+    } catch (error) {
+      console.error('删除关键词失败:', error)
+      setSearchMessage('删除关键词失败，请稍后重试')
+    } finally {
+      setIsDeleting(false)
     }
   }
 
+  // 批量删除关键词
+  const handleBatchDelete = async () => {
+    if (selectedForDeletion.size === 0 || isDeleting) return
+
+    setIsDeleting(true)
+    const deletingKeywords = new Set(selectedForDeletion)
+
+    try {
+      const deletePromises = Array.from(deletingKeywords).map(keywordName =>
+        fetch(`/api/keywords/${encodeURIComponent(keywordName)}`, {
+          method: 'DELETE',
+        })
+      )
+
+      const results = await Promise.all(deletePromises)
+      const successCount = results.filter(r => r.ok).length
+
+      // 立即清空相关状态，避免DOM引用问题
+      if (deletingKeywords.has(selectedKeyword)) {
+        setSelectedKeyword('')
+        setAnalysisResults(null)
+        setActiveTab('overview')
+      }
+
+      // 清除任务状态（如果存在）
+      if (taskStatus && deletingKeywords.has(currentTaskKeyword.current)) {
+        setTaskStatus(null)
+        stopPolling()
+      }
+
+      // 使用函数式更新确保状态同步
+      setAvailableKeywords(prev => {
+        const filtered = prev.filter(kw => !deletingKeywords.has(kw.name))
+        console.log(`批量删除后，剩余关键词数量: ${filtered.length}`)
+        return filtered
+      })
+      
+      setAnalysisFiles(prev => {
+        const filtered = prev.filter(file => !deletingKeywords.has(file.name))
+        console.log(`批量删除后，剩余分析文件数量: ${filtered.length}`)
+        return filtered
+      })
+      
+      // 清除选择状态
+      setSelectedForDeletion(new Set())
+      setIsEditMode(false)
+
+      setSearchMessage(`成功删除 ${successCount} 个关键词`)
+      
+      // 使用防抖机制强制重新渲染，确保DOM完全更新
+      debounce(() => {
+        window.dispatchEvent(new Event('resize'))
+      }, 100)
+      
+      // 额外的状态同步检查
+      debounce(() => {
+        // 再次检查状态一致性
+        if (selectedKeyword && deletingKeywords.has(selectedKeyword)) {
+          console.warn('检测到状态不一致，强制清理选中状态')
+          setSelectedKeyword('')
+          setAnalysisResults(null)
+          setActiveTab('overview')
+        }
+        
+        // 清理任何可能的残留引用
+        if (deletingKeywords.has(currentTaskKeyword.current)) {
+          currentTaskKeyword.current = ''
+        }
+      }, 200)
+    } catch (error) {
+      console.error('批量删除失败:', error)
+      setSearchMessage('批量删除失败，请稍后重试')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  // 长按处理
+  const handleLongPress = (keywordName: string) => {
+    if (!isEditMode) {
+      setIsEditMode(true)
+      setSelectedForDeletion(new Set([keywordName]))
+    }
+  }
+
+  // 清理长按定时器和事件监听器
+  const cleanupLongPress = (keywordName: string) => {
+    const timer = longPressTimersRef.current.get(keywordName)
+    if (timer !== undefined) {
+      window.clearTimeout(timer)
+      longPressTimersRef.current.delete(keywordName)
+    }
+
+    if (eventListenersRef.current.mouseup) {
+      document.removeEventListener('mouseup', eventListenersRef.current.mouseup)
+      delete eventListenersRef.current.mouseup
+    }
+    if (eventListenersRef.current.touchend) {
+      document.removeEventListener('touchend', eventListenersRef.current.touchend)
+      delete eventListenersRef.current.touchend
+    }
+    if (eventListenersRef.current.touchcancel) {
+      document.removeEventListener('touchcancel', eventListenersRef.current.touchcancel)
+      delete eventListenersRef.current.touchcancel
+    }
+  }
+
+  // 切换选择状态
+  const toggleSelection = (keywordName: string) => {
+    if (!isEditMode) return
+
+    setSelectedForDeletion(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(keywordName)) {
+        newSet.delete(keywordName)
+      } else {
+        newSet.add(keywordName)
+      }
+      return newSet
+    })
+  }
+
+  // 重试失败的任务
+  async function handleRetryTask(keyword: string) {
+    if (!keyword || isLoading) return
+
+    setIsLoading(true)
+    setSearchMessage('正在重新提交爬取任务...')
+
+    try {
+      // 使用相同的参数重新提交任务
+      const requestData = {
+        keyword,
+        languages: selectedLanguages,
+        limits: languageLimits
+      }
+
+      const response = await fetch('/api/keywords/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setSearchMessage(`重试任务已提交! ${data.message || ''}`)
+        // 清除之前的失败状态
+        setTaskStatus(null)
+        // 开始新的轮询
+        startPolling(keyword, 3000)
+      } else {
+        setSearchMessage(`重试任务失败: ${data.error || '未知错误'}`)
+      }
+    } catch (error) {
+      console.error('重试任务失败:', error)
+      setSearchMessage('重试任务失败，请稍后重试')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // 处理语言选择变化
+  const handleLanguageChange = (language: string) => {
+    // 使用函数式更新避免状态竞争
+    setSelectedLanguages(prevLanguages => {
+      if (prevLanguages.includes(language)) {
+        // 移除语言
+        const newLanguages = prevLanguages.filter(lang => lang !== language)
+
+        // 同时更新限制
+        setLanguageLimits((prevLimits: Record<string, number>) => {
+          const newLimits: Record<string, number> = {...prevLimits}
+          delete newLimits[language]
+          return newLimits
+        })
+
+        return newLanguages
+      } else {
+        // 添加语言
+        const newLanguages = [...prevLanguages, language]
+
+        // 同时更新限制
+        setLanguageLimits((prevLimits: Record<string, number>) => ({
+          ...prevLimits,
+          [language]: 30 // 默认每种语言30个
+        }))
+
+        return newLanguages
+      }
+    })
+  }
+
   // 处理语言数量限制变化
-  const handleLimitChange = (language, value) => {
+  const handleLimitChange = (language: string, value: string) => {
     const numValue = parseInt(value, 10)
     if (!isNaN(numValue) && numValue > 0) {
-      setLanguageLimits({
-        ...languageLimits,
+      setLanguageLimits((prevLimits: Record<string, number>) => ({
+        ...prevLimits,
         [language]: numValue
-      })
+      }))
     }
   }
 
   // 切换关键词时加载对应分析文件
-  const handleKeywordChange = (name) => {
+  const handleKeywordChange = (name: string) => {
     if (name === selectedKeyword) return; // 避免相同关键词重复加载
 
+    console.log(`切换关键词: ${selectedKeyword} -> ${name}`)
+
     setSelectedKeyword(name);
-    setAnalysisResults(null); // 重置分析结果，避免使用旧数据
+    // 立即清空分析结果，避免显示错误的数据
+    setAnalysisResults(null);
     setActiveTab('overview'); // 重置为默认标签页
 
     const file = analysisFiles.find(f => f.name === name)?.file;
-    if (file) fetchAnalysisByFile(file);
+    console.log(`查找分析文件: ${name} -> ${file}`)
+
+    if (file) {
+      // 先设置loading状态，然后加载新数据
+      setIsLoading(true);
+      fetchAnalysisByFile(file);
+    } else {
+      console.warn(`未找到关键词 "${name}" 对应的分析文件`)
+      setSearchMessage(`未找到关键词 "${name}" 的分析结果`)
+    }
   }
 
-  // 修改轮询相关的 useEffect
-  useEffect(() => {
-    let isSubscribed = true;
-
-    if (taskStatus && currentTaskKeyword.current) {
-      // 立即获取一次最新状态
-      fetchTaskStatus(currentTaskKeyword.current);
-      // 使用统一的轮询控制（1秒）
-      startPolling(currentTaskKeyword.current, 1000)
-    } else {
-      // 没有任务时停止轮询
-      stopPolling()
-    }
-
-    return () => {
-      isSubscribed = false;
-      stopPolling()
-    };
-  }, [taskStatus?.status]);
-
-  // 监控selectedKeyword变化，更新当前任务关键词
-  useEffect(() => {
-    if (selectedKeyword) {
-      currentTaskKeyword.current = selectedKeyword;
-    }
-  }, [selectedKeyword]);
-
   // 优化强制刷新函数
-  async function forceRefreshResults(targetKeyword) {
+  async function forceRefreshResults(targetKeyword?: string) {
     const keyword = targetKeyword || selectedKeyword;
     if (!keyword) return false;
 
@@ -730,7 +1095,7 @@ function KeywordsPage() {
 
       // 尝试多种匹配方式查找文件
       const keywordUnderscore = keyword.replace(/ /g, '_');
-      const keywordFile = filesData.find(f =>
+      const keywordFile = filesData.find((f: {name: string; file: string}) =>
         f.name === keyword ||
         f.name === keywordUnderscore ||
         f.file.includes(`analysis_${keyword}`) ||
@@ -758,15 +1123,103 @@ function KeywordsPage() {
   useEffect(() => {
     // 组件挂载时加载关键词列表
     fetchKeywords();
-    return () => { stopPolling() };
+    
+    // 组件卸载时的清理函数
+    return () => { 
+      stopPolling()
+      // 清理防抖定时器
+      if (debounceTimerRef.current !== null) {
+        window.clearTimeout(debounceTimerRef.current)
+        debounceTimerRef.current = null
+      }
+      // 清理所有长按定时器
+      longPressTimersRef.current.forEach(timer => {
+        window.clearTimeout(timer)
+      })
+      longPressTimersRef.current.clear()
+      // 清理所有事件监听器
+      if (eventListenersRef.current.mouseup) {
+        document.removeEventListener('mouseup', eventListenersRef.current.mouseup)
+        delete eventListenersRef.current.mouseup
+      }
+      if (eventListenersRef.current.touchend) {
+        document.removeEventListener('touchend', eventListenersRef.current.touchend)
+        delete eventListenersRef.current.touchend
+      }
+      if (eventListenersRef.current.touchcancel) {
+        document.removeEventListener('touchcancel', eventListenersRef.current.touchcancel)
+        delete eventListenersRef.current.touchcancel
+      }
+      // 清理状态引用
+      setSelectedKeyword('')
+      setAnalysisResults(null)
+      setTaskStatus(null)
+      setAvailableKeywords([])
+      setAnalysisFiles([])
+      setSelectedForDeletion(new Set())
+      setIsEditMode(false)
+      currentTaskKeyword.current = ''
+      // 触发最后的清理事件
+      window.dispatchEvent(new Event('resize'))
+    };
   }, []);
 
+  // 监听关键词列表变化，确保状态同步
+  useEffect(() => {
+    // 如果当前选中的关键词不在可用关键词列表中，清空选择
+    if (selectedKeyword && !availableKeywords.some(kw => kw.name === selectedKeyword)) {
+      console.log(`关键词 "${selectedKeyword}" 已不存在，清空选择`)
+      setSelectedKeyword('')
+      setAnalysisResults(null)
+      setActiveTab('overview')
+    }
+  }, [availableKeywords, selectedKeyword]);
+
+  // 由分析文件计算出可用的关键词名集合
+  const analysisNames = useMemo<string[]>(() => analysisFiles.map(f => f.name), [analysisFiles])
+
+  // 只展示有分析文件的关键词，避免数据不一致
+  const filteredKeywords = useMemo<Keyword[]>(() => {
+    return availableKeywords.filter(k => analysisNames.includes(k.name))
+  }, [availableKeywords, analysisNames])
+
+  // 如果当前选中不在分析文件列表中，清空选择
+  useEffect(() => {
+    if (selectedKeyword && !analysisNames.includes(selectedKeyword)) {
+      setSelectedKeyword('')
+      setAnalysisResults(null)
+      setActiveTab('overview')
+    }
+  }, [selectedKeyword, analysisNames])
+
+  // 暂时注释掉加载状态检查，避免页面一直显示加载动画
+  /*
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
       </div>
     )
+  }
+  */
+
+  // 安全的点击处理函数 - 恢复为直接调用，避免额外异步包装
+  const safeClickHandler = (handler: Function, ...args: any[]) => {
+    try {
+      handler(...args)
+    } catch (error) {
+      console.warn('点击处理出错:', error)
+    }
+  }
+
+  // 安全的语言选择处理
+  const safeLanguageChange = (language: string) => {
+    safeClickHandler(handleLanguageChange, language)
+  }
+
+  // 安全的语言限制处理
+  const safeLimitChange = (language: string, value: string) => {
+    safeClickHandler(handleLimitChange, language, value)
   }
 
   return (
@@ -826,7 +1279,7 @@ function KeywordsPage() {
                         key={language}
                         variant={selectedLanguages.includes(language) ? "default" : "outline"}
                         className="cursor-pointer"
-                        onClick={() => handleLanguageChange(language)}
+                        onClick={() => safeLanguageChange(language)}
                       >
                         {language}
                       </Badge>
@@ -846,7 +1299,7 @@ function KeywordsPage() {
                             min="1"
                             max="100"
                             value={languageLimits[language] || 30}
-                            onChange={(e) => handleLimitChange(language, e.target.value)}
+                            onChange={(e) => safeLimitChange(language, e.target.value)}
                             className="w-20"
                           />
                           <span className="text-sm">个项目</span>
@@ -858,11 +1311,7 @@ function KeywordsPage() {
               </div>
             )}
 
-            {searchMessage && (
-              <div className="mt-4 p-3 bg-blue-50 text-blue-600 rounded-md">
-                {searchMessage}
-              </div>
-            )}
+
 
             {taskStatus && taskStatus.status !== 'completed' && (
               <div className="mt-4 border rounded-md p-4">
@@ -875,7 +1324,21 @@ function KeywordsPage() {
                        taskStatus.status === 'completed' ? '已完成' : '失败'}
                     </Badge>
                   </span>
-                  <span className="text-sm">{taskStatus.progress}%</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">{taskStatus.progress}%</span>
+                    {taskStatus.status === 'failed' && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleRetryTask(selectedKeyword)}
+                        disabled={isLoading}
+                        className="text-xs"
+                      >
+                        <RefreshCw className="w-3 h-3 mr-1" />
+                        重试
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <Progress value={taskStatus.progress} className="h-2" />
                 {taskStatus.message && (
@@ -887,32 +1350,176 @@ function KeywordsPage() {
         </CardContent>
       </Card>
 
-      {/* 已有关键词列表 */}
+      {/* 爬虫分析监控 */}
+      <CrawlerMonitor className="glass-card bg-gradient-to-br from-green-500/10 to-teal-500/10" />
+
+      {/* 已分析关键词 */}
       <Card className="glass-card bg-gradient-to-br from-amber-500/10 to-orange-500/10">
         <CardHeader>
-          <CardTitle>已分析关键词</CardTitle>
-          <CardDescription>选择一个已分析的关键词查看详细数据</CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>已分析关键词</CardTitle>
+              <CardDescription>
+                {isEditMode ? '选择要删除的关键词' : '选择一个已分析的关键词查看详细数据'}
+              </CardDescription>
+            </div>
+            <div className="flex items-center gap-2">
+              {isEditMode && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => safeClickHandler(() => {
+                      const allKeywords = new Set(availableKeywords.map(kw => kw.name))
+                      setSelectedForDeletion(allKeywords)
+                    })}
+                  >
+                    全选
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => safeClickHandler(() => setSelectedForDeletion(new Set()))}
+                  >
+                    清空
+                  </Button>
+                  {selectedForDeletion.size > 0 && (
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => safeClickHandler(() => setShowDeleteConfirm(true))}
+                    >
+                      删除选中 ({selectedForDeletion.size})
+                    </Button>
+                  )}
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => safeClickHandler(() => {
+                      setIsEditMode(false)
+                      setSelectedForDeletion(new Set())
+                    })}
+                  >
+                    完成
+                  </Button>
+                </>
+              )}
+              {!isEditMode && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => safeClickHandler(() => {
+                    setIsEditMode(true)
+                    setSelectedForDeletion(new Set())
+                  })}
+                >
+                  编辑
+                </Button>
+              )}
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {availableKeywords.map((kw) => (
-              <Badge
-                key={kw.id}
-                variant={selectedKeyword === kw.name ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => handleKeywordChange(kw.name)}
-              >
-                {kw.name} ({kw.count})
-              </Badge>
-            ))}
-            {availableKeywords.length === 0 && (
-              <p className="text-muted-foreground">暂无分析数据，请先搜索一个关键词</p>
-            )}
-          </div>
+            <div className="flex flex-wrap gap-2">
+              {filteredKeywords.map((kw, index) => (
+                <div key={`keyword-${kw.name}`} className="relative">
+                  <Badge
+                    variant={
+                      isEditMode && selectedForDeletion.has(kw.name)
+                        ? "destructive"
+                        : selectedKeyword === kw.name
+                          ? "default"
+                          : "outline"
+                    }
+                    className={`cursor-pointer transition-all ${
+                      isEditMode ? 'pr-8' : ''
+                    } ${
+                      isEditMode && selectedForDeletion.has(kw.name)
+                        ? 'ring-2 ring-red-500'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      if (isEditMode) {
+                        safeClickHandler(toggleSelection, kw.name)
+                      } else {
+                        safeClickHandler(handleKeywordChange, kw.name)
+                      }
+                    }}
+                    onMouseDown={() => {
+                      if (!isEditMode) {
+                        // 清理之前的事件监听器
+                        cleanupLongPress(kw.name)
+                        
+                        const timer = window.setTimeout(() => {
+                          handleLongPress(kw.name)
+                        }, 500)
+                        
+                        longPressTimersRef.current.set(kw.name, timer)
+
+                        // 创建清理函数
+                        const cleanup = () => {
+                          cleanupLongPress(kw.name)
+                        }
+                        
+                        // 存储事件监听器引用
+                        eventListenersRef.current.mouseup = cleanup
+                        document.addEventListener('mouseup', cleanup)
+                      }
+                    }}
+                    onTouchStart={() => {
+                      if (!isEditMode) {
+                        // 清理之前的事件监听器
+                        cleanupLongPress(kw.name)
+                        
+                        const timer = window.setTimeout(() => {
+                          handleLongPress(kw.name)
+                        }, 500)
+                        
+                        longPressTimersRef.current.set(kw.name, timer)
+
+                        // 创建清理函数
+                        const cleanup = () => {
+                          cleanupLongPress(kw.name)
+                        }
+                        
+                        // 存储事件监听器引用
+                        eventListenersRef.current.touchend = cleanup
+                        eventListenersRef.current.touchcancel = cleanup
+                        document.addEventListener('touchend', cleanup)
+                        document.addEventListener('touchcancel', cleanup)
+                      }
+                    }}
+                    onMouseEnter={() => {
+                      // 鼠标悬停时如果在编辑模式且按住鼠标，则选择
+                      if (isEditMode && isLongPressing) {
+                        toggleSelection(kw.name)
+                      }
+                    }}
+                  >
+                    {kw.name} ({kw.count})
+                  </Badge>
+                  {isEditMode && (
+                    <button
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setKeywordToDelete(kw.name)
+                        setShowDeleteConfirm(true)
+                      }}
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              ))}
+              {filteredKeywords.length === 0 && (
+                <p className="text-muted-foreground">暂无分析数据，请先搜索一个关键词</p>
+              )}
+            </div>
         </CardContent>
       </Card>
 
-      {availableKeywords.length > 0 && (
+      {filteredKeywords.length > 0 && (
         <Card className="glass-card bg-gradient-to-br from-indigo-500/10 to-purple-500/10">
           <CardHeader>
             <CardTitle>分析结果</CardTitle>
@@ -921,15 +1528,15 @@ function KeywordsPage() {
           <CardContent className="space-y-6">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <Select
-                value={selectedKeyword}
-                onValueChange={handleKeywordChange}
+                value={analysisNames.includes(selectedKeyword) ? selectedKeyword : undefined}
+                onValueChange={(value) => safeClickHandler(handleKeywordChange, value)}
               >
                 <SelectTrigger className="md:w-[280px] w-full">
                   <SelectValue placeholder="选择分析主题" />
                 </SelectTrigger>
                 <SelectContent>
                   {analysisFiles.map((item) => (
-                    <SelectItem key={item.name} value={item.name}>{item.name}</SelectItem>
+                    <SelectItem key={`select-item-${item.name}`} value={item.name}>{item.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -937,7 +1544,7 @@ function KeywordsPage() {
               <Button
                 variant="default"
                 size="sm"
-                onClick={() => forceRefreshResults()}
+                onClick={() => safeClickHandler(forceRefreshResults)}
                 disabled={isLoading || !selectedKeyword}
                 className="bg-blue-500 hover:bg-blue-600"
               >
@@ -948,10 +1555,10 @@ function KeywordsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {
+                onClick={() => safeClickHandler(() => {
                   const file = analysisFiles.find(f => f.name === selectedKeyword)?.file
                   if (file) fetchAnalysisByFile(file)
-                }}
+                })}
                 disabled={isLoading || !selectedKeyword}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
@@ -961,7 +1568,7 @@ function KeywordsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={regenerateCharts}
+                onClick={() => safeClickHandler(regenerateCharts)}
                 disabled={isRegenerating || !selectedKeyword}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isRegenerating ? 'animate-spin' : ''}`} />
@@ -970,11 +1577,11 @@ function KeywordsPage() {
             </div>
 
             {selectedKeyword && (
-              <div className="tabs-container" key={`tabs-container-${selectedKeyword}`}>
+              <div className="tabs-container">
                 <h3 className="analysis-section-title mb-4">
                   {selectedKeyword} 关键词分析结果
                 </h3>
-                <SafeTabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <Tabs key="analysis-tabs" defaultValue="overview" value={activeTab} onValueChange={(value) => safeClickHandler(setActiveTab, value)} className="w-full">
                   <TabsList className="grid w-full md:w-auto grid-cols-4 mb-6">
                     <TabsTrigger value="overview">概览</TabsTrigger>
                     <TabsTrigger value="repositories">项目列表</TabsTrigger>
@@ -982,35 +1589,35 @@ function KeywordsPage() {
                     <TabsTrigger value="keywords">关键词分析</TabsTrigger>
                   </TabsList>
 
-                  <TabsContent key={`overview-${selectedKeyword}-${activeTab === 'overview'}`} value="overview">
+                  <TabsContent value="overview" className="space-y-6">
                     {analysisResults ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+                      <div key="overview-content" className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
                         {analysisResults.charts && analysisResults.charts.language_distribution && (
                           <Card>
                             <CardHeader>
                               <CardTitle>编程语言分布</CardTitle>
                             </CardHeader>
                             <CardContent className="h-64">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                  <Pie
-                                    data={adjustPercentages(prepareLanguageData())}
-                                    nameKey="name"
-                                    dataKey="count"
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={80}
-                                    fill="#8884d8"
-                                    label={({ name, displayPercent }) => `${name}: ${displayPercent.toFixed(2)}%`}
-                                  >
-                                    {adjustPercentages(prepareLanguageData()).map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                  </Pie>
-                                  <Tooltip formatter={(value, name, props) => [`${props.payload.count} 个项目`, name]} />
-                                  <Legend formatter={(value) => `${value}`} />
-                                </PieChart>
-                              </ResponsiveContainer>
+                                <ResponsiveContainer key="lang-container" width="100%" height="100%">
+                                  <PieChart key="language-pie-chart">
+                                    <Pie
+                                      data={adjustPercentages(prepareLanguageData())}
+                                      nameKey="name"
+                                      dataKey="count"
+                                      cx="50%"
+                                      cy="50%"
+                                      outerRadius={80}
+                                      fill="#8884d8"
+                                      label={({ name, displayPercent }) => `${name}: ${displayPercent?.toFixed(2) || 0}%`}
+                                    >
+                                      {adjustPercentages(prepareLanguageData()).map((entry, index) => (
+                                        <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
+                                      ))}
+                                    </Pie>
+                                    <Tooltip formatter={(value: any, name: string, props: any) => [`${props.payload.count} 个项目`, name]} />
+                                    <Legend formatter={(value) => `${value}`} />
+                                  </PieChart>
+                                </ResponsiveContainer>
                             </CardContent>
                           </Card>
                         )}
@@ -1021,31 +1628,36 @@ function KeywordsPage() {
                               <CardTitle>星标统计</CardTitle>
                             </CardHeader>
                             <CardContent className="h-64">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart
-                                  data={prepareStarsData(analysisResults.charts.stars_distribution.data)}
-                                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                                >
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis dataKey="name" />
-                                  <YAxis />
-                                  <Tooltip formatter={(value) => new Intl.NumberFormat().format(value)} />
-                                  <Legend />
-                                  <Bar dataKey="value" fill="#8884d8" name="星标数" />
-                                </BarChart>
-                              </ResponsiveContainer>
+                                <ResponsiveContainer key="stars-container" width="100%" height="100%">
+                                  <BarChart
+                                    key="stars-bar-chart"
+                                    data={prepareStarsData(analysisResults.charts.stars_distribution.data)}
+                                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                                  >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip formatter={(value: any) => new Intl.NumberFormat().format(value)} />
+                                    <Legend />
+                                    <Bar dataKey="value" fill="#8884d8" name="星标数" />
+                                  </BarChart>
+                                </ResponsiveContainer>
                             </CardContent>
                           </Card>
                         )}
 
                         {/* 标签分析 - 添加回概览页面 */}
                         {analysisResults.charts && analysisResults.charts.tag_analysis && (
-                          <Card>
+                          <Card key="tag-analysis-card">
                             <CardHeader>
                               <CardTitle>标签分析</CardTitle>
                             </CardHeader>
                             <CardContent>
-                              <TagAnalysis data={analysisResults.charts.tag_analysis.data} isSimplified={true} />
+                              <TagAnalysis
+                                key="tag-analysis-component"
+                                data={analysisResults.charts.tag_analysis.data}
+                                isSimplified={true}
+                              />
                             </CardContent>
                           </Card>
                         )}
@@ -1059,42 +1671,57 @@ function KeywordsPage() {
                     )}
                   </TabsContent>
 
-                  <TabsContent key={`repositories-${selectedKeyword}-${activeTab === 'repositories'}`} value="repositories">
-                    {analysisResults && analysisResults.repositories ? (
-                      <RepositoryList repositories={analysisResults.repositories} keyword={selectedKeyword} />
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-gray-500">
-                          {isLoading ? '加载仓库数据中...' : '没有找到仓库数据或数据正在处理中'}
-                        </p>
-                      </div>
-                    )}
+                  <TabsContent value="repositories" className="space-y-4">
+                    <div key="repositories-content">
+                      {isLoading ? (
+                        <div className="py-8 text-center">
+                          <div className="flex items-center justify-center">
+                            <RefreshCw className="w-6 h-6 animate-spin mr-2" />
+                            <span>加载仓库数据中...</span>
+                          </div>
+                        </div>
+                      ) : analysisResults && analysisResults.repositories && analysisResults.repositories.length > 0 ? (
+                        <RepositoryList
+                          repositories={analysisResults.repositories}
+                          keyword={selectedKeyword}
+                        />
+                      ) : (
+                        <div className="py-8 text-center">
+                          <p className="text-gray-500">
+                            没有找到仓库数据或数据正在处理中
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </TabsContent>
 
-                  <TabsContent key={`libraries-${selectedKeyword}-${activeTab === 'libraries'}`} value="libraries">
-                    {analysisResults ? (
-                      <div className="grid grid-cols-1 gap-6">
-                        {/* 增强库分析组件 */}
-                        {analysisResults && selectedKeyword && (
-                          <EnhancedLibraryAnalysis
-                            keyword={selectedKeyword}
-                            key={`lib-analysis-${selectedKeyword}`}
-                            title="常用库/包分析"
-                          />
-                        )}
-                      </div>
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-gray-500">
-                          {isLoading ? '加载库分析数据中...' : '没有找到库分析数据或数据正在处理中'}
-                        </p>
-                      </div>
-                    )}
+                  <TabsContent value="libraries" className="space-y-4">
+                    <div key="libraries-content">
+                      {analysisResults ? (
+                        <div className="grid grid-cols-1 gap-6">
+                          {/* 增强库分析组件 */}
+                          {analysisResults && selectedKeyword && (
+                            <EnhancedLibraryAnalysis
+                              keyword={selectedKeyword}
+                              title="常用库/包分析"
+                              libraryData={analysisResults.charts?.imported_libraries?.data || {}}
+                            />
+                          )}
+                        </div>
+                      ) : (
+                        <div className="py-8 text-center">
+                          <p className="text-gray-500">
+                            {isLoading ? '加载库分析数据中...' : '没有找到库分析数据或数据正在处理中'}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </TabsContent>
 
-                  <TabsContent key={`keywords-${selectedKeyword}-${activeTab === 'keywords'}`} value="keywords">
-                    {analysisResults ? (
-                      <div className="grid grid-cols-1 gap-6 py-4">
+                  <TabsContent value="keywords" className="space-y-4">
+                    <div key="keywords-content">
+                      {analysisResults ? (
+                        <div className="grid grid-cols-1 gap-6 py-4">
                         {/* 标签分析组件 */}
                         {analysisResults.charts && (
                           <Card>
@@ -1148,21 +1775,66 @@ function KeywordsPage() {
                             </CardContent>
                           </Card>
                         )}
-                      </div>
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-gray-500">
-                          {isLoading ? '加载关键词分析数据中...' : '没有找到关键词分析数据或数据正在处理中'}
-                        </p>
-                      </div>
-                    )}
+                        </div>
+                      ) : (
+                        <div className="py-8 text-center">
+                          <p className="text-gray-500">
+                            {isLoading ? '加载关键词分析数据中...' : '没有找到关键词分析数据或数据正在处理中'}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </TabsContent>
-                </SafeTabs>
+                </Tabs>
               </div>
             )}
           </CardContent>
         </Card>
       )}
+
+      {/* 删除确认对话框 */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>确认删除</DialogTitle>
+            <DialogDescription>
+              {keywordToDelete ? (
+                <>确定要删除关键词 "<strong>{keywordToDelete}</strong>" 吗？</>
+              ) : (
+                <>确定要删除选中的 <strong>{selectedForDeletion.size}</strong> 个关键词吗？</>
+              )}
+              <br />
+              <span className="text-red-600">此操作将删除所有相关的分析数据和文件，且无法撤销。</span>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowDeleteConfirm(false)
+                setKeywordToDelete(null)
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={async () => {
+                if (keywordToDelete) {
+                  await handleDeleteKeyword(keywordToDelete)
+                  setKeywordToDelete(null)
+                } else {
+                  await handleBatchDelete()
+                }
+                setShowDeleteConfirm(false)
+              }}
+            >
+              确认删除
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 将对象数组转换为CSV字符串
 function convertToCSV(arr: any[]) {
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
     // 获取所有爬虫任务
     const tasks = await prisma.crawlTask.findMany({
       orderBy: {
-        startedAt: 'desc'
+        started_at: 'desc'
       },
       include: {
         keyword: true
@@ -63,11 +63,11 @@ export async function GET(request: Request) {
       status: task.status,
       progress: task.progress,
       message: task.message || '',
-      startedAt: task.startedAt,
-      completedAt: task.completedAt || '',
-      totalRepositories: task.totalRepositories,
-      pythonRepositories: task.pythonRepositories,
-      javaRepositories: task.javaRepositories
+      startedAt: task.started_at,
+      completedAt: task.completed_at || '',
+      totalRepositories: task.total_repositories,
+      pythonRepositories: task.python_repositories,
+      javaRepositories: task.java_repositories
     }));
     
     // 转换为CSV

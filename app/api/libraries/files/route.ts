@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 export async function GET(request: Request) {
   try {
@@ -81,7 +81,7 @@ export async function GET(request: Request) {
       skip: (page - 1) * limit,
       take: limit,
       orderBy: {
-        createdAt: 'desc'
+        created_at: 'desc'
       }
     });
     

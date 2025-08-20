@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
@@ -68,17 +68,17 @@ export async function POST(request: Request) {
     const existingKeyword = await prisma.keyword.findUnique({
       where: { text: keyword },
       include: {
-        crawlTasks: {
+        crawl_tasks: {
           where: { OR: [{ status: 'pending' }, { status: 'running' }] },
-          orderBy: { startedAt: 'desc' },
+          orderBy: { started_at: 'desc' },
           take: 1,
         },
       },
     });
 
     // 如果关键词已存在且有正在进行的任务，直接返回任务信息
-    if (existingKeyword && existingKeyword.crawlTasks.length > 0) {
-      const runningTask = existingKeyword.crawlTasks[0];
+    if (existingKeyword && existingKeyword.crawl_tasks.length > 0) {
+      const runningTask = existingKeyword.crawl_tasks[0];
       return NextResponse.json({
         success: true,
         message: '该关键词正在处理中，可以查看任务进度',
@@ -97,7 +97,8 @@ export async function POST(request: Request) {
         status: 'pending',
         progress: 0,
         message: '爬虫任务已创建，正在启动...',
-        keywordId,
+        keywordId: keywordId,
+        started_at: new Date(),
       }
     });
     crawlTaskId = crawlTask.id;
@@ -115,7 +116,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const scraperPath = path.join(process.cwd(), 'scraper', 'keyword_scraper.py');
+    const scraperPath = path.join(process.cwd(), 'backend', 'scraper', 'keyword_scraper.py');
     let cmd = `${PYTHON_BIN} "${scraperPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`;
 
     // 添加语言参数
@@ -145,6 +146,7 @@ export async function POST(request: Request) {
       GITHUB_TOKEN_PQG: process.env.GITHUB_TOKEN_PQG || '',
       GITHUB_TOKEN_LR: process.env.GITHUB_TOKEN_LR || '',
       GITHUB_TOKEN_HXZ: process.env.GITHUB_TOKEN_HXZ || '',
+      GITHUB_TOKEN_XHY: process.env.GITHUB_TOKEN_XHY || '',
     };
 
     exec(cmd, { env: childEnv }, (error, stdout, stderr) => {
@@ -160,7 +162,7 @@ export async function POST(request: Request) {
       console.log(`爬虫输出: ${stdout}`);
 
       // 爬虫完成后运行数据分析（同样传递环境变量）
-      const analysisPath = path.join(process.cwd(), 'scraper', 'data_analysis.py');
+      const analysisPath = path.join(process.cwd(), 'backend', 'scraper', 'analyzers', 'data_analysis.py');
       exec(`${PYTHON_BIN} "${analysisPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`, { env: childEnv }, (error, stdout, stderr) => {
         if (error) {
           console.error(`数据分析执行错误: ${error.message}`);
@@ -205,7 +207,7 @@ async function updateTaskStatus(taskId: number, status: string, progress: number
         status,
         progress,
         message,
-        ...(status === 'completed' || status === 'failed' ? { completedAt: new Date() } : {})
+        ...(status === 'completed' || status === 'failed' ? { completed_at: new Date() } : {})
       }
     });
   } catch (error) {

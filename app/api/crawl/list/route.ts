@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 获取爬虫任务列表数据
 export async function GET(request: Request) {
@@ -10,15 +10,22 @@ export async function GET(request: Request) {
     const status = searchParams.get('status'); // 可选过滤状态
     
     // 构建查询条件
-    const where = status ? {
-      status: status
-    } : {};
+    const where: any = {};
+    if (status) {
+      // 支持多个状态，用逗号分隔
+      const statusList = status.split(',');
+      if (statusList.length > 1) {
+        where.status = { in: statusList };
+      } else {
+        where.status = status;
+      }
+    }
     
     // 获取爬虫任务
     const tasks = await prisma.crawlTask.findMany({
       where,
       orderBy: {
-        startedAt: 'desc'
+        started_at: 'desc'
       },
       skip: (page - 1) * limit,
       take: limit,
@@ -37,11 +44,11 @@ export async function GET(request: Request) {
       status: task.status,
       progress: task.progress,
       message: task.message,
-      startedAt: task.startedAt,
-      completedAt: task.completedAt,
-      totalRepositories: task.totalRepositories,
-      pythonRepositories: task.pythonRepositories,
-      javaRepositories: task.javaRepositories
+      startedAt: task.started_at,
+      completedAt: task.completed_at,
+      totalRepositories: task.total_repositories,
+      pythonRepositories: task.python_repositories,
+      javaRepositories: task.java_repositories
     }));
     
     return NextResponse.json({

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/db/prisma'
 
 // 定义仓库数据接口
 interface Repository {
   name: string
   stars: number
-  trendDate: Date
+  trend_date: Date
 }
 
 // 定义趋势数据接口
@@ -46,7 +46,7 @@ export async function GET() {
     const trendingRepos = await prisma.repository.findMany({
       where: {
         trending: true,
-        trendDate: {
+        trend_date: {
           gte: sevenDaysAgo
         }
       },
@@ -57,13 +57,13 @@ export async function GET() {
       select: {
         name: true,
         stars: true,
-        trendDate: true
+        trend_date: true
       }
     }) as Repository[]
 
     // 按日期分组处理趋势数据
     const trendData = trendingRepos.reduce<TrendData>((acc, repo) => {
-      const date = repo.trendDate.toISOString().split('T')[0]
+      const date = repo.trend_date.toISOString().split('T')[0]
       if (!acc[date]) {
         acc[date] = {}
       }

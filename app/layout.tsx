@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/components/layout/theme-provider'
 import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })

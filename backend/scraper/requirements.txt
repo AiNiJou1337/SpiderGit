@@ -1,0 +1,9 @@
+# GitHub 关键词爬虫依赖
+requests>=2.28.0
+psycopg2-binary>=2.9.0
+beautifulsoup4>=4.11.0
+python-dotenv>=0.19.0
+
+# 可选依赖
+lxml>=4.9.0
+urllib3>=1.26.0

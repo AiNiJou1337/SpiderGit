@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,10 +17,41 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./src/*", "./*"],
+      "@/components/*": ["./src/components/*", "./components/*"],
+      "@/lib/*": ["./src/lib/*", "./lib/*"],
+      "@/types/*": ["./src/types/*", "./types/*"],
+      "@/app/*": ["./app/*"],
+      "@/config/*": ["./config/*"],
+      "@/database/*": ["./database/*"],
+      "@/tools/*": ["./tools/*"]
+    },
+    "target": "es2017",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts", 
+    "**/*.ts", 
+    "**/*.tsx", 
+    ".next/types/**/*.ts",
+    "src/**/*",
+    "app/**/*",
+    "config/**/*",
+    "tools/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "backend/**/*",
+    "tests/backend/**/*",
+    ".next",
+    "dist",
+    "build"
+  ]
 }

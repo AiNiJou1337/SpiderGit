@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db/prisma';
 
 // 导出分析数据为JSON
 export async function GET(request: Request) {
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
             keywordId: keyword.id
           },
           orderBy: {
-            startedAt: 'desc'
+            started_at: 'desc'
           }
         });
         
@@ -218,7 +218,7 @@ export async function GET(request: Request) {
         keywordId: keyword.id
       },
       orderBy: {
-        startedAt: 'desc'
+        started_at: 'desc'
       }
     });
     
