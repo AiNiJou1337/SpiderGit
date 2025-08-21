@@ -300,7 +300,7 @@ export default function RepositoryList({
                   {/* 作者 */}
                   <TableCell>
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {repo.full_name.split('/')[0]}
+                      {repo.full_name ? repo.full_name.split('/')[0] : (repo.owner || 'Unknown')}
                     </span>
                   </TableCell>
 

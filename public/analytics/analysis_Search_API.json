@@ -1,7 +1,7 @@
 {
   "keyword": "Search API",
   "repository_count": 100,
-  "analysis_date": "2025-05-29T17:31:58.692395",
+  "analysis_date": "2025-08-21T07:55:55.884Z",
   "charts": {
     "language_distribution": {
       "data": {
@@ -2026,5 +2026,131 @@
       "url": "https://github.com/cyrusadkisson/twitter_api_examples",
       "tags": []
     }
-  ]
+  ],
+  "trends": {
+    "libraries": {
+      "os": {
+        "trend": "up",
+        "count": 20,
+        "percentile": 97.5,
+        "category": "utility"
+      },
+      "setuptools": {
+        "trend": "up",
+        "count": 15,
+        "percentile": 92.5,
+        "category": "other"
+      },
+      "re": {
+        "trend": "up",
+        "count": 14,
+        "percentile": 87.5,
+        "category": "other"
+      },
+      "sys": {
+        "trend": "up",
+        "count": 11,
+        "percentile": 80,
+        "category": "utility"
+      },
+      "pandas as pd": {
+        "trend": "up",
+        "count": 11,
+        "percentile": 80,
+        "category": "other"
+      },
+      "json": {
+        "trend": "stable",
+        "count": 10,
+        "percentile": 72.5,
+        "category": "utility"
+      },
+      "time": {
+        "trend": "stable",
+        "count": 8,
+        "percentile": 67.5,
+        "category": "other"
+      },
+      "asyncio": {
+        "trend": "stable",
+        "count": 7,
+        "percentile": 62.5,
+        "category": "other"
+      },
+      "logging": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 57.5,
+        "category": "other"
+      },
+      "contextlib": {
+        "trend": "stable",
+        "count": 5,
+        "percentile": 45,
+        "category": "other"
+      },
+      "fastapi": {
+        "trend": "stable",
+        "count": 5,
+        "percentile": 45,
+        "category": "web-framework"
+      },
+      "requests": {
+        "trend": "stable",
+        "count": 5,
+        "percentile": 45,
+        "category": "utility"
+      },
+      "typing": {
+        "trend": "stable",
+        "count": 5,
+        "percentile": 45,
+        "category": "other"
+      },
+      "pathlib": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "datetime": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "argparse": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "uvicorn": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "pydantic": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "collections": {
+        "trend": "down",
+        "count": 3,
+        "percentile": 5,
+        "category": "other"
+      },
+      "subprocess": {
+        "trend": "down",
+        "count": 3,
+        "percentile": 5,
+        "category": "other"
+      }
+    },
+    "packages": {},
+    "functions": {}
+  }
 }

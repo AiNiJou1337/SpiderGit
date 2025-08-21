@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { LineChartComponent, BarChartComponent } from '@/components/ui/charts'
@@ -139,22 +139,35 @@ export default function KeywordDetailPage({ params }: { params: { id: string } }
       
       {/* 分析图表 */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-        <LineChartComponent
-          data={trendData}
-          title="趋势变化"
-          description="过去30天的使用频率变化"
-          height={400}
-        />
-        
-        <BarChartComponent
-          data={languageData}
-          title="语言分布"
-          description="使用该关键词的项目语言分布"
-          xAxisKey="name"
-          yAxisKey="count"
-          layout="vertical"
-          height={400}
-        />
+        <Card>
+          <CardHeader>
+            <CardTitle>趋势变化</CardTitle>
+            <CardDescription>过去30天的使用频率变化</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <LineChartComponent
+              data={trendData}
+              dataKey="count"
+              nameKey="date"
+              height={400}
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>语言分布</CardTitle>
+            <CardDescription>使用该关键词的项目语言分布</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <BarChartComponent
+              data={languageData}
+              dataKey="count"
+              nameKey="name"
+              height={400}
+            />
+          </CardContent>
+        </Card>
       </div>
       
       {/* 相关仓库列表 */}

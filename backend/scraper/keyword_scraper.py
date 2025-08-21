@@ -16,6 +16,7 @@ from urllib.parse import quote_plus
 from pathlib import Path
 import re
 import logging
+from collections import Counter
 
 # 设置控制台编码，解决Windows乱码问题
 if sys.platform.startswith('win'):
@@ -29,14 +30,7 @@ os.environ.pop('HTTPS_PROXY', None)
 os.environ.pop('http_proxy', None)
 os.environ.pop('https_proxy', None)
 
-# 导入代码分析器
-try:
-    from code_analyzer import CodeAnalyzer
-except ImportError:
-    logger.warning("无法导入代码分析器，将跳过代码分析功能")
-    CodeAnalyzer = None
-
-# 设置日志
+# 设置日志（必须在使用logger之前）
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -45,6 +39,13 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger('keyword_scraper')
+
+# 导入代码分析器
+try:
+    from analyzers.code_analyzer import CodeAnalyzer
+except ImportError:
+    logger.warning("无法导入代码分析器，将跳过代码分析功能")
+    CodeAnalyzer = None
 
 # 数据库连接信息
 DB_URL = os.environ.get('DATABASE_URL')
@@ -301,6 +302,7 @@ def search_github_repositories(keyword, language=None, limit=50):
                     'created_at': repo['created_at'],
                     'updated_at': repo['updated_at'],
                     'pushed_at': repo['pushed_at'],
+                    'topics': repo.get('topics', []),  # 添加 topics 字段
                     'keyword': keyword,
                     'scraped_at': datetime.datetime.now().isoformat()
                 })
@@ -488,19 +490,23 @@ def analyze_repository_code(repo_data):
 
 def save_code_analysis_to_db(conn, analysis_data):
     """保存代码分析结果到数据库"""
-    if not analysis_data:
+    if not analysis_data or not analysis_data.get('analysis_results'):
+        logger.warning("没有分析结果需要保存")
         return
 
     try:
         cursor = conn.cursor()
+        saved_count = 0
 
         for file_analysis in analysis_data['analysis_results']:
             # 根据实际数据库列名进行映射
-            filename = file_analysis.get('file_path', '').split('/')[-1] if file_analysis.get('file_path') else None
-            path = file_analysis.get('file_path')
-            imports = file_analysis.get('imports') or []
+            file_path = file_analysis.get('file_path', '')
+            filename = file_path.split('/')[-1] if file_path else None
+            imports = file_analysis.get('imports', [])
+            language = file_analysis.get('language', '')
 
-            if not path or not filename:
+            if not file_path or not filename:
+                logger.warning(f"跳过无效文件分析结果: {file_analysis}")
                 continue
 
             # 使用 ON CONFLICT 进行 upsert（现在有唯一约束了）
@@ -508,7 +514,7 @@ def save_code_analysis_to_db(conn, analysis_data):
                 INSERT INTO code_files (
                     repository_id, filename, path, content, comments,
                     functions, packages, components, api_endpoints,
-                    importedlibraries, created_at, updated_at
+                    "importedLibraries", created_at, updated_at
                 ) VALUES (
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s,
@@ -522,28 +528,168 @@ def save_code_analysis_to_db(conn, analysis_data):
                     packages = EXCLUDED.packages,
                     components = EXCLUDED.components,
                     api_endpoints = EXCLUDED.api_endpoints,
-                    importedlibraries = EXCLUDED.importedlibraries,
+                    "importedLibraries" = EXCLUDED."importedLibraries",
                     updated_at = NOW()
             """, (
                 analysis_data['repository_id'],
                 filename,
-                path,
+                file_path,
                 None,            # content 暂不存全文
-                None,            # comments 暂无
+                f"Language: {language}",  # comments: 存储语言信息
                 imports,         # functions: 使用 imports 占位
                 imports,         # packages: 使用 imports 占位
                 [],              # components: 空数组
                 [],              # api_endpoints: 空数组
-                imports,         # importedlibraries: 注意是全小写
+                imports,         # importedLibraries: 导入的库列表
             ))
+            saved_count += 1
 
         conn.commit()
         cursor.close()
-        logger.info(f"保存了 {len(analysis_data['analysis_results'])} 个文件的分析结果")
+        logger.info(f"保存了 {saved_count} 个文件的分析结果")
 
     except Exception as e:
         logger.error(f"保存代码分析结果失败: {e}")
+        logger.error(f"错误详情: {str(e)}")
         conn.rollback()
+        if 'cursor' in locals():
+            cursor.close()
+
+# 已弃用：使用 backend/scraper/analyzers/data_analysis.py 进行分析
+def generate_analysis_json_deprecated(conn, keyword, task_id=None):
+    """生成关键词分析的JSON文件 - 已弃用，请使用 data_analysis.py"""
+    try:
+        # 获取关键词ID
+        cursor = conn.cursor()
+        cursor.execute('SELECT id FROM "keywords" WHERE "text" = %s', (keyword,))
+        keyword_record = cursor.fetchone()
+
+        if not keyword_record:
+            logger.error(f"未找到关键词: {keyword}")
+            return False
+
+        keyword_id = keyword_record[0]
+
+        # 获取与该关键词相关的仓库
+        cursor.execute('''
+            SELECT r.id, r.name, r.owner, r.full_name, r.description, r.language,
+                   r.stars, r.forks, r.url, r.tags
+            FROM "repositories" r
+            JOIN "repository_keywords" rk ON r.id = rk."repositoryId"
+            WHERE rk."keywordId" = %s
+            ORDER BY r.stars DESC
+        ''', (keyword_id,))
+
+        repositories = []
+        for row in cursor.fetchall():
+            repositories.append({
+                'id': row[0],
+                'name': row[1],
+                'owner': row[2],
+                'full_name': row[3],
+                'description': row[4],
+                'language': row[5],
+                'stars': row[6],
+                'forks': row[7],
+                'url': row[8],
+                'tags': row[9] if row[9] else []
+            })
+
+        if not repositories:
+            logger.warning(f"关键词 '{keyword}' 没有关联的仓库")
+            return False
+
+        # 获取代码文件数据
+        repo_ids = [repo['id'] for repo in repositories]
+        if repo_ids:
+            placeholder = ','.join(['%s'] * len(repo_ids))
+            cursor.execute(f'''
+                SELECT repository_id, filename, path, "importedLibraries", functions, packages, components
+                FROM "code_files"
+                WHERE repository_id IN ({placeholder})
+            ''', repo_ids)
+
+            code_files = []
+            for row in cursor.fetchall():
+                code_files.append({
+                    'repository_id': row[0],
+                    'filename': row[1],
+                    'path': row[2],
+                    'imported_libraries': row[3] if row[3] else [],
+                    'functions': row[4] if row[4] else [],
+                    'packages': row[5] if row[5] else [],
+                    'components': row[6] if row[6] else []
+                })
+        else:
+            code_files = []
+
+        # 分析数据
+        language_stats = {}
+        all_libraries = []
+        all_packages = []
+        all_functions = []
+
+        # 统计语言分布
+        for repo in repositories:
+            lang = repo['language']
+            if lang and lang.strip():  # 确保语言不为空或空白
+                language_stats[lang] = language_stats.get(lang, 0) + 1
+
+        # 统计代码分析数据
+        for file_data in code_files:
+            all_libraries.extend(file_data['imported_libraries'])
+            all_packages.extend(file_data['packages'])
+            all_functions.extend(file_data['functions'])
+
+        # 调试信息
+        logger.info(f"语言统计: {language_stats}")
+        logger.info(f"代码文件数量: {len(code_files)}")
+        logger.info(f"库数量: {len(all_libraries)}")
+        logger.info(f"包数量: {len(all_packages)}")
+        logger.info(f"函数数量: {len(all_functions)}")
+
+        # 生成分析结果
+        analysis_result = {
+            'keyword': keyword,
+            'repository_count': len(repositories),
+            'analysis_date': datetime.datetime.now().isoformat(),
+            'charts': {
+                'language_distribution': {
+                    'data': language_stats
+                },
+                'common_packages': {
+                    'data': dict(Counter(all_packages).most_common(20))
+                },
+                'imported_libraries': {
+                    'data': dict(Counter(all_libraries).most_common(20))
+                },
+                'common_functions': {
+                    'data': dict(Counter(all_functions).most_common(20))
+                }
+            },
+            'repositories': repositories
+        }
+
+        # 保存到JSON文件
+        analytics_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'public', 'analytics')
+        os.makedirs(analytics_dir, exist_ok=True)
+
+        safe_keyword = "".join(c for c in keyword if c.isalnum() or c in (' ', '-', '_')).rstrip()
+        result_file = os.path.join(analytics_dir, f'analysis_{safe_keyword}.json')
+
+        with open(result_file, 'w', encoding='utf-8') as f:
+            json.dump(analysis_result, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"分析结果已保存到 {result_file}")
+        cursor.close()
+        return True
+
+    except Exception as e:
+        logger.error(f"生成分析JSON失败: {e}")
+        logger.error(f"错误详情: {str(e)}")
+        if 'cursor' in locals():
+            cursor.close()
+        return False
 
 def crawl_by_keyword(keyword, conn, task_id=None, languages=None, limits=None):
     """根据关键词爬取仓库"""
@@ -680,15 +826,35 @@ def main():
         if task_id:
             if success:
                 # 注意：这里设置为90%，为数据分析留出10%的进度空间
-                # API会在数据分析完成后将状态设置为100%
                 update_task_status(conn, task_id, 'running', 90,
-                                 f"爬取完成，共处理 {total_repos} 个项目，等待数据分析...",
+                                 f"爬取完成，共处理 {total_repos} 个项目，开始生成分析...",
                                  total_repos=total_repos)
             else:
                 update_task_status(conn, task_id, 'failed', 0,
                                  f"部分关键词爬取失败，共处理 {total_repos} 个项目")
 
         logger.info(f"所有关键词爬取完成，共处理 {total_repos} 个仓库")
+
+        # 生成分析JSON文件
+        if success:
+            logger.info("开始生成分析结果...")
+            analysis_success = True
+            for keyword in keywords:
+                if not generate_analysis_json(conn, keyword, task_id):
+                    analysis_success = False
+                    logger.error(f"关键词 '{keyword}' 分析生成失败")
+
+            # 更新最终任务状态
+            if task_id:
+                if analysis_success:
+                    update_task_status(conn, task_id, 'completed', 100,
+                                     f"分析完成，共处理 {total_repos} 个项目",
+                                     total_repos=total_repos)
+                    logger.info("所有分析结果生成完成")
+                else:
+                    update_task_status(conn, task_id, 'completed', 95,
+                                     f"爬取完成但部分分析失败，共处理 {total_repos} 个项目",
+                                     total_repos=total_repos)
 
         # 重要：正常退出，让API知道爬虫已完成
         if not success:

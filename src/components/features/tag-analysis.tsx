@@ -24,12 +24,28 @@ export function TagAnalysis({
   
   // 将标签数据转换为图表格式，并只显示前15个
   const chartData = useMemo(() => {
-    return Object.entries(data || {})
-      .map(([name, count]) => ({ 
+    // 确保 data 是一个有效的对象，并且不包含嵌套结构
+    let processedData = data || {};
+
+    // 检查是否是嵌套结构（包含 topic_distribution）
+    if (processedData.topic_distribution && typeof processedData.topic_distribution === 'object') {
+      processedData = processedData.topic_distribution;
+    }
+
+    // 过滤掉非数字值和特殊字段
+    const validEntries = Object.entries(processedData).filter(([key, value]) => {
+      return typeof value === 'number' &&
+             key !== 'total_topics' &&
+             key !== 'topic_distribution' &&
+             !key.startsWith('_');
+    });
+
+    return validEntries
+      .map(([name, count]) => ({
         name,
         displayName: name.length > 15 ? `${name.slice(0, 12)}...` : name,
         fullName: name,
-        count 
+        count: count as number
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, isSimplified ? 8 : 15)  // 简化模式显示前8个，完整模式显示前15个
@@ -61,8 +77,26 @@ export function TagAnalysis({
     return null
   }
 
-  const totalTags = Object.keys(data || {}).length
-  const totalCount = Object.values(data || {}).reduce((sum, count) => sum + count, 0)
+  // 计算总数时也要处理嵌套结构
+  const processedDataForStats = useMemo(() => {
+    let processedData = data || {};
+    if (processedData.topic_distribution && typeof processedData.topic_distribution === 'object') {
+      processedData = processedData.topic_distribution;
+    }
+
+    // 过滤掉非数字值
+    const validEntries = Object.entries(processedData).filter(([key, value]) => {
+      return typeof value === 'number' &&
+             key !== 'total_topics' &&
+             key !== 'topic_distribution' &&
+             !key.startsWith('_');
+    });
+
+    return Object.fromEntries(validEntries);
+  }, [data]);
+
+  const totalTags = Object.keys(processedDataForStats).length
+  const totalCount = Object.values(processedDataForStats).reduce((sum, count) => sum + (count as number), 0)
 
   return (
     <Card className="w-full">

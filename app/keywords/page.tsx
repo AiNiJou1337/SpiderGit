@@ -442,6 +442,12 @@ function KeywordsPage() {
         });
         data.charts.language_distribution.data = languages;
       }
+    } else if (data.charts.language_distribution.data) {
+      // 检查数据格式，如果包含 language_distribution 嵌套结构，则提取它
+      if (data.charts.language_distribution.data.language_distribution) {
+        console.log('检测到嵌套的语言分布数据结构，正在提取 language_distribution');
+        data.charts.language_distribution.data = data.charts.language_distribution.data.language_distribution;
+      }
     }
 
     // 处理星标分布数据
@@ -480,6 +486,12 @@ function KeywordsPage() {
           }
         });
         data.charts.tag_analysis.data = tags;
+      }
+    } else if (data.charts.tag_analysis.data) {
+      // 检查数据格式，如果包含 topic_distribution，则提取它
+      if (data.charts.tag_analysis.data.topic_distribution) {
+        console.log('检测到嵌套的标签数据结构，正在提取 topic_distribution');
+        data.charts.tag_analysis.data = data.charts.tag_analysis.data.topic_distribution;
       }
     }
 
@@ -637,16 +649,38 @@ function KeywordsPage() {
     }
 
     // 获取原始数据
-    const rawData = analysisResults.charts.language_distribution.data || {};
+    let rawData = analysisResults.charts.language_distribution.data || {};
+
+    // 如果数据包含嵌套结构，提取实际的语言分布数据
+    if (rawData.language_distribution && typeof rawData.language_distribution === 'object') {
+      rawData = rawData.language_distribution;
+    }
+
+    // 过滤掉元数据字段，只保留实际的编程语言
+    const filteredData: Record<string, number> = {};
+    Object.entries(rawData).forEach(([key, value]) => {
+      // 排除元数据字段
+      if (typeof value === 'number' &&
+          !key.includes('total_') &&
+          !key.includes('language_') &&
+          !key.includes('analyzed_') &&
+          !key.includes('top_') &&
+          key !== 'mean' &&
+          key !== 'min' &&
+          key !== 'max' &&
+          key !== 'total') {
+        filteredData[key] = value;
+      }
+    });
 
     // 计算总和
-    const total = Object.values(rawData).reduce((sum: number, count: any) => sum + Number(count), 0);
+    const total = Object.values(filteredData).reduce((sum: number, count: number) => sum + count, 0);
 
     // 如果总和为0，返回空数组
     if (total === 0) return [];
 
     // 计算准确的百分比，确保总和为100%
-    return Object.entries(rawData).map(([name, value]) => {
+    return Object.entries(filteredData).map(([name, value]) => {
       const numValue = Number(value);
       // 计算真实百分比
       const realPercent = (numValue / total) * 100;
@@ -720,10 +754,20 @@ function KeywordsPage() {
   const prepareStarsData = (starsData: any) => {
     if (!starsData) return [];
 
+    // 检查是否所有值都是0或无效
+    const min = Number(starsData.min) || 0;
+    const mean = Number(starsData.mean) || 0;
+    const max = Number(starsData.max) || 0;
+
+    // 如果所有值都是0，返回空数组（将显示无数据提示）
+    if (min === 0 && mean === 0 && max === 0) {
+      return [];
+    }
+
     return [
-      { name: '最小值', value: starsData.min },
-      { name: '平均值', value: starsData.mean },
-      { name: '最大值', value: starsData.max }
+      { name: '最小值', value: min },
+      { name: '平均值', value: Math.round(mean * 100) / 100 }, // 保留2位小数
+      { name: '最大值', value: max }
     ];
   };
 
@@ -1628,6 +1672,15 @@ function KeywordsPage() {
                               <CardTitle>星标统计</CardTitle>
                             </CardHeader>
                             <CardContent className="h-64">
+                              {prepareStarsData(analysisResults.charts.stars_distribution.data).length === 0 ? (
+                                <div className="flex items-center justify-center h-full text-gray-500">
+                                  <div className="text-center">
+                                    <div className="text-4xl mb-2">📊</div>
+                                    <div>暂无星标数据</div>
+                                    <div className="text-sm mt-1">所有仓库的星标数为0</div>
+                                  </div>
+                                </div>
+                              ) : (
                                 <ResponsiveContainer key="stars-container" width="100%" height="100%">
                                   <BarChart
                                     key="stars-bar-chart"
@@ -1642,6 +1695,7 @@ function KeywordsPage() {
                                     <Bar dataKey="value" fill="#8884d8" name="星标数" />
                                   </BarChart>
                                 </ResponsiveContainer>
+                              )}
                             </CardContent>
                           </Card>
                         )}

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Play, Pause, AlertCircle, CheckCircle, Clock, X, ChevronDown, ChevronUp, History, ExternalLink } from 'lucide-react'
+import { RefreshCw, Play, Pause, AlertCircle, CheckCircle, Clock, X, ChevronDown, ChevronUp, History, ExternalLink, RotateCcw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 interface CrawlTask {
@@ -33,6 +33,7 @@ export default function CrawlerMonitor({ className }: CrawlerMonitorProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const [notifications, setNotifications] = useState<Array<{id: string, type: 'success' | 'error', message: string, keyword: string}>>([])
+  const [retryingTasks, setRetryingTasks] = useState<Set<number>>(new Set())
   const previousTasksRef = useRef<CrawlTask[]>([])
 
   // 部署时间戳 - 用于过滤新请求（可以从环境变量或构建时间获取）
@@ -68,6 +69,48 @@ export default function CrawlerMonitor({ className }: CrawlerMonitorProps) {
   }
   const removeNotification = (id: string) => {
     setNotifications(prev => prev.filter(n => n.id !== id))
+  }
+
+  // 重试失败的任务
+  const retryTask = async (taskId: number, keyword: string) => {
+    if (retryingTasks.has(taskId)) return // 防止重复点击
+
+    setRetryingTasks(prev => new Set(prev).add(taskId))
+
+    try {
+      const response = await fetch('/api/crawl/retry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ taskId })
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        // 添加成功通知
+        const notificationId = `retry-${taskId}-${Date.now()}`
+        addNotification(notificationId, 'success', `任务 #${taskId} 重试请求已提交`, keyword)
+
+        // 立即刷新任务列表
+        await fetchTasks(false)
+      } else {
+        // 添加错误通知
+        const notificationId = `retry-error-${taskId}-${Date.now()}`
+        addNotification(notificationId, 'error', `重试失败: ${data.error}`, keyword)
+      }
+    } catch (error) {
+      console.error('重试任务失败:', error)
+      const notificationId = `retry-error-${taskId}-${Date.now()}`
+      addNotification(notificationId, 'error', '重试请求失败，请稍后再试', keyword)
+    } finally {
+      setRetryingTasks(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(taskId)
+        return newSet
+      })
+    }
   }
 
   // 获取任务状态（优化版本，减少频繁查询）
@@ -327,8 +370,23 @@ export default function CrawlerMonitor({ className }: CrawlerMonitorProps) {
                       {task.status}
                     </Badge>
                   </div>
-                  <div className="text-sm text-gray-500">
-                    ID: {task.id}
+                  <div className="flex items-center gap-2">
+                    {/* 重试按钮 - 只对失败的任务显示 */}
+                    {task.status === 'failed' && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => retryTask(task.id, task.keyword)}
+                        disabled={retryingTasks.has(task.id)}
+                        className="text-xs"
+                      >
+                        <RotateCcw className={`h-3 w-3 mr-1 ${retryingTasks.has(task.id) ? 'animate-spin' : ''}`} />
+                        {retryingTasks.has(task.id) ? '重试中...' : '重试'}
+                      </Button>
+                    )}
+                    <div className="text-sm text-gray-500">
+                      ID: {task.id}
+                    </div>
                   </div>
                 </div>
 

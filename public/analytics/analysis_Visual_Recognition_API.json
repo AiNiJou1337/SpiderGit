@@ -1,12 +1,34 @@
 {
   "keyword": "Visual Recognition API",
   "repository_count": 29,
-  "analysis_date": "2025-05-29T15:57:01.749464",
+  "analysis_date": "2025-08-21T17:39:37.603427",
   "charts": {
     "language_distribution": {
       "data": {
-        "Java": 13,
-        "Python": 16
+        "total_languages": 2,
+        "language_distribution": {
+          "Python": 16,
+          "Java": 13
+        },
+        "language_stars": {
+          "Java": 0,
+          "Python": 0
+        },
+        "language_avg_stars": {
+          "Java": 0.0,
+          "Python": 0.0
+        },
+        "top_languages": [
+          [
+            "Python",
+            16
+          ],
+          [
+            "Java",
+            13
+          ]
+        ],
+        "analyzed_at": "2025-08-21T17:39:37.483866"
       }
     },
     "stars_distribution": {
@@ -14,205 +36,289 @@
         "mean": 4.586206896551724,
         "min": 0,
         "max": 87,
-        "total": 133
+        "total": 0
       }
+    },
+    "common_packages": {
+      "data": {}
     },
     "imported_libraries": {
       "data": {
-        "opencv": 1,
-        "player": 1,
+        "os": 20,
+        "time": 12,
+        "json": 7,
+        "cv2": 7,
+        "google": 5,
         "speech": 4,
         "sys": 4,
-        "subprocess as sp": 3,
-        "main": 1,
-        "typing": 1,
         "random": 4,
-        "express": 1,
-        "socket.io": 1,
-        "opencv4nodejs": 1,
-        "path": 1,
-        "http": 2,
-        "transcript": 1,
-        "time": 12,
-        "fuzzywuzzy": 1,
-        "lyrics": 1,
-        "os": 20,
-        "spotify": 1,
-        "fs": 1,
-        "signal": 2,
-        "subprocess": 2,
-        "json": 7,
-        "requests": 2,
-        "re": 3,
-        "base64": 1,
-        "webbrowser": 1,
-        "datetime": 2,
         "urllib": 4,
-        "youtube_search": 1,
-        "youtube_transcript_api": 1,
-        "cv2": 7,
-        "dynamodb": 2,
-        "__future__": 2,
-        "boto3": 2,
-        "ssl": 1,
         "io": 4,
-        "gtts": 3,
-        "google": 5,
-        "google_ocr": 1,
-        "csv": 1,
         "numpy as np": 4,
-        "glob": 2,
-        "graphqlclient": 1,
-        "ibm_watson": 1,
-        "sklearn": 1,
-        "pandas as pd": 1,
-        "picamera": 1,
-        "aiy": 1,
-        "argparse": 1,
         "PIL": 4,
-        "dotenv": 1,
-        "streamlit as st": 1,
-        "setuptools": 1,
-        "codecs": 2,
-        "distutils": 1,
-        "dialogflow_v2 as dialogflow": 1,
-        "pyaudio": 1,
-        "wave": 1,
-        "yolopy": 1,
-        "functions": 1,
-        "detect": 1,
+        "ConfigParser": 4,
+        "watson_developer_cloud": 3,
+        "subprocess as sp": 3,
+        "re": 3,
+        "gtts": 3,
         "speech_recognition as sr": 3,
         "pyttsx3": 3,
-        "nltk": 1,
-        "tkinter": 2,
-        "textblob": 2,
-        "connectapi": 1,
-        "watson_developer_cloud": 3,
-        "ConfigParser": 4,
-        "virtualrecognition": 1,
-        "labeling": 2,
-        "mysql": 1,
-        "geo_tags": 1,
-        "config_t": 3,
-        "MySQLdb": 1,
-        "warnings": 1,
-        "exiftool": 2,
-        "database_connector": 1,
-        "threading": 1,
-        "fnmatch": 1,
-        "hashlib": 1,
-        "exifread": 1,
-        "imageio": 1,
-        "rawpy": 1,
-        "wtforms": 2,
-        "compare": 3,
-        "stats": 2,
-        "flask_wtf": 2,
-        "flask": 2,
-        "thesaurus": 1,
-        "utils": 1,
-        "urllib2": 1
+        "config_t": 3
       }
+    },
+    "common_functions": {
+      "data": {}
     },
     "tag_analysis": {
       "data": {
-        "fuzzywuzzy": 1,
-        "google-teachable-machine": 1,
-        "python": 1,
-        "python-levenshtein": 1,
-        "python3": 1,
-        "sfspeechrecognizer": 1,
-        "spotify-api": 1,
-        "spotify-web-api": 1,
-        "youtube-search-api": 1,
-        "youtube-transcript-api": 1,
-        "project": 1,
-        "android": 2,
-        "ibm-watson": 1,
-        "ibm-watson-visual-recognition": 1,
-        "android-application": 1,
-        "rock-art": 1,
-        "watson-ibm": 1
-      }
-    },
-    "description_keywords": {
-      "data": {
-        "recognition": 31,
-        "visual": 29,
-        "using": 23,
-        "this": 17,
-        "with": 15,
-        "review": 14,
-        "image": 13,
-        "watson": 12,
-        "have": 11,
-        "vision": 10,
-        "install": 10,
-        "user": 8,
-        "text-to-speech": 8,
-        "that": 7,
-        "speech": 7,
-        "text": 7,
-        "from": 7,
-        "google": 7,
-        "libraries": 7,
-        "python": 7,
-        "project": 7,
-        "application": 7,
-        "form": 6,
-        "conversion": 6,
-        "program": 6,
-        "speech_recognition": 6,
-        "pyttsx3": 6,
-        "gtts": 6,
-        "code": 6,
-        "library": 6,
-        "input": 6,
-        "android": 6,
-        "such": 5,
-        "people": 5,
-        "easy": 5,
-        "them": 5,
-        "visually": 5,
-        "impaired": 5,
-        "users": 5,
-        "computer": 5,
-        "face": 5,
-        "which": 5,
-        "learning": 4,
-        "person": 4,
-        "designed": 4,
-        "detect": 4,
-        "stored": 4,
-        "database": 4,
-        "these": 4,
-        "will": 4
+        "total_topics": 17,
+        "topic_distribution": {
+          "android": 2,
+          "fuzzywuzzy": 1,
+          "google-teachable-machine": 1,
+          "python": 1,
+          "python-levenshtein": 1,
+          "python3": 1,
+          "sfspeechrecognizer": 1,
+          "spotify-api": 1,
+          "spotify-web-api": 1,
+          "youtube-search-api": 1,
+          "youtube-transcript-api": 1,
+          "ibm-watson": 1,
+          "ibm-watson-visual-recognition": 1,
+          "project": 1,
+          "android-application": 1,
+          "rock-art": 1,
+          "watson-ibm": 1
+        },
+        "top_topics": [
+          [
+            "android",
+            2
+          ],
+          [
+            "fuzzywuzzy",
+            1
+          ],
+          [
+            "google-teachable-machine",
+            1
+          ],
+          [
+            "python",
+            1
+          ],
+          [
+            "python-levenshtein",
+            1
+          ],
+          [
+            "python3",
+            1
+          ],
+          [
+            "sfspeechrecognizer",
+            1
+          ],
+          [
+            "spotify-api",
+            1
+          ],
+          [
+            "spotify-web-api",
+            1
+          ],
+          [
+            "youtube-search-api",
+            1
+          ],
+          [
+            "youtube-transcript-api",
+            1
+          ],
+          [
+            "ibm-watson",
+            1
+          ],
+          [
+            "ibm-watson-visual-recognition",
+            1
+          ],
+          [
+            "project",
+            1
+          ],
+          [
+            "android-application",
+            1
+          ],
+          [
+            "rock-art",
+            1
+          ],
+          [
+            "watson-ibm",
+            1
+          ]
+        ],
+        "analyzed_at": "2025-08-21T17:39:37.484864"
       }
     }
   },
+  "trends": {
+    "libraries": {
+      "os": {
+        "trend": "up",
+        "count": 20,
+        "percentile": 97.5,
+        "category": "other"
+      },
+      "time": {
+        "trend": "up",
+        "count": 12,
+        "percentile": 92.5,
+        "category": "other"
+      },
+      "json": {
+        "trend": "up",
+        "count": 7,
+        "percentile": 85.0,
+        "category": "other"
+      },
+      "cv2": {
+        "trend": "up",
+        "count": 7,
+        "percentile": 85.0,
+        "category": "other"
+      },
+      "google": {
+        "trend": "up",
+        "count": 5,
+        "percentile": 77.5,
+        "category": "other"
+      },
+      "speech": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "sys": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "random": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "urllib": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "io": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "numpy as np": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "PIL": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "ConfigParser": {
+        "trend": "stable",
+        "count": 4,
+        "percentile": 55.0,
+        "category": "other"
+      },
+      "watson_developer_cloud": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "subprocess as sp": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "re": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "gtts": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "speech_recognition as sr": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "pyttsx3": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      },
+      "config_t": {
+        "trend": "stable",
+        "count": 3,
+        "percentile": 17.5,
+        "category": "other"
+      }
+    },
+    "packages": {},
+    "functions": {}
+  },
   "repositories": [
     {
-      "id": 619,
-      "name": "MoodTunes",
-      "owner": "HSQ8",
-      "full_name": "HSQ8/MoodTunes",
-      "description": "a mobile app that predicts the type of music that best fits a mood based on visual recognition of emotions through Microsoft Azure Machine Learning API",
+      "id": 612,
+      "name": "visrec-api",
+      "full_name": "JavaVisRec/visrec-api",
+      "owner": "JavaVisRec",
+      "description": "Visual recognition specification for Java (JSR381)",
+      "url": "https://github.com/JavaVisRec/visrec-api",
       "language": "Java",
-      "stars": 1,
-      "forks": 1,
-      "url": "https://github.com/HSQ8/MoodTunes",
-      "tags": []
+      "stars": 87,
+      "forks": 18,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:48.502000",
+      "updated_at": "2025-05-21T10:51:48.502000",
+      "trend_date": "2025-05-21T10:51:48.502000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:48.503000"
     },
     {
       "id": 596,
       "name": "Singify",
-      "owner": "ObjectJosh",
       "full_name": "ObjectJosh/Singify",
+      "owner": "ObjectJosh",
       "description": "A \"finish the lyrics\" game using Spotify, YouTube Transcript, and YouTube Search APIs, coupled with speech recognition and visual machine learning.",
+      "url": "https://github.com/ObjectJosh/Singify",
       "language": "Python",
       "stars": 9,
       "forks": 2,
-      "url": "https://github.com/ObjectJosh/Singify",
       "tags": [
         "fuzzywuzzy",
         "google-teachable-machine",
@@ -224,342 +330,482 @@
         "spotify-web-api",
         "youtube-search-api",
         "youtube-transcript-api"
-      ]
-    },
-    {
-      "id": 597,
-      "name": "Drishti-For_Blind",
-      "owner": "roopeshukla",
-      "full_name": "roopeshukla/Drishti-For_Blind",
-      "description": "Visual impairment can pose a challenge to accomplish everyday activities such as driving, reading, and walking. People with visual impairment experience their surroundings uniquely when compared to a sighted person. They have more active senses (touch, smell, sound, and taste) to learn about their surrounding but activity as easy as reading a book or detecting objects in front without touching seems impossible for them. Drishti (meaning \"vision\" in the Hindi language) is designed to describe this beautiful world to the visually impaired. Drishti helps to read the text in front of the user, and it also conveys the environment around the visually impaired, by describing the objects and relationship b/w the objects.  Examples are a 'person sitting on a bench,' 'a dog is sleeping,' 'a stop sign on the road'. On users command the image is captured with a camera connected to the raspberry pi. If the user wants text description of the image, the image is analysed by Google's Cloud Vision API using Optical Character Recognition to detect the characters, letters in the picture, and if the user wants the scene description of the nearby environment, the image is sent to the Microsoft Cognitive Services to analyse the image using Computer Vision. Generated result is stored in the Dynamo DB (Cloud database). When the user asks Alexa to 'Read the text' or 'Explain the environment', the Alexa Skill Kit triggers AWS Lambda Function to fetch the results from the database (Dynamo Db). The Alexa app then recites the stored result on the user's mobile. This innovative device, designed to serve the visually impaired, is handy, easy to use with high accuracy.",
-      "language": "Python",
-      "stars": 5,
-      "forks": 0,
-      "url": "https://github.com/roopeshukla/Drishti-For_Blind",
-      "tags": []
-    },
-    {
-      "id": 598,
-      "name": "precision_ag",
-      "owner": "danxfreeman",
-      "full_name": "danxfreeman/precision_ag",
-      "description": "Use IBM Watson Visual Recognition API to identify water stress from drone images of crop fields",
-      "language": "Python",
-      "stars": 4,
-      "forks": 1,
-      "url": "https://github.com/danxfreeman/precision_ag",
-      "tags": []
-    },
-    {
-      "id": 599,
-      "name": "Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
-      "owner": "The-Assembly",
-      "full_name": "The-Assembly/Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
-      "description": "The AIY Vision Kit is a handy hardware bundle created by Google, one of several projects aimed at Do-It-Yourself Artificial Intelligence (AIY = Artificial Intelligence Yourself). These kits are available at most computer hardware stores and online retailers in Dubai and contain all the hardware (including a Raspberry Pi with a camera and the Vision Bonnet, a custom board for computer vision) required to build a compact intelligent camera system in a few easy steps, before taking it for a spin on image and face recognition tasks.  In this workshop, we’ll do a deep dive into the AIY Vision Kit and the available libraries for it: learning how to use machine learning models, APIs and the assorted peripherals to create our own desktop focus checker. This smart system will process a variety of visual cues through a neural network to detect when our attention is slipping, a handy feature with the amount of on-camera work we do these days.  Materials: —Google AIY Vision Kit (https://aiyprojects.withgoogle.com/vision) —Thonny Python IDE (https://thonny.org/)  -----------------------------------------  To learn more about The Assembly’s workshops, visit our website, social media or email us at workshops@theassembly.ae  Our website: —http://www.theassembly.ae Social media: —Instagram: http://instagram.com/makesmartthings —Facebook: http://fb.com/makesmartthings —Twitter: http://twitter.com/makesmartthings  #AIYVisionKit #ComputerVision #ArtificialIntelligence #Google #NeuralNetwork #FaceRecognition #Thonny #RaspberryPi",
-      "language": "Python",
-      "stars": 4,
-      "forks": 1,
-      "url": "https://github.com/The-Assembly/Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
-      "tags": []
-    },
-    {
-      "id": 600,
-      "name": "Visual-QnA",
-      "owner": "itz-abhay",
-      "full_name": "itz-abhay/Visual-QnA",
-      "description": "Visual QnA is an innovative project that combines image recognition and natural language processing to provide users with a comprehensive question-answering system using Gemini Api. Leveraging the power of AI, this platform allows users to ask queries about images or pose general questions, making it amazing for education, research, and everydayUse",
-      "language": "Python",
-      "stars": 2,
-      "forks": 0,
-      "url": "https://github.com/itz-abhay/Visual-QnA",
-      "tags": []
-    },
-    {
-      "id": 601,
-      "name": "Visual-Recognition-IBM-Watson",
-      "owner": "henriquerzs",
-      "full_name": "henriquerzs/Visual-Recognition-IBM-Watson",
-      "description": "Visual Recognition with API Watson at IBM Bluemix using Python programming",
-      "language": "Python",
-      "stars": 1,
-      "forks": 1,
-      "url": "https://github.com/henriquerzs/Visual-Recognition-IBM-Watson",
-      "tags": []
-    },
-    {
-      "id": 602,
-      "name": "Webhose-API-Image-Search",
-      "owner": "Webhose",
-      "full_name": "Webhose/Webhose-API-Image-Search",
-      "description": "Access image metadata and visual labels using the Webhose API image recognition feature",
-      "language": "Python",
-      "stars": 1,
-      "forks": 0,
-      "url": "https://github.com/Webhose/Webhose-API-Image-Search",
-      "tags": []
-    },
-    {
-      "id": 603,
-      "name": "Virtual-Assistant-for-Visually-Impaired",
-      "owner": "AnushreeYN",
-      "full_name": "AnushreeYN/Virtual-Assistant-for-Visually-Impaired",
-      "description": "The Virtual Assistant for Visually Impaired uses Python, OpenCV, Google Cloud Vision API, Dialogflow, and Object Recognition to assist visually impaired individuals. It features speech-to-text and object recognition, providing real-time assistance to enhance daily life and navigation.",
-      "language": "Python",
-      "stars": 1,
-      "forks": 0,
-      "url": "https://github.com/AnushreeYN/Virtual-Assistant-for-Visually-Impaired",
-      "tags": [
-        "project"
-      ]
-    },
-    {
-      "id": 604,
-      "name": "Sentiment-Analyzer",
-      "owner": "gauravbhambhani",
-      "full_name": "gauravbhambhani/Sentiment-Analyzer",
-      "description": "Problem identified: In places such as cafes, shops, movie theatre, it's very difficult to collect review to know the performance quality by making them fill the form, it's very time consuming and sometimes confusing. According to recent research, 84% of people fill out at least one web form per week. Which supports our stance that most of the people prefer to review by saying it rather than filling any form. Solution: So to solve this problem and enhance communication, we have made this project that collects people’s review by asking them personally, and analyze whether the review is positive, negative or neutral and hence bridges the communication gap. So, in order to achieve this, we have used technologies such as speech-to-text and text-to-speech conversion. On starting the program, a page designed using Tkinter (pythons GUI), opens up. On the click of the button, the program starts talking to the user, which makes it easier for the user to understand what to do, using text to speech. The person can then speak and record its review. The speech and text conversion were achieved using the libraries namely speech_recognition, pyttsx3, and gTTS. Note: You need to have these packages on your computer in order to run the program. Execute the following lines of code in your command prompt to install the packages. pip install speech_recognition pip install pyttsx3 (if this dows noot get installed, kindly install the .whl file for the corresponding library.) pip install gTTS speech_recognition: Recognizing speech requires audio input, and SpeechRecognition makes retrieving this input really easy. Instead of having to build scripts for accessing microphones and processing audio files from scratch, SpeechRecognition will have you up and running in just a few minutes. pyttsx3: is a text-to-speech conversion library in Python. gTTS (Google Text-to-Speech): a Python library and CLI tool to interface with Google Translates' text-to-speech API textblob- Textblob and its NLPTK libraries. After recording the review from a customer, it analyses whether the review given is positive or negative or neutral, and to do this we have used textblob and its NLPTK libraries. And all the reviews are stored in a database called db.txt file for future reference. Recommendation: Run the code using the Visual Studio Code. Project Done By: Gaurav Vinod Bhambhani (18BCE072)",
-      "language": "Python",
-      "stars": 1,
-      "forks": 1,
-      "url": "https://github.com/gauravbhambhani/Sentiment-Analyzer",
-      "tags": []
-    },
-    {
-      "id": 605,
-      "name": "IBMWatsonVR",
-      "owner": "kayla220",
-      "full_name": "kayla220/IBMWatsonVR",
-      "description": "IBM Watson visual recognition API examples",
-      "language": "Python",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/kayla220/IBMWatsonVR",
-      "tags": []
-    },
-    {
-      "id": 606,
-      "name": "vision_api",
-      "owner": "YYegor",
-      "full_name": "YYegor/vision_api",
-      "description": "JPG and RAW crawler with visual content recognition (based on Google Vision API)",
-      "language": "Python",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/YYegor/vision_api",
-      "tags": []
-    },
-    {
-      "id": 607,
-      "name": "centenis",
-      "owner": "calufornia",
-      "full_name": "calufornia/centenis",
-      "description": "Early detection of memory disorders using IBM Watson Visual Recognition API",
-      "language": "Python",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/calufornia/centenis",
-      "tags": []
-    },
-    {
-      "id": 608,
-      "name": "visualdetection",
-      "owner": "bogda995",
-      "full_name": "bogda995/visualdetection",
-      "description": "Visual Detect Face Recognition Application is an interactive web app developed using React, React Redux, and React Router, enabling users to detect faces in images. Leveraging the Clarifai API for advanced face recognition, the app allows users to input image URLs and displays detected faces with bounding boxes.",
-      "language": "Python",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/bogda995/visualdetection",
-      "tags": []
-    },
-    {
-      "id": 609,
-      "name": "PEIBM",
-      "owner": "cluelessog",
-      "full_name": "cluelessog/PEIBM",
-      "description": "Usage of IBM Watson Visual Recognition API to recognize Indian Coins in an Image",
-      "language": "Python",
-      "stars": 0,
-      "forks": 1,
-      "url": "https://github.com/cluelessog/PEIBM",
-      "tags": []
-    },
-    {
-      "id": 610,
-      "name": "Using-XAI-Algorithms-for-Material-Recognition",
-      "owner": "Yassa122",
-      "full_name": "Yassa122/Using-XAI-Algorithms-for-Material-Recognition",
-      "description": "A Material Recognition Model using ChemBERTa for predicting molecular properties from SMILES strings, enhanced with Explainable AI (XAI) for transparent predictions. The project includes a Next.js frontend for user-friendly input, XAI-based visual explanations, and data visualization, supporting model fine-tuning and backend API integration",
-      "language": "Python",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/Yassa122/Using-XAI-Algorithms-for-Material-Recognition",
-      "tags": []
-    },
-    {
-      "id": 611,
-      "name": "Smart-Reviewer",
-      "owner": "Divs-2606",
-      "full_name": "Divs-2606/Smart-Reviewer",
-      "description": "Problem identified:   In places such as cafes, shops, movie theatre, it's very difficult to collect review to know the performance quality by making them fill the form, it's very time consuming and sometimes confusing. According to recent research, 84% of people fill out at least one web form per week. Which supports our stance that most of the people prefer to review by saying it rather than filling any form.     Solution:  So to solve this problem and enhance communication, we have made this project that collects people’s review by asking them personally, and analyze whether the review is positive, negative or neutral and hence bridges the communication gap.     So, in order to achieve this, we have used technologies such as speech-to-text and text-to-speech conversion. On starting the program, a page designed using Tkinter (pythons GUI), opens up. On the click of the button, the program starts talking to the user, which makes it easier for the user to understand what to do, using text to speech. The person can then speak and record its review. The speech and text conversion were achieved using the libraries namely speech_recognition, pyttsx3, and gTTS.     Note:   You need to have these packages on your computer in order to run the program.  Execute the following lines of code in your command prompt to install the packages.  pip install speech_recognition  pip install pyttsx3 (if this dows noot get installed, kindly install the .whl file for the corresponding library.)  pip install gTTS        speech_recognition: Recognizing speech requires audio input, and SpeechRecognition makes retrieving this input really easy. Instead of having to build scripts for accessing microphones and processing audio files from scratch, SpeechRecognition will have you up and running in just a few minutes.     pyttsx3:  is a text-to-speech conversion library in Python.     gTTS (Google Text-to-Speech):  a Python library and CLI tool to interface with Google Translate's text-to-speech API  textblob- Textblob and its NLPTK libraries.     After recording the review from a customer, it analyses whether the review given is positive or negative or neutral, and to do this we have used textblob and its NLPTK libraries. And all the reviews are stored in a database called db.txt file for future reference.   Recommendation: Run the code using the Visual Studio Code.   Project Done By: Divya Mahur (18BCE106)  Gaurav Vinod Bhambhani (18BCE072)  ",
-      "language": "Python",
-      "stars": 0,
-      "forks": 1,
-      "url": "https://github.com/Divs-2606/Smart-Reviewer",
-      "tags": []
-    },
-    {
-      "id": 612,
-      "name": "visrec-api",
-      "owner": "JavaVisRec",
-      "full_name": "JavaVisRec/visrec-api",
-      "description": "Visual recognition specification for Java (JSR381)",
-      "language": "Java",
-      "stars": 87,
-      "forks": 18,
-      "url": "https://github.com/JavaVisRec/visrec-api",
-      "tags": []
+      ],
+      "created_at": "2025-05-21T10:49:57.245000",
+      "updated_at": "2025-05-21T10:49:57.245000",
+      "trend_date": "2025-05-21T10:49:57.245000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:49:57.246000"
     },
     {
       "id": 613,
       "name": "Pokemon-Go-Watson",
-      "owner": "mhsu0020",
       "full_name": "mhsu0020/Pokemon-Go-Watson",
+      "owner": "mhsu0020",
       "description": "Pokemon Go With Watson Visual Recognition API",
+      "url": "https://github.com/mhsu0020/Pokemon-Go-Watson",
       "language": "Java",
       "stars": 7,
       "forks": 0,
-      "url": "https://github.com/mhsu0020/Pokemon-Go-Watson",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:51:51.067000",
+      "updated_at": "2025-05-21T10:51:51.067000",
+      "trend_date": "2025-05-21T10:51:51.067000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:51.067000"
+    },
+    {
+      "id": 597,
+      "name": "Drishti-For_Blind",
+      "full_name": "roopeshukla/Drishti-For_Blind",
+      "owner": "roopeshukla",
+      "description": "Visual impairment can pose a challenge to accomplish everyday activities such as driving, reading, and walking. People with visual impairment experience their surroundings uniquely when compared to a sighted person. They have more active senses (touch, smell, sound, and taste) to learn about their surrounding but activity as easy as reading a book or detecting objects in front without touching seems impossible for them. Drishti (meaning \"vision\" in the Hindi language) is designed to describe this beautiful world to the visually impaired. Drishti helps to read the text in front of the user, and it also conveys the environment around the visually impaired, by describing the objects and relationship b/w the objects.  Examples are a 'person sitting on a bench,' 'a dog is sleeping,' 'a stop sign on the road'. On users command the image is captured with a camera connected to the raspberry pi. If the user wants text description of the image, the image is analysed by Google's Cloud Vision API using Optical Character Recognition to detect the characters, letters in the picture, and if the user wants the scene description of the nearby environment, the image is sent to the Microsoft Cognitive Services to analyse the image using Computer Vision. Generated result is stored in the Dynamo DB (Cloud database). When the user asks Alexa to 'Read the text' or 'Explain the environment', the Alexa Skill Kit triggers AWS Lambda Function to fetch the results from the database (Dynamo Db). The Alexa app then recites the stored result on the user's mobile. This innovative device, designed to serve the visually impaired, is handy, easy to use with high accuracy.",
+      "url": "https://github.com/roopeshukla/Drishti-For_Blind",
+      "language": "Python",
+      "stars": 5,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:15.375000",
+      "updated_at": "2025-05-21T10:50:15.375000",
+      "trend_date": "2025-05-21T10:50:15.375000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:15.375000"
+    },
+    {
+      "id": 598,
+      "name": "precision_ag",
+      "full_name": "danxfreeman/precision_ag",
+      "owner": "danxfreeman",
+      "description": "Use IBM Watson Visual Recognition API to identify water stress from drone images of crop fields",
+      "url": "https://github.com/danxfreeman/precision_ag",
+      "language": "Python",
+      "stars": 4,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:26.953000",
+      "updated_at": "2025-05-21T10:50:26.953000",
+      "trend_date": "2025-05-21T10:50:26.953000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:26.953000"
+    },
+    {
+      "id": 599,
+      "name": "Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
+      "full_name": "The-Assembly/Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
+      "owner": "The-Assembly",
+      "description": "The AIY Vision Kit is a handy hardware bundle created by Google, one of several projects aimed at Do-It-Yourself Artificial Intelligence (AIY = Artificial Intelligence Yourself). These kits are available at most computer hardware stores and online retailers in Dubai and contain all the hardware (including a Raspberry Pi with a camera and the Vision Bonnet, a custom board for computer vision) required to build a compact intelligent camera system in a few easy steps, before taking it for a spin on image and face recognition tasks.  In this workshop, we’ll do a deep dive into the AIY Vision Kit and the available libraries for it: learning how to use machine learning models, APIs and the assorted peripherals to create our own desktop focus checker. This smart system will process a variety of visual cues through a neural network to detect when our attention is slipping, a handy feature with the amount of on-camera work we do these days.  Materials: —Google AIY Vision Kit (https://aiyprojects.withgoogle.com/vision) —Thonny Python IDE (https://thonny.org/)  -----------------------------------------  To learn more about The Assembly’s workshops, visit our website, social media or email us at workshops@theassembly.ae  Our website: —http://www.theassembly.ae Social media: —Instagram: http://instagram.com/makesmartthings —Facebook: http://fb.com/makesmartthings —Twitter: http://twitter.com/makesmartthings  #AIYVisionKit #ComputerVision #ArtificialIntelligence #Google #NeuralNetwork #FaceRecognition #Thonny #RaspberryPi",
+      "url": "https://github.com/The-Assembly/Check-Your-Focus-with-Google-AIY-Vision-by-The-Assembly",
+      "language": "Python",
+      "stars": 4,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:32.691000",
+      "updated_at": "2025-05-21T10:50:32.691000",
+      "trend_date": "2025-05-21T10:50:32.691000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:32.691000"
     },
     {
       "id": 614,
       "name": "VisualRecognitionApi",
-      "owner": "deepnetts",
       "full_name": "deepnetts/VisualRecognitionApi",
+      "owner": "deepnetts",
       "description": "Specification of standard Visual Recognition API for Java (JSR work in progress)",
+      "url": "https://github.com/deepnetts/VisualRecognitionApi",
       "language": "Java",
       "stars": 4,
       "forks": 7,
-      "url": "https://github.com/deepnetts/VisualRecognitionApi",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:51:53.746000",
+      "updated_at": "2025-05-21T10:51:53.746000",
+      "trend_date": "2025-05-21T10:51:53.746000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:53.746000"
+    },
+    {
+      "id": 600,
+      "name": "Visual-QnA",
+      "full_name": "itz-abhay/Visual-QnA",
+      "owner": "itz-abhay",
+      "description": "Visual QnA is an innovative project that combines image recognition and natural language processing to provide users with a comprehensive question-answering system using Gemini Api. Leveraging the power of AI, this platform allows users to ask queries about images or pose general questions, making it amazing for education, research, and everydayUse",
+      "url": "https://github.com/itz-abhay/Visual-QnA",
+      "language": "Python",
+      "stars": 2,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:36.745000",
+      "updated_at": "2025-05-21T10:50:36.745000",
+      "trend_date": "2025-05-21T10:50:36.745000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:36.745000"
     },
     {
       "id": 615,
       "name": "FaceRecognitionApp",
-      "owner": "adamzv",
       "full_name": "adamzv/FaceRecognitionApp",
+      "owner": "adamzv",
       "description": "Simple Android face recognition application using CameraKit API and IBM Watson Visual Recognition",
+      "url": "https://github.com/adamzv/FaceRecognitionApp",
       "language": "Java",
       "stars": 2,
       "forks": 2,
-      "url": "https://github.com/adamzv/FaceRecognitionApp",
       "tags": [
         "android",
         "ibm-watson",
         "ibm-watson-visual-recognition"
-      ]
+      ],
+      "created_at": "2025-05-21T10:51:56.630000",
+      "updated_at": "2025-05-21T10:51:56.630000",
+      "trend_date": "2025-05-21T10:51:56.630000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:56.631000"
+    },
+    {
+      "id": 601,
+      "name": "Visual-Recognition-IBM-Watson",
+      "full_name": "henriquerzs/Visual-Recognition-IBM-Watson",
+      "owner": "henriquerzs",
+      "description": "Visual Recognition with API Watson at IBM Bluemix using Python programming",
+      "url": "https://github.com/henriquerzs/Visual-Recognition-IBM-Watson",
+      "language": "Python",
+      "stars": 1,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:40.779000",
+      "updated_at": "2025-05-21T10:50:40.779000",
+      "trend_date": "2025-05-21T10:50:40.779000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:40.780000"
+    },
+    {
+      "id": 602,
+      "name": "Webhose-API-Image-Search",
+      "full_name": "Webhose/Webhose-API-Image-Search",
+      "owner": "Webhose",
+      "description": "Access image metadata and visual labels using the Webhose API image recognition feature",
+      "url": "https://github.com/Webhose/Webhose-API-Image-Search",
+      "language": "Python",
+      "stars": 1,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:43.324000",
+      "updated_at": "2025-05-21T10:50:43.324000",
+      "trend_date": "2025-05-21T10:50:43.324000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:43.324000"
+    },
+    {
+      "id": 603,
+      "name": "Virtual-Assistant-for-Visually-Impaired",
+      "full_name": "AnushreeYN/Virtual-Assistant-for-Visually-Impaired",
+      "owner": "AnushreeYN",
+      "description": "The Virtual Assistant for Visually Impaired uses Python, OpenCV, Google Cloud Vision API, Dialogflow, and Object Recognition to assist visually impaired individuals. It features speech-to-text and object recognition, providing real-time assistance to enhance daily life and navigation.",
+      "url": "https://github.com/AnushreeYN/Virtual-Assistant-for-Visually-Impaired",
+      "language": "Python",
+      "stars": 1,
+      "forks": 0,
+      "tags": [
+        "project"
+      ],
+      "created_at": "2025-05-21T10:50:47.344000",
+      "updated_at": "2025-05-21T10:50:47.344000",
+      "trend_date": "2025-05-21T10:50:47.344000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:47.344000"
+    },
+    {
+      "id": 604,
+      "name": "Sentiment-Analyzer",
+      "full_name": "gauravbhambhani/Sentiment-Analyzer",
+      "owner": "gauravbhambhani",
+      "description": "Problem identified: In places such as cafes, shops, movie theatre, it's very difficult to collect review to know the performance quality by making them fill the form, it's very time consuming and sometimes confusing. According to recent research, 84% of people fill out at least one web form per week. Which supports our stance that most of the people prefer to review by saying it rather than filling any form. Solution: So to solve this problem and enhance communication, we have made this project that collects people’s review by asking them personally, and analyze whether the review is positive, negative or neutral and hence bridges the communication gap. So, in order to achieve this, we have used technologies such as speech-to-text and text-to-speech conversion. On starting the program, a page designed using Tkinter (pythons GUI), opens up. On the click of the button, the program starts talking to the user, which makes it easier for the user to understand what to do, using text to speech. The person can then speak and record its review. The speech and text conversion were achieved using the libraries namely speech_recognition, pyttsx3, and gTTS. Note: You need to have these packages on your computer in order to run the program. Execute the following lines of code in your command prompt to install the packages. pip install speech_recognition pip install pyttsx3 (if this dows noot get installed, kindly install the .whl file for the corresponding library.) pip install gTTS speech_recognition: Recognizing speech requires audio input, and SpeechRecognition makes retrieving this input really easy. Instead of having to build scripts for accessing microphones and processing audio files from scratch, SpeechRecognition will have you up and running in just a few minutes. pyttsx3: is a text-to-speech conversion library in Python. gTTS (Google Text-to-Speech): a Python library and CLI tool to interface with Google Translates' text-to-speech API textblob- Textblob and its NLPTK libraries. After recording the review from a customer, it analyses whether the review given is positive or negative or neutral, and to do this we have used textblob and its NLPTK libraries. And all the reviews are stored in a database called db.txt file for future reference. Recommendation: Run the code using the Visual Studio Code. Project Done By: Gaurav Vinod Bhambhani (18BCE072)",
+      "url": "https://github.com/gauravbhambhani/Sentiment-Analyzer",
+      "language": "Python",
+      "stars": 1,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:50:57.411000",
+      "updated_at": "2025-05-21T10:50:57.411000",
+      "trend_date": "2025-05-21T10:50:57.411000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:50:57.412000"
     },
     {
       "id": 616,
       "name": "Wordy",
-      "owner": "eneim",
       "full_name": "eneim/Wordy",
+      "owner": "eneim",
       "description": "A sample project which uses Bluemix's Visual Recognition API for education purpose.",
+      "url": "https://github.com/eneim/Wordy",
       "language": "Java",
       "stars": 1,
       "forks": 2,
-      "url": "https://github.com/eneim/Wordy",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:51:59.225000",
+      "updated_at": "2025-05-21T10:51:59.225000",
+      "trend_date": "2025-05-21T10:51:59.225000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:59.225000"
     },
     {
       "id": 617,
       "name": "health-",
-      "owner": "imvicky01",
       "full_name": "imvicky01/health-",
+      "owner": "imvicky01",
       "description": "Simple Android face recognition application using CameraKit API and IBM Watson Visual Recognition",
+      "url": "https://github.com/imvicky01/health-",
       "language": "Java",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/imvicky01/health-",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:01.822000",
+      "updated_at": "2025-05-21T10:52:01.822000",
+      "trend_date": "2025-05-21T10:52:01.822000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:01.822000"
     },
     {
       "id": 618,
       "name": "watson_vision_app",
-      "owner": "Samlarn",
       "full_name": "Samlarn/watson_vision_app",
+      "owner": "Samlarn",
       "description": "Using Watson Visual Recognition API for image tagging in an application. ",
+      "url": "https://github.com/Samlarn/watson_vision_app",
       "language": "Java",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/Samlarn/watson_vision_app",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:04.371000",
+      "updated_at": "2025-05-21T10:52:04.371000",
+      "trend_date": "2025-05-21T10:52:04.371000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:04.372000"
+    },
+    {
+      "id": 619,
+      "name": "MoodTunes",
+      "full_name": "HSQ8/MoodTunes",
+      "owner": "HSQ8",
+      "description": "a mobile app that predicts the type of music that best fits a mood based on visual recognition of emotions through Microsoft Azure Machine Learning API",
+      "url": "https://github.com/HSQ8/MoodTunes",
+      "language": "Java",
+      "stars": 1,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:52:06.943000",
+      "updated_at": "2025-05-21T10:52:06.943000",
+      "trend_date": "2025-05-21T10:52:06.943000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:06.943000"
     },
     {
       "id": 620,
       "name": "uofthacks2018",
-      "owner": "jbalawejder",
       "full_name": "jbalawejder/uofthacks2018",
+      "owner": "jbalawejder",
       "description": "ScavaHunt is an Android application game built with Java and the Watson Visual Recognition API. Virtual scavenger hunt where you must take photos of the items you find and application will decide if the object is valid. Race againts the clock and see how many you can find",
+      "url": "https://github.com/jbalawejder/uofthacks2018",
       "language": "Java",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/jbalawejder/uofthacks2018",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:09.487000",
+      "updated_at": "2025-05-21T10:52:09.487000",
+      "trend_date": "2025-05-21T10:52:09.487000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:09.488000"
+    },
+    {
+      "id": 605,
+      "name": "IBMWatsonVR",
+      "full_name": "kayla220/IBMWatsonVR",
+      "owner": "kayla220",
+      "description": "IBM Watson visual recognition API examples",
+      "url": "https://github.com/kayla220/IBMWatsonVR",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:01.581000",
+      "updated_at": "2025-05-21T10:51:01.581000",
+      "trend_date": "2025-05-21T10:51:01.581000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:01.581000"
+    },
+    {
+      "id": 606,
+      "name": "vision_api",
+      "full_name": "YYegor/vision_api",
+      "owner": "YYegor",
+      "description": "JPG and RAW crawler with visual content recognition (based on Google Vision API)",
+      "url": "https://github.com/YYegor/vision_api",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:08.646000",
+      "updated_at": "2025-05-21T10:51:08.646000",
+      "trend_date": "2025-05-21T10:51:08.646000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:08.646000"
+    },
+    {
+      "id": 607,
+      "name": "centenis",
+      "full_name": "calufornia/centenis",
+      "owner": "calufornia",
+      "description": "Early detection of memory disorders using IBM Watson Visual Recognition API",
+      "url": "https://github.com/calufornia/centenis",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:24.202000",
+      "updated_at": "2025-05-21T10:51:24.202000",
+      "trend_date": "2025-05-21T10:51:24.202000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:24.202000"
+    },
+    {
+      "id": 608,
+      "name": "visualdetection",
+      "full_name": "bogda995/visualdetection",
+      "owner": "bogda995",
+      "description": "Visual Detect Face Recognition Application is an interactive web app developed using React, React Redux, and React Router, enabling users to detect faces in images. Leveraging the Clarifai API for advanced face recognition, the app allows users to input image URLs and displays detected faces with bounding boxes.",
+      "url": "https://github.com/bogda995/visualdetection",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:35.802000",
+      "updated_at": "2025-05-21T10:51:35.802000",
+      "trend_date": "2025-05-21T10:51:35.802000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:35.802000"
+    },
+    {
+      "id": 609,
+      "name": "PEIBM",
+      "full_name": "cluelessog/PEIBM",
+      "owner": "cluelessog",
+      "description": "Usage of IBM Watson Visual Recognition API to recognize Indian Coins in an Image",
+      "url": "https://github.com/cluelessog/PEIBM",
+      "language": "Python",
+      "stars": 0,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:38.356000",
+      "updated_at": "2025-05-21T10:51:38.356000",
+      "trend_date": "2025-05-21T10:51:38.356000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:38.356000"
+    },
+    {
+      "id": 610,
+      "name": "Using-XAI-Algorithms-for-Material-Recognition",
+      "full_name": "Yassa122/Using-XAI-Algorithms-for-Material-Recognition",
+      "owner": "Yassa122",
+      "description": "A Material Recognition Model using ChemBERTa for predicting molecular properties from SMILES strings, enhanced with Explainable AI (XAI) for transparent predictions. The project includes a Next.js frontend for user-friendly input, XAI-based visual explanations, and data visualization, supporting model fine-tuning and backend API integration",
+      "url": "https://github.com/Yassa122/Using-XAI-Algorithms-for-Material-Recognition",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:40.931000",
+      "updated_at": "2025-05-21T10:51:40.931000",
+      "trend_date": "2025-05-21T10:51:40.931000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:40.931000"
+    },
+    {
+      "id": 611,
+      "name": "Smart-Reviewer",
+      "full_name": "Divs-2606/Smart-Reviewer",
+      "owner": "Divs-2606",
+      "description": "Problem identified:   In places such as cafes, shops, movie theatre, it's very difficult to collect review to know the performance quality by making them fill the form, it's very time consuming and sometimes confusing. According to recent research, 84% of people fill out at least one web form per week. Which supports our stance that most of the people prefer to review by saying it rather than filling any form.     Solution:  So to solve this problem and enhance communication, we have made this project that collects people’s review by asking them personally, and analyze whether the review is positive, negative or neutral and hence bridges the communication gap.     So, in order to achieve this, we have used technologies such as speech-to-text and text-to-speech conversion. On starting the program, a page designed using Tkinter (pythons GUI), opens up. On the click of the button, the program starts talking to the user, which makes it easier for the user to understand what to do, using text to speech. The person can then speak and record its review. The speech and text conversion were achieved using the libraries namely speech_recognition, pyttsx3, and gTTS.     Note:   You need to have these packages on your computer in order to run the program.  Execute the following lines of code in your command prompt to install the packages.  pip install speech_recognition  pip install pyttsx3 (if this dows noot get installed, kindly install the .whl file for the corresponding library.)  pip install gTTS        speech_recognition: Recognizing speech requires audio input, and SpeechRecognition makes retrieving this input really easy. Instead of having to build scripts for accessing microphones and processing audio files from scratch, SpeechRecognition will have you up and running in just a few minutes.     pyttsx3:  is a text-to-speech conversion library in Python.     gTTS (Google Text-to-Speech):  a Python library and CLI tool to interface with Google Translate's text-to-speech API  textblob- Textblob and its NLPTK libraries.     After recording the review from a customer, it analyses whether the review given is positive or negative or neutral, and to do this we have used textblob and its NLPTK libraries. And all the reviews are stored in a database called db.txt file for future reference.   Recommendation: Run the code using the Visual Studio Code.   Project Done By: Divya Mahur (18BCE106)  Gaurav Vinod Bhambhani (18BCE072)  ",
+      "url": "https://github.com/Divs-2606/Smart-Reviewer",
+      "language": "Python",
+      "stars": 0,
+      "forks": 1,
+      "tags": [],
+      "created_at": "2025-05-21T10:51:43.454000",
+      "updated_at": "2025-05-21T10:51:43.454000",
+      "trend_date": "2025-05-21T10:51:43.454000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:51:43.455000"
     },
     {
       "id": 621,
       "name": "IBM-Watson-demo",
-      "owner": "b3tung",
       "full_name": "b3tung/IBM-Watson-demo",
+      "owner": "b3tung",
       "description": "Demo android app using IBM Watson Visual Recognition API",
+      "url": "https://github.com/b3tung/IBM-Watson-demo",
       "language": "Java",
       "stars": 0,
       "forks": 0,
-      "url": "https://github.com/b3tung/IBM-Watson-demo",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:11.999000",
+      "updated_at": "2025-05-21T10:52:11.999000",
+      "trend_date": "2025-05-21T10:52:11.999000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:11.999000"
     },
     {
       "id": 622,
       "name": "ImageClassifier",
-      "owner": "Jyothesh",
       "full_name": "Jyothesh/ImageClassifier",
+      "owner": "Jyothesh",
       "description": "Image classification using IBM Watson's Visual Recognition API",
+      "url": "https://github.com/Jyothesh/ImageClassifier",
       "language": "Java",
       "stars": 0,
       "forks": 0,
-      "url": "https://github.com/Jyothesh/ImageClassifier",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:14.555000",
+      "updated_at": "2025-05-21T10:52:14.555000",
+      "trend_date": "2025-05-21T10:52:14.555000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:14.555000"
     },
     {
       "id": 623,
       "name": "WatsonWhatsThisImage",
-      "owner": "FMurry",
       "full_name": "FMurry/WatsonWhatsThisImage",
+      "owner": "FMurry",
       "description": "Quick simple prototype showing Visual Recognition using the Watson API on android",
+      "url": "https://github.com/FMurry/WatsonWhatsThisImage",
       "language": "Java",
       "stars": 0,
       "forks": 0,
-      "url": "https://github.com/FMurry/WatsonWhatsThisImage",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-21T10:52:17.133000",
+      "updated_at": "2025-05-21T10:52:17.133000",
+      "trend_date": "2025-05-21T10:52:17.133000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:17.133000"
     },
     {
       "id": 624,
       "name": "BrandbergVision",
-      "owner": "DDemmer1",
       "full_name": "DDemmer1/BrandbergVision",
+      "owner": "DDemmer1",
       "description": "Android application for object detection in rock art, utilizing the Watson-IBM Visual Recognition API",
+      "url": "https://github.com/DDemmer1/BrandbergVision",
       "language": "Java",
       "stars": 0,
       "forks": 0,
-      "url": "https://github.com/DDemmer1/BrandbergVision",
       "tags": [
         "android",
         "android-application",
         "rock-art",
         "watson-ibm"
-      ]
+      ],
+      "created_at": "2025-05-21T10:52:19.699000",
+      "updated_at": "2025-05-21T10:52:19.699000",
+      "trend_date": "2025-05-21T10:52:19.699000",
+      "keyword": "Visual Recognition API",
+      "scraped_at": "2025-05-21T10:52:19.700000"
     }
   ]
 }

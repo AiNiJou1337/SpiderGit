@@ -1,5 +1,31 @@
 # 变更日志
 
+## 2025-08-21（文档架构更新与Chrome兼容性修复）
+
+### 📚 文档更新
+- **更新** 架构文档 (`docs/ARCHITECTURE.md`) 以反映实际项目结构
+- **更新** README.md 技术栈信息和安装步骤
+- **更新** 快速开始指南 (`docs/QUICK_START.md`) 的命令和路径
+- **新增** API 文档 (`docs/API.md`) 详细描述所有 API 接口
+- **新增** 部署指南 (`docs/DEPLOYMENT.md`) 包含多种部署方案
+
+### 🏗️ 架构改进
+- **更新** 项目结构文档以匹配实际的文件组织
+- **完善** 技术栈说明，包含具体版本信息 (Next.js 13.5.6, Python 3.8+)
+- **添加** 系统架构图和数据流图
+- **补充** 性能优化和安全考虑说明
+
+### 🐛 修复
+- **修复** keywords 页面 Chrome 浏览器兼容性问题
+  - 修复 CardFooter 组件导入缺失导致的 DOM 操作错误
+  - 修复图表组件参数不匹配问题 (LineChartComponent, BarChartComponent)
+  - 解决 `NotFoundError: Failed to execute 'removeChild' on 'Node'` 错误
+
+### 🔧 技术栈更新
+- **确认** 依赖路径从 `scraper/` 到 `backend/`
+- **完善** Prisma 数据库配置说明
+- **更新** npm scripts 和命令行示例
+
 ## 2025-08-14（关键词管理功能增强与数据清理）
 本次变更目标：增强关键词管理功能，实现删除编辑功能，优化爬虫监控，解决数据一致性问题。
 

@@ -15,10 +15,9 @@ export async function GET() {
   )
   // 3. 生成主题名和文件路径
   const result = analysisFiles.map(f => {
-    // 主题名：去掉 analysis_ 和 .json，替换下划线为空格
+    // 主题名：去掉 analysis_ 和 .json，将下划线转换为空格以匹配数据库关键词
     let name = f.replace('analysis_', '').replace('.json', '').replace(/_/g, ' ')
-    // 首字母大写
-    name = name.charAt(0).toUpperCase() + name.slice(1)
+    // 转换为空格格式，确保与数据库关键词名称一致
     return {
       name,
       file: `/analytics/${f}`

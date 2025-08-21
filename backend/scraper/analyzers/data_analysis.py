@@ -90,24 +90,36 @@ class GitHubDataAnalyzer:
     def analyze_topics(self) -> Dict[str, Any]:
         """分析主题标签分布"""
         logger.info("开始分析主题标签分布...")
-        
+
         topic_stats = Counter()
         topic_repos = defaultdict(list)
-        
+
         for repo in self.data:
+            # 检查 tags 字段（数据库中实际存储的字段）
+            tags = repo.get('tags', [])
+            # 也检查 topics 字段（兼容性）
             topics = repo.get('topics', [])
-            if topics:
-                for topic in topics:
-                    topic_stats[topic] += 1
-                    topic_repos[topic].append(repo)
-        
+
+            # 合并两个字段的数据
+            all_topics = []
+            if tags and isinstance(tags, list):
+                all_topics.extend(tags)
+            if topics and isinstance(topics, list):
+                all_topics.extend(topics)
+
+            if all_topics:
+                for topic in all_topics:
+                    if topic and isinstance(topic, str):  # 确保是有效的字符串
+                        topic_stats[topic] += 1
+                        topic_repos[topic].append(repo)
+
         result = {
             'total_topics': len(topic_stats),
             'topic_distribution': dict(topic_stats.most_common()),
             'top_topics': topic_stats.most_common(20),
             'analyzed_at': datetime.datetime.now().isoformat()
         }
-        
+
         self.analysis_results['topics'] = result
         logger.info(f"主题分析完成，发现 {len(topic_stats)} 个主题")
         return result
@@ -115,8 +127,12 @@ class GitHubDataAnalyzer:
     def analyze_stars_distribution(self) -> Dict[str, Any]:
         """分析星数分布"""
         logger.info("开始分析星数分布...")
-        
-        stars_list = [repo.get('stargazers_count', 0) for repo in self.data]
+
+        # 兼容不同的星标字段名
+        stars_list = []
+        for repo in self.data:
+            stars = repo.get('stargazers_count') or repo.get('stars', 0)
+            stars_list.append(stars)
         stars_list.sort(reverse=True)
         
         # 分段统计
@@ -240,6 +256,9 @@ class GitHubDataAnalyzer:
         self.analyze_creation_trends()
         self.analyze_repository_sizes()
 
+        # 分析代码文件数据
+        code_analysis = self._analyze_code_files()
+
         # 生成标准格式的摘要
         summary = {
             'keyword': getattr(self, 'keyword', 'unknown'),
@@ -247,24 +266,31 @@ class GitHubDataAnalyzer:
             'analysis_date': datetime.datetime.now().isoformat(),
             'charts': {
                 'language_distribution': {
-                    'data': {}
+                    'data': self.analysis_results.get('languages', {})
                 },
                 'stars_distribution': {
-                    'data': {}
+                    'data': self.analysis_results.get('stars', {})
                 },
                 'common_packages': {
-                    'data': {}
+                    'data': code_analysis.get('packages', {})
                 },
                 'imported_libraries': {
-                    'data': {}
+                    'data': code_analysis.get('libraries', {})
                 },
                 'common_functions': {
-                    'data': {}
+                    'data': code_analysis.get('functions', {})
                 },
                 'tag_analysis': {
-                    'data': {}
+                    'data': self.analysis_results.get('topics', {})
                 }
-            }
+            },
+            # 添加预计算的趋势数据
+            'trends': {
+                'libraries': code_analysis.get('library_trends', {}),
+                'packages': code_analysis.get('package_trends', {}),
+                'functions': code_analysis.get('function_trends', {})
+            },
+            'repositories': self.data  # 包含完整的仓库数据
         }
 
         # 填充语言分布数据
@@ -290,7 +316,172 @@ class GitHubDataAnalyzer:
                 summary['charts']['tag_analysis']['data'] = topics_data['distribution']
 
         return summary
-    
+
+    def _analyze_code_files(self) -> Dict[str, Dict[str, int]]:
+        """分析代码文件数据"""
+        logger.info("开始分析代码文件数据...")
+
+        # 获取数据库连接
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # 获取所有仓库ID
+            repo_ids = [repo['id'] for repo in self.data]
+            if not repo_ids:
+                return {'libraries': {}, 'packages': {}, 'functions': {}}
+
+            # 查询代码文件数据
+            placeholders = ','.join(['%s'] * len(repo_ids))
+            query = f'''
+                SELECT "importedLibraries", packages, functions
+                FROM "code_files"
+                WHERE repository_id IN ({placeholders})
+            '''
+
+            cursor.execute(query, repo_ids)
+            rows = cursor.fetchall()
+
+            # 统计数据
+            all_libraries = []
+            all_packages = []
+            all_functions = []
+
+            for row in rows:
+                imported_libs = row[0] if row[0] else []
+                packages = row[1] if row[1] else []
+                functions = row[2] if row[2] else []
+
+                all_libraries.extend(imported_libs)
+                all_packages.extend(packages)
+                all_functions.extend(functions)
+
+            # 统计频次并取前20
+            library_count = dict(Counter(all_libraries).most_common(20))
+            package_count = dict(Counter(all_packages).most_common(20))
+            function_count = dict(Counter(all_functions).most_common(20))
+
+            # 预计算趋势数据
+            library_trends = self._calculate_library_trends(library_count)
+            package_trends = self._calculate_library_trends(package_count)
+            function_trends = self._calculate_library_trends(function_count)
+
+            cursor.close()
+            conn.close()
+
+            logger.info(f"代码文件分析完成: {len(library_count)} 个库, {len(package_count)} 个包, {len(function_count)} 个函数")
+
+            return {
+                'libraries': library_count,
+                'packages': package_count,
+                'functions': function_count,
+                'library_trends': library_trends,
+                'package_trends': package_trends,
+                'function_trends': function_trends
+            }
+
+        except Exception as e:
+            logger.error(f"分析代码文件失败: {e}")
+            return {'libraries': {}, 'packages': {}, 'functions': {}}
+
+    def _calculate_library_trends(self, library_data: Dict[str, int]) -> Dict[str, Dict[str, Any]]:
+        """计算库的趋势数据"""
+        if not library_data:
+            return {}
+
+        counts = list(library_data.values())
+        if len(counts) == 0:
+            return {}
+
+        # 计算统计指标
+        sorted_counts = sorted(counts)
+        n = len(sorted_counts)
+
+        # 计算中位数
+        median = sorted_counts[n//2] if n % 2 == 1 else (sorted_counts[n//2-1] + sorted_counts[n//2]) / 2
+
+        # 计算四分位数
+        q1_idx = n // 4
+        q3_idx = 3 * n // 4
+        q1 = sorted_counts[q1_idx]
+        q3 = sorted_counts[q3_idx]
+
+        # 计算平均值和标准差
+        mean = sum(counts) / n
+        variance = sum((x - mean) ** 2 for x in counts) / n
+        std_dev = variance ** 0.5
+
+        # 计算异常值阈值
+        iqr = q3 - q1
+        outlier_lower = q1 - 1.5 * iqr
+        outlier_upper = q3 + 1.5 * iqr
+
+        # 为每个库计算趋势
+        trends = {}
+        for name, count in library_data.items():
+            # 基于统计指标判断趋势
+            if count >= outlier_upper:
+                trend = 'up'
+            elif count <= outlier_lower:
+                trend = 'down'
+            elif count >= q3:
+                trend = 'up'
+            elif count >= median:
+                trend = 'stable'
+            elif count >= q1:
+                trend = 'stable'
+            else:
+                trend = 'down'
+
+            trends[name] = {
+                'trend': trend,
+                'count': count,
+                'percentile': self._calculate_percentile(count, sorted_counts),
+                'category': self._get_library_category(name)
+            }
+
+        return trends
+
+    def _calculate_percentile(self, value: int, sorted_values: List[int]) -> float:
+        """计算值在排序列表中的百分位数"""
+        if not sorted_values:
+            return 0.0
+
+        count_below = sum(1 for v in sorted_values if v < value)
+        count_equal = sum(1 for v in sorted_values if v == value)
+
+        # 使用平均排名方法
+        percentile = (count_below + count_equal / 2) / len(sorted_values) * 100
+        return round(percentile, 1)
+
+    def _get_library_category(self, library_name: str) -> str:
+        """根据库名推断分类"""
+        library_name_lower = library_name.lower()
+
+        # Web框架
+        if library_name_lower in ['react', 'vue', 'angular', 'express', 'flask', 'django', 'spring']:
+            return 'web-framework'
+
+        # 数据库
+        elif library_name_lower in ['mysql', 'postgresql', 'mongodb', 'redis', 'sqlite']:
+            return 'database'
+
+        # 工具库
+        elif library_name_lower in ['lodash', 'axios', 'requests', 'numpy', 'pandas']:
+            return 'utility'
+
+        # 测试
+        elif library_name_lower in ['jest', 'mocha', 'pytest', 'junit']:
+            return 'testing'
+
+        # 构建工具
+        elif library_name_lower in ['webpack', 'vite', 'babel', 'typescript']:
+            return 'build-tool'
+
+        # 默认分类
+        else:
+            return 'other'
+
     def _generate_insights(self) -> List[str]:
         """生成关键洞察"""
         insights = []
@@ -444,7 +635,7 @@ def load_data_from_database(keywords, task_id=None):
         cursor.execute(query, keywords)
         rows = cursor.fetchall()
 
-        # 转换为字典格式（修正字段映射）
+        # 转换为字典格式（与分析器期望的格式一致）
         repositories = []
         for row in rows:
             repo = {
@@ -453,10 +644,10 @@ def load_data_from_database(keywords, task_id=None):
                 'full_name': row[2],
                 'owner': row[3],
                 'description': row[4] or '',
-                'html_url': row[5],
+                'url': row[5],  # 使用 url 而不是 html_url
                 'language': row[6],
-                'stargazers_count': row[7] or 0,
-                'forks_count': row[8] or 0,
+                'stars': row[7] or 0,  # 使用 stars 而不是 stargazers_count
+                'forks': row[8] or 0,  # 使用 forks 而不是 forks_count
                 'tags': row[9] or [],
                 'created_at': row[10].isoformat() if row[10] else None,
                 'updated_at': row[11].isoformat() if row[11] else None,

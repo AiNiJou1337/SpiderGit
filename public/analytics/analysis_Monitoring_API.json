@@ -1,7 +1,7 @@
 {
   "keyword": "Monitoring API",
   "repository_count": 110,
-  "analysis_date": "2025-05-29T15:57:01.577675",
+  "analysis_date": "2025-08-21T07:55:55.878Z",
   "charts": {
     "language_distribution": {
       "data": {
@@ -2771,5 +2771,479 @@
       "url": "https://github.com/the-pragmatic-dev/meco-api",
       "tags": []
     }
-  ]
+  ],
+  "trends": {
+    "libraries": {
+      "boto3": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "logging": {
+        "trend": "up",
+        "count": 6,
+        "percentile": 92.3,
+        "category": "other"
+      },
+      "smtplib": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "base64": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "json": {
+        "trend": "up",
+        "count": 12,
+        "percentile": 96.8,
+        "category": "utility"
+      },
+      "urllib2": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "urllib": {
+        "trend": "up",
+        "count": 3,
+        "percentile": 84.6,
+        "category": "other"
+      },
+      "time": {
+        "trend": "up",
+        "count": 6,
+        "percentile": 92.3,
+        "category": "other"
+      },
+      "os": {
+        "trend": "up",
+        "count": 16,
+        "percentile": 98.1,
+        "category": "utility"
+      },
+      "setuptools": {
+        "trend": "up",
+        "count": 19,
+        "percentile": 99.4,
+        "category": "other"
+      },
+      "sys": {
+        "trend": "up",
+        "count": 9,
+        "percentile": 95.5,
+        "category": "utility"
+      },
+      "codecs": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "mock": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "f5": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "six": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "pytest": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "testing"
+      },
+      "icontrol": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "requests": {
+        "trend": "up",
+        "count": 5,
+        "percentile": 90.4,
+        "category": "utility"
+      },
+      "tempfile": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "flasgger": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "src": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "flask": {
+        "trend": "up",
+        "count": 3,
+        "percentile": 84.6,
+        "category": "web-framework"
+      },
+      "apscheduler": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "threading": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "flask_cors": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "distutils": {
+        "trend": "up",
+        "count": 3,
+        "percentile": 84.6,
+        "category": "other"
+      },
+      "re": {
+        "trend": "up",
+        "count": 7,
+        "percentile": 94.2,
+        "category": "other"
+      },
+      "pathlib": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "typing": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "datetime": {
+        "trend": "up",
+        "count": 4,
+        "percentile": 88.5,
+        "category": "other"
+      },
+      "argparse": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "packaging": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "enum": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "__future__": {
+        "trend": "up",
+        "count": 4,
+        "percentile": 88.5,
+        "category": "other"
+      },
+      "platform": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "Cython": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "versioneer": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "configparser": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "errno": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "cx_Freeze": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "py2exe": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "subprocess": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "ConfigParser as configparser": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "llmserve": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "domonit": {
+        "trend": "up",
+        "count": 3,
+        "percentile": 84.6,
+        "category": "other"
+      },
+      "aiproxy": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "bs4": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "selenium": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "services": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "fastapi": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "web-framework"
+      },
+      "slowapi": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "uvicorn": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "models": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "random": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "tweepy": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "dhooks": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "thread": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "websocket": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "events": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "dateutil": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "django": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "web-framework"
+      },
+      "multiprocessing": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "lib": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "settings": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "toredis": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "tornado": {
+        "trend": "up",
+        "count": 2,
+        "percentile": 75.6,
+        "category": "other"
+      },
+      "optparse": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "urlparse": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "uuid": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "tweetstream": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "redis": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "database"
+      },
+      "apprise": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "healthcheck": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "odintools": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "werkzeug": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "pynag": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "utils": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      },
+      "cgi": {
+        "trend": "stable",
+        "count": 1,
+        "percentile": 34.6,
+        "category": "other"
+      }
+    },
+    "packages": {},
+    "functions": {}
+  }
 }

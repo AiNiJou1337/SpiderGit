@@ -1,12 +1,34 @@
 {
   "keyword": "Cryptography API",
   "repository_count": 81,
-  "analysis_date": "2025-05-29T17:44:12.601303",
+  "analysis_date": "2025-08-21T17:38:25.531552",
   "charts": {
     "language_distribution": {
       "data": {
-        "Python": 51,
-        "Java": 29
+        "total_languages": 2,
+        "language_distribution": {
+          "Python": 51,
+          "Java": 29
+        },
+        "language_stars": {
+          "Java": 0,
+          "Python": 0
+        },
+        "language_avg_stars": {
+          "Java": 0.0,
+          "Python": 0.0
+        },
+        "top_languages": [
+          [
+            "Python",
+            51
+          ],
+          [
+            "Java",
+            29
+          ]
+        ],
+        "analyzed_at": "2025-08-21T17:38:25.453843"
       }
     },
     "stars_distribution": {
@@ -14,7 +36,7 @@
         "mean": 182.35802469135803,
         "min": 1,
         "max": 13541,
-        "total": 14771
+        "total": 0
       }
     },
     "common_packages": {
@@ -49,92 +71,444 @@
     },
     "tag_analysis": {
       "data": {
-        "cryptography": 40,
-        "python": 20,
-        "api": 13,
-        "encryption": 8,
-        "security": 6,
-        "java": 6,
-        "aes": 3,
-        "crypto": 3,
-        "python3": 3,
-        "encryption-decryption": 3,
-        "cybersecurity": 3,
-        "sdk": 3,
-        "end-to-end-encryption": 3,
-        "rest-api": 3,
-        "android": 3
-      }
-    },
-    "comment_keywords": {
-      "data": {}
-    },
-    "description_keywords": {
-      "data": {
-        "cryptographic": 30,
-        "using": 26,
-        "python": 24,
-        "cryptography": 21,
-        "data": 17,
-        "encryption": 14,
-        "library": 13,
-        "project": 13,
-        "apis": 13,
-        "java": 13,
-        "bitcoin": 11,
-        "price": 11,
-        "secure": 10,
-        "which": 9,
-        "regression": 9,
-        "provides": 8,
-        "based": 8,
-        "model": 8,
-        "used": 7,
-        "bayesian": 7,
-        "variations": 7,
-        "have": 7,
-        "dataset": 7,
-        "simple": 7,
-        "security": 7,
-        "test": 6,
-        "decryption": 6,
-        "voice": 6,
-        "open": 5,
-        "learning": 5,
-        "implement": 5,
-        "equation": 5,
-        "tools": 5,
-        "rest": 5,
-        "tool": 5,
-        "system": 5,
-        "easy": 5,
-        "encrypted": 5,
-        "text": 5,
-        "intel": 4,
-        "paillier": 4,
-        "cryptosystem": 4,
-        "source": 4,
-        "package": 4,
-        "trading": 4,
-        "datasets": 4,
-        "prices": 4,
-        "linear": 4,
-        "files": 4,
-        "restful": 4
+        "total_topics": 212,
+        "topic_distribution": {
+          "cryptography": 40,
+          "python": 20,
+          "api": 13,
+          "encryption": 8,
+          "java": 6,
+          "security": 6,
+          "crypto": 3,
+          "encryption-decryption": 3,
+          "end-to-end-encryption": 3,
+          "aes": 3,
+          "python3": 3,
+          "android": 3,
+          "sdk": 3,
+          "cybersecurity": 3,
+          "rest-api": 3,
+          "javacard": 2,
+          "package": 2,
+          "telegram": 2,
+          "elliptic-curve-arithmetic": 2,
+          "gdpr": 2,
+          "hipaa": 2,
+          "pki": 2,
+          "rsa": 2,
+          "dsl": 2,
+          "specification": 2,
+          "flask": 2,
+          "apigee": 2,
+          "blockchain": 2,
+          "secure": 2,
+          "bitcoin": 2,
+          "ethereum": 2,
+          "aes-encryption": 2,
+          "rsa-cryptography": 2,
+          "cpp": 1,
+          "go": 1,
+          "javascript": 1,
+          "objc": 1,
+          "asn1": 1,
+          "cms": 1,
+          "crl": 1,
+          "csr": 1,
+          "ocsp": 1,
+          "pem": 1,
+          "pkcs12": 1,
+          "pkcs7": 1,
+          "tsp": 1,
+          "x509": 1,
+          "smartcard": 1,
+          "apache-kafka": 1,
+          "field-level-encryption": 1,
+          "flink": 1,
+          "flink-stream-processing": 1,
+          "flinksql": 1,
+          "kafka": 1,
+          "kafka-connect": 1,
+          "ksqldb": 1,
+          "smt": 1,
+          "transformations": 1,
+          "udfs": 1,
+          "user-defined-functions": 1,
+          "aes-ige": 1,
+          "ige": 1,
+          "module": 1,
+          "mtproto": 1,
+          "telethon": 1,
+          "code-generation": 1,
+          "static-analysis": 1,
+          "homomorphic-encryption": 1,
+          "certificate-transparency": 1,
+          "content-security-policy": 1,
+          "dnssec": 1,
+          "http-header-check": 1,
+          "http-scan": 1,
+          "mixed-content": 1,
+          "openvpn": 1,
+          "scan-tool": 1,
+          "scanning-tool": 1,
+          "security-audit": 1,
+          "security-tools": 1,
+          "ssh-scanner": 1,
+          "ssl-scanner": 1,
+          "subresource-integrity": 1,
+          "tls-scan": 1,
+          "tls-scanning-library": 1,
+          "vulnerability-scanners": 1,
+          "bn254": 1,
+          "cryptographic-library": 1,
+          "elliptic-curve-cryptography": 1,
+          "mpc": 1,
+          "multi-party": 1,
+          "multi-party-computation": 1,
+          "multiparty-computation": 1,
+          "oblivious-transfer": 1,
+          "oprf": 1,
+          "python-cryptography": 1,
+          "ristretto": 1,
+          "ristretto255": 1,
+          "secure-multi-party-computation": 1,
+          "secure-multiparty-computation": 1,
+          "maven": 1,
+          "api-wrapper": 1,
+          "key-generation": 1,
+          "pip": 1,
+          "python-library": 1,
+          "tpm": 1,
+          "trusted-platform-module": 1,
+          "examples": 1,
+          "cloudflare": 1,
+          "dns": 1,
+          "hacking": 1,
+          "hash": 1,
+          "honeypot": 1,
+          "nmap": 1,
+          "osint": 1,
+          "portscanner": 1,
+          "sql": 1,
+          "webeye": 1,
+          "whois": 1,
+          "whois-lookup": 1,
+          "elgamal-encryption": 1,
+          "xor": 1,
+          "zero-trust": 1,
+          "android-library": 1,
+          "cryptography-library": 1,
+          "hashing": 1,
+          "secret-key-encryption": 1,
+          "freedompop": 1,
+          "telegram-bot": 1,
+          "encryptors": 1,
+          "hacktoberfest": 1,
+          "sentry": 1,
+          "algorithmic-trading": 1,
+          "bitmex": 1,
+          "ccxt": 1,
+          "cryptofeed": 1,
+          "orderbook": 1,
+          "pyqt5": 1,
+          "tkinter": 1,
+          "ed25519": 1,
+          "language": 1,
+          "pwnagotchi": 1,
+          "hack": 1,
+          "note": 1,
+          "notes": 1,
+          "py": 1,
+          "secure-note": 1,
+          "web3": 1,
+          "biputils": 1,
+          "bitcoin-finder": 1,
+          "bitcoin-recovery": 1,
+          "bitcoin-stealer": 1,
+          "bitcoin-wallet": 1,
+          "ethereum-finder": 1,
+          "ethereum-stealer": 1,
+          "ethereum-wallet": 1,
+          "hashlib": 1,
+          "cryptography-api": 1,
+          "decoding": 1,
+          "mental-ability": 1,
+          "data-hiding": 1,
+          "django-rest-framework": 1,
+          "pillow": 1,
+          "django": 1,
+          "django-framework": 1,
+          "docker-container": 1,
+          "coding": 1,
+          "key": 1,
+          "token": 1,
+          "peewee": 1,
+          "digital-signatures": 1,
+          "entanglement": 1,
+          "ghz": 1,
+          "grover": 1,
+          "post-quantum": 1,
+          "post-quantum-cryptography": 1,
+          "qiskit": 1,
+          "quantum-attacks": 1,
+          "quantum-computing": 1,
+          "sphincs": 1,
+          "sphincsplus": 1,
+          "binance": 1,
+          "cryptocurrencies": 1,
+          "cryptocurrency": 1,
+          "cryptocurrency-exchanges": 1,
+          "data": 1,
+          "json": 1,
+          "litecoin": 1,
+          "statistics": 1,
+          "console-application": 1,
+          "database": 1,
+          "network-programming": 1,
+          "polygon": 1,
+          "cryptography-using-conceal": 1,
+          "facebook": 1,
+          "keychain": 1,
+          "cloud": 1,
+          "cloudproof": 1,
+          "java-8": 1,
+          "silence": 1,
+          "sms": 1,
+          "smssecure": 1,
+          "textsecure": 1,
+          "pkcs11": 1,
+          "pkcs11-tool": 1,
+          "cli-app": 1,
+          "cryptcp": 1,
+          "cryptcp-api": 1,
+          "cryptopro": 1,
+          "cryptoprocsp": 1,
+          "js": 1,
+          "sqlite": 1,
+          "cryptography-tools": 1
+        },
+        "top_topics": [
+          [
+            "cryptography",
+            40
+          ],
+          [
+            "python",
+            20
+          ],
+          [
+            "api",
+            13
+          ],
+          [
+            "encryption",
+            8
+          ],
+          [
+            "java",
+            6
+          ],
+          [
+            "security",
+            6
+          ],
+          [
+            "crypto",
+            3
+          ],
+          [
+            "encryption-decryption",
+            3
+          ],
+          [
+            "end-to-end-encryption",
+            3
+          ],
+          [
+            "aes",
+            3
+          ],
+          [
+            "python3",
+            3
+          ],
+          [
+            "android",
+            3
+          ],
+          [
+            "sdk",
+            3
+          ],
+          [
+            "cybersecurity",
+            3
+          ],
+          [
+            "rest-api",
+            3
+          ],
+          [
+            "javacard",
+            2
+          ],
+          [
+            "package",
+            2
+          ],
+          [
+            "telegram",
+            2
+          ],
+          [
+            "elliptic-curve-arithmetic",
+            2
+          ],
+          [
+            "gdpr",
+            2
+          ]
+        ],
+        "analyzed_at": "2025-08-21T17:38:25.454836"
       }
     }
+  },
+  "trends": {
+    "libraries": {
+      "os": {
+        "trend": "up",
+        "count": 29,
+        "percentile": 97.5,
+        "category": "other"
+      },
+      "sys": {
+        "trend": "up",
+        "count": 18,
+        "percentile": 92.5,
+        "category": "other"
+      },
+      "setuptools": {
+        "trend": "up",
+        "count": 16,
+        "percentile": 87.5,
+        "category": "other"
+      },
+      "time": {
+        "trend": "up",
+        "count": 14,
+        "percentile": 82.5,
+        "category": "other"
+      },
+      "json": {
+        "trend": "up",
+        "count": 12,
+        "percentile": 77.5,
+        "category": "other"
+      },
+      "hashlib": {
+        "trend": "stable",
+        "count": 11,
+        "percentile": 70.0,
+        "category": "other"
+      },
+      "datetime": {
+        "trend": "stable",
+        "count": 11,
+        "percentile": 70.0,
+        "category": "other"
+      },
+      "logging": {
+        "trend": "stable",
+        "count": 9,
+        "percentile": 62.5,
+        "category": "other"
+      },
+      "subprocess": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "other"
+      },
+      "re": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "other"
+      },
+      "cryptography": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "other"
+      },
+      "requests": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "utility"
+      },
+      "flask": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "web-framework"
+      },
+      "org": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "other"
+      },
+      "java": {
+        "trend": "stable",
+        "count": 6,
+        "percentile": 42.5,
+        "category": "other"
+      },
+      "random": {
+        "trend": "down",
+        "count": 5,
+        "percentile": 22.5,
+        "category": "other"
+      },
+      "shutil": {
+        "trend": "down",
+        "count": 4,
+        "percentile": 10.0,
+        "category": "other"
+      },
+      "threading": {
+        "trend": "down",
+        "count": 4,
+        "percentile": 10.0,
+        "category": "other"
+      },
+      "User": {
+        "trend": "down",
+        "count": 4,
+        "percentile": 10.0,
+        "category": "other"
+      },
+      "ConfigParser": {
+        "trend": "down",
+        "count": 4,
+        "percentile": 10.0,
+        "category": "other"
+      }
+    },
+    "packages": {},
+    "functions": {}
   },
   "repositories": [
     {
       "id": 231,
       "name": "tink",
-      "owner": "tink-crypto",
       "full_name": "tink-crypto/tink",
+      "owner": "tink-crypto",
       "description": "Tink is a multi-language, cross-platform, open source library that provides cryptographic APIs that are secure, easy to use correctly, and hard(er) to misuse.",
+      "url": "https://github.com/tink-crypto/tink",
       "language": "Java",
       "stars": 13541,
       "forks": 1179,
-      "url": "https://github.com/tink-crypto/tink",
       "tags": [
         "cpp",
         "crypto",
@@ -144,18 +518,23 @@
         "javascript",
         "objc",
         "security"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:34.258000",
+      "updated_at": "2025-05-16T10:39:34.258000",
+      "trend_date": "2025-05-16T10:39:34.258000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:34.259000"
     },
     {
       "id": 181,
       "name": "asn1crypto",
-      "owner": "wbond",
       "full_name": "wbond/asn1crypto",
+      "owner": "wbond",
       "description": "Python ASN.1 library with a focus on performance and a pythonic API",
+      "url": "https://github.com/wbond/asn1crypto",
       "language": "Python",
       "stars": 344,
       "forks": 143,
-      "url": "https://github.com/wbond/asn1crypto",
       "tags": [
         "asn1",
         "cms",
@@ -169,35 +548,45 @@
         "python",
         "tsp",
         "x509"
-      ]
+      ],
+      "created_at": "2025-05-16T10:36:39.162000",
+      "updated_at": "2025-05-16T10:36:39.162000",
+      "trend_date": "2025-05-16T10:36:39.162000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:39.163000"
     },
     {
       "id": 232,
       "name": "JCAlgTest",
-      "owner": "crocs-muni",
       "full_name": "crocs-muni/JCAlgTest",
+      "owner": "crocs-muni",
       "description": "Automated testing tool for algorithms from JavaCard API supported by particular smart card. Performance testing of almost all available methods. The results for more than 100+ cards.",
+      "url": "https://github.com/crocs-muni/JCAlgTest",
       "language": "Java",
       "stars": 119,
       "forks": 45,
-      "url": "https://github.com/crocs-muni/JCAlgTest",
       "tags": [
         "cryptography",
         "javacard",
         "security",
         "smartcard"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:37.289000",
+      "updated_at": "2025-05-16T10:39:37.289000",
+      "trend_date": "2025-05-16T10:39:37.289000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:37.289000"
     },
     {
       "id": 233,
       "name": "kryptonite-for-kafka",
-      "owner": "hpgrahsl",
       "full_name": "hpgrahsl/kryptonite-for-kafka",
+      "owner": "hpgrahsl",
       "description": "Kryptonite for Kafka is a client-side 🔒 field level 🔓 cryptography library for Apache Kafka® offering a Kafka Connect SMT, ksqlDB UDFs, Flink UDFs, and a standalone HTTP API service. It's an ! UNOFFICIAL ! community project",
+      "url": "https://github.com/hpgrahsl/kryptonite-for-kafka",
       "language": "Java",
       "stars": 86,
       "forks": 7,
-      "url": "https://github.com/hpgrahsl/kryptonite-for-kafka",
       "tags": [
         "apache-kafka",
         "cryptography",
@@ -214,18 +603,23 @@
         "transformations",
         "udfs",
         "user-defined-functions"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:40.416000",
+      "updated_at": "2025-05-16T10:39:40.416000",
+      "trend_date": "2025-05-16T10:39:40.416000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:40.417000"
     },
     {
       "id": 182,
       "name": "cryptg",
-      "owner": "cher-nov",
       "full_name": "cher-nov/cryptg",
+      "owner": "cher-nov",
       "description": "Official Telethon extension to provide much faster cryptography for Telegram API requests.",
+      "url": "https://github.com/cher-nov/cryptg",
       "language": "Python",
       "stars": 83,
       "forks": 26,
-      "url": "https://github.com/cher-nov/cryptg",
       "tags": [
         "aes",
         "aes-ige",
@@ -239,63 +633,83 @@
         "python",
         "telegram",
         "telethon"
-      ]
+      ],
+      "created_at": "2025-05-16T10:36:42.661000",
+      "updated_at": "2025-05-16T10:36:42.661000",
+      "trend_date": "2025-05-16T10:36:42.661000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:42.662000"
     },
     {
       "id": 234,
       "name": "CogniCrypt",
-      "owner": "eclipse-cognicrypt",
       "full_name": "eclipse-cognicrypt/CogniCrypt",
+      "owner": "eclipse-cognicrypt",
       "description": "CogniCrypt is an Eclipse plugin that supports Java developers in using Java Cryptographic APIs.",
+      "url": "https://github.com/eclipse-cognicrypt/CogniCrypt",
       "language": "Java",
       "stars": 61,
       "forks": 22,
-      "url": "https://github.com/eclipse-cognicrypt/CogniCrypt",
       "tags": [
         "code-generation",
         "cryptography",
         "java",
         "static-analysis"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:42.975000",
+      "updated_at": "2025-05-16T10:39:42.975000",
+      "trend_date": "2025-05-16T10:39:42.975000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:42.976000"
     },
     {
       "id": 183,
       "name": "pailliercryptolib_python",
-      "owner": "intel",
       "full_name": "intel/pailliercryptolib_python",
+      "owner": "intel",
       "description": "Intel Paillier Cryptosystem Library is an open-source library which provides accelerated performance of a partial homomorphic encryption (HE), named Paillier cryptosystem, by utilizing Intel® IPP-Crypto technologies on Intel CPUs supporting the AVX512IFMA instructions. The library is written in modern standard C++ and provides the essential API for the Paillier cryptosystem scheme. Intel Paillier Cryptosystem Library - Python is a Python extension package intended for Python based privacy preserving machine learning solutions which utilizes the partial HE scheme for increased data and model protection.",
+      "url": "https://github.com/intel/pailliercryptolib_python",
       "language": "Python",
       "stars": 56,
       "forks": 12,
-      "url": "https://github.com/intel/pailliercryptolib_python",
       "tags": [
         "cryptography",
         "homomorphic-encryption",
         "python3"
-      ]
+      ],
+      "created_at": "2025-05-16T10:36:46.185000",
+      "updated_at": "2025-05-16T10:36:46.185000",
+      "trend_date": "2025-05-16T10:36:46.185000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:46.186000"
     },
     {
       "id": 235,
       "name": "java-bitpay-client",
-      "owner": "bitpay",
       "full_name": "bitpay/java-bitpay-client",
+      "owner": "bitpay",
       "description": "Java library for the new cryptographically secure BitPay API",
+      "url": "https://github.com/bitpay/java-bitpay-client",
       "language": "Java",
       "stars": 42,
       "forks": 54,
-      "url": "https://github.com/bitpay/java-bitpay-client",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:45.509000",
+      "updated_at": "2025-05-16T10:39:45.509000",
+      "trend_date": "2025-05-16T10:39:45.509000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:45.510000"
     },
     {
       "id": 184,
       "name": "cryptolyzer",
-      "owner": "c0r0n3r",
       "full_name": "c0r0n3r/cryptolyzer",
+      "owner": "c0r0n3r",
       "description": "CryptoLyzer is a fast, flexible and comprehensive server cryptographic protocol (TLS, SSL, SSH, DNSSEC) and related setting (HTTP headers, DNS records) analyzer and fingerprint (JA3, HASSH tag) generator with Python API and CLI. (read-only clone of the original GitLab project)",
+      "url": "https://github.com/c0r0n3r/cryptolyzer",
       "language": "Python",
       "stars": 39,
       "forks": 2,
-      "url": "https://github.com/c0r0n3r/cryptolyzer",
       "tags": [
         "certificate-transparency",
         "content-security-policy",
@@ -316,18 +730,23 @@
         "tls-scan",
         "tls-scanning-library",
         "vulnerability-scanners"
-      ]
+      ],
+      "created_at": "2025-05-16T10:36:49.182000",
+      "updated_at": "2025-05-16T10:36:49.182000",
+      "trend_date": "2025-05-16T10:36:49.182000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:49.183000"
     },
     {
       "id": 185,
       "name": "oblivious",
-      "owner": "nthparty",
       "full_name": "nthparty/oblivious",
+      "owner": "nthparty",
       "description": "Python library that serves as an API for common cryptographic primitives used to implement OPRF, OT, and PSI protocols.",
+      "url": "https://github.com/nthparty/oblivious",
       "language": "Python",
       "stars": 27,
       "forks": 5,
-      "url": "https://github.com/nthparty/oblivious",
       "tags": [
         "bn254",
         "cryptographic-library",
@@ -345,18 +764,23 @@
         "ristretto255",
         "secure-multi-party-computation",
         "secure-multiparty-computation"
-      ]
+      ],
+      "created_at": "2025-05-16T10:36:52.333000",
+      "updated_at": "2025-05-16T10:36:52.333000",
+      "trend_date": "2025-05-16T10:36:52.333000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:52.333000"
     },
     {
       "id": 236,
       "name": "virgil-sdk-java-android",
-      "owner": "VirgilSecurity",
       "full_name": "VirgilSecurity/virgil-sdk-java-android",
+      "owner": "VirgilSecurity",
       "description": "Virgil Core SDK allows developers to get up and running with Virgil Cards Service API quickly and add end-to-end security to their new or existing digital solutions to become HIPAA and GDPR compliant and more.",
+      "url": "https://github.com/VirgilSecurity/virgil-sdk-java-android",
       "language": "Java",
       "stars": 26,
       "forks": 5,
-      "url": "https://github.com/VirgilSecurity/virgil-sdk-java-android",
       "tags": [
         "android",
         "cryptography",
@@ -368,42 +792,57 @@
         "maven",
         "pki",
         "sdk"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:48.081000",
+      "updated_at": "2025-05-16T10:39:48.081000",
+      "trend_date": "2025-05-16T10:39:48.081000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:48.082000"
     },
     {
       "id": 186,
       "name": "Bayesian-Regression-and-Bitcoin",
-      "owner": "vkgnandhu177",
       "full_name": "vkgnandhu177/Bayesian-Regression-and-Bitcoin",
+      "owner": "vkgnandhu177",
       "description": "# Bayesian-Regression-to-Predict-Bitcoin-Price-Variations Predicting the price variations of bitcoin, a virtual cryptographic currency. These predictions could be used as the foundation of a bitcoin trading strategy. To make these predictions, we will have to familiarize ourself with a machine learning technique, Bayesian Regression, and implement this technique in Python.  # Datasets We have the datasets in the data folder. The original raw data can be found here: http://api.bitcoincharts.com/v1/csv/. The datasets from this site have three attributes:   (1) time in epoch,   (2) price in USD per bitcoin, and   (3) bitcoin amount in a transaction (buy/sell).   However, only the first two attributes are relevant to this project.  To make the data to have evenly space records, we took all the records within a 20 second window and replaced it by a single record as the average of all the transaction prices in that window. Not every 20 second window had a record; therefore those missing entries were filled using the prices of the previous 20 observations and assuming a Gaussian distribution. The raw data that has been cleaned is given in the file dataset.csv  Finally, as discussed in the paper, the data was divided into a total of 9 different datasets. The whole dataset is partitioned into three equally sized (50 price variations in each) subsets: train1, train2, and test. The train sets are used for training a linear model, while the test set is for evaluation of the model. There are three csv files associated with each subset of data: *_90.csv, *_180.csv, and *_360.csv. In _90.csv, for example, each line represents a vector of length 90 where the elements are 30 minute worth of bitcoin price variations (since we have 20 second intervals) and a price variation in the 91st column. Similarly, the *_180.csv represents 60 minutes of prices and *_360.csv represents 120 minutes of prices.  # Project Requirements We are expected to implement the Bayesian Regression model to predict the future price variation of bitcoin as described in the reference paper. The main parts to focus on are Equation 6 and the Predicting Price Change section.  # Logic in bitcoin.py 1. Compute the price variations (Δp1, Δp2, and Δp3) for train2 using train1 as input to the Bayesian Regression equation (Equations 6). Make sure to use the similarity metric (Equation 9) in place of the Euclidean distance in Bayesian Regression (Equation 6).  2. Compute the linear regression parameters (w0, w1, w2, w3) by finding the best linear fit (Equation 8). Here you will need to use the ols function of statsmodels.formula.api. Your model should be fit using Δp1, Δp2, and Δp3 as the covariates. Note: the bitcoin order book data was not available, so you do not have to worry about the rw4 term.  3. Use the linear regression model computed in Step 2 and Bayesian Regression estimates, to predict the price variations for the test dataset. Bayesian Regression estimates for test dataset are computed in the same way as they are computed for train2 dataset – using train1 as an input.  4. Once the price variations are predicted, compute the mean squared error (MSE) for the test dataset (the test dataset has 50 vectors => 50 predictions).",
+      "url": "https://github.com/vkgnandhu177/Bayesian-Regression-and-Bitcoin",
       "language": "Python",
       "stars": 21,
       "forks": 4,
-      "url": "https://github.com/vkgnandhu177/Bayesian-Regression-and-Bitcoin",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:36:54.892000",
+      "updated_at": "2025-05-16T10:36:54.892000",
+      "trend_date": "2025-05-16T10:36:54.892000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:54.894000"
     },
     {
       "id": 187,
       "name": "python-bitpay-client",
-      "owner": "bitpay",
       "full_name": "bitpay/python-bitpay-client",
+      "owner": "bitpay",
       "description": "Python implementation for the BitPay Cryptographically Secure RESTful API",
+      "url": "https://github.com/bitpay/python-bitpay-client",
       "language": "Python",
       "stars": 19,
       "forks": 13,
-      "url": "https://github.com/bitpay/python-bitpay-client",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:36:57.965000",
+      "updated_at": "2025-05-16T10:36:57.965000",
+      "trend_date": "2025-05-16T10:36:57.965000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:36:57.965000"
     },
     {
       "id": 188,
       "name": "py-tpm-utils",
-      "owner": "ph4r05",
       "full_name": "ph4r05/py-tpm-utils",
+      "owner": "ph4r05",
       "description": "Simple TPM utils in Python for generating random numbers & RSA keys",
+      "url": "https://github.com/ph4r05/py-tpm-utils",
       "language": "Python",
       "stars": 19,
       "forks": 2,
-      "url": "https://github.com/ph4r05/py-tpm-utils",
       "tags": [
         "api",
         "api-wrapper",
@@ -415,48 +854,63 @@
         "rsa",
         "tpm",
         "trusted-platform-module"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:00.541000",
+      "updated_at": "2025-05-16T10:37:00.541000",
+      "trend_date": "2025-05-16T10:37:00.541000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:00.542000"
     },
     {
       "id": 237,
       "name": "Crypto-API-Rules",
-      "owner": "CROSSINGTUD",
       "full_name": "CROSSINGTUD/Crypto-API-Rules",
+      "owner": "CROSSINGTUD",
       "description": "This repository contains all CrySL rules currently used in the crypto assistant CogniCrypt.",
+      "url": "https://github.com/CROSSINGTUD/Crypto-API-Rules",
       "language": "Java",
       "stars": 16,
       "forks": 12,
-      "url": "https://github.com/CROSSINGTUD/Crypto-API-Rules",
       "tags": [
         "api",
         "cryptography",
         "dsl",
         "examples",
         "specification"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:50.658000",
+      "updated_at": "2025-05-16T10:39:50.658000",
+      "trend_date": "2025-05-16T10:39:50.658000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:50.659000"
     },
     {
       "id": 238,
       "name": "bouncycastle-implementations",
-      "owner": "anonrig",
       "full_name": "anonrig/bouncycastle-implementations",
+      "owner": "anonrig",
       "description": "Some cryptographic algorithms implemented using Bouncy Castle API.",
+      "url": "https://github.com/anonrig/bouncycastle-implementations",
       "language": "Java",
       "stars": 14,
       "forks": 7,
-      "url": "https://github.com/anonrig/bouncycastle-implementations",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:53.259000",
+      "updated_at": "2025-05-16T10:39:53.259000",
+      "trend_date": "2025-05-16T10:39:53.259000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:53.260000"
     },
     {
       "id": 189,
       "name": "webeye",
-      "owner": "Zaeem20",
       "full_name": "Zaeem20/webeye",
+      "owner": "Zaeem20",
       "description": "Webeye is a Powerful package for making ethical hacking tools easier",
+      "url": "https://github.com/Zaeem20/webeye",
       "language": "Python",
       "stars": 13,
       "forks": 3,
-      "url": "https://github.com/Zaeem20/webeye",
       "tags": [
         "api",
         "cloudflare",
@@ -474,18 +928,23 @@
         "webeye",
         "whois",
         "whois-lookup"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:03.646000",
+      "updated_at": "2025-05-16T10:37:03.646000",
+      "trend_date": "2025-05-16T10:37:03.646000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:03.647000"
     },
     {
       "id": 190,
       "name": "ElgamalEncryption-using-ECC",
-      "owner": "Yash0day",
       "full_name": "Yash0day/ElgamalEncryption-using-ECC",
+      "owner": "Yash0day",
       "description": "Elgamal Encryption using Elliptic Curve Cryptography in Python 2.7",
+      "url": "https://github.com/Yash0day/ElgamalEncryption-using-ECC",
       "language": "Python",
       "stars": 12,
       "forks": 4,
-      "url": "https://github.com/Yash0day/ElgamalEncryption-using-ECC",
       "tags": [
         "api",
         "cryptography",
@@ -493,18 +952,23 @@
         "elliptic-curve-arithmetic",
         "python",
         "security"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:06.700000",
+      "updated_at": "2025-05-16T10:37:06.700000",
+      "trend_date": "2025-05-16T10:37:06.700000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:06.701000"
     },
     {
       "id": 191,
       "name": "pysdk-core",
-      "owner": "XQ-Message-Inc",
       "full_name": "XQ-Message-Inc/pysdk-core",
+      "owner": "XQ-Message-Inc",
       "description": "A Python Implementation of XQ Message SDK (V.2) which provides convenient access to the XQ Message API. ",
+      "url": "https://github.com/XQ-Message-Inc/pysdk-core",
       "language": "Python",
       "stars": 12,
       "forks": 0,
-      "url": "https://github.com/XQ-Message-Inc/pysdk-core",
       "tags": [
         "aes",
         "cryptography",
@@ -516,30 +980,40 @@
         "security",
         "xor",
         "zero-trust"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:10.359000",
+      "updated_at": "2025-05-16T10:37:10.359000",
+      "trend_date": "2025-05-16T10:37:10.359000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:10.360000"
     },
     {
       "id": 239,
       "name": "cryptocard",
-      "owner": "jporras66",
       "full_name": "jporras66/cryptocard",
+      "owner": "jporras66",
       "description": "Java API for credit cards cryptography computing",
+      "url": "https://github.com/jporras66/cryptocard",
       "language": "Java",
       "stars": 12,
       "forks": 10,
-      "url": "https://github.com/jporras66/cryptocard",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:59.419000",
+      "updated_at": "2025-05-16T10:39:59.419000",
+      "trend_date": "2025-05-16T10:39:59.419000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:59.420000"
     },
     {
       "id": 192,
       "name": "virgil-sdk-python",
-      "owner": "VirgilSecurity",
       "full_name": "VirgilSecurity/virgil-sdk-python",
+      "owner": "VirgilSecurity",
       "description": "Virgil Core SDK allows developers to get up and running with Virgil Cards Service API quickly and add end-to-end security to their new or existing digital solutions to become HIPAA and GDPR compliant and more.",
+      "url": "https://github.com/VirgilSecurity/virgil-sdk-python",
       "language": "Python",
       "stars": 10,
       "forks": 2,
-      "url": "https://github.com/VirgilSecurity/virgil-sdk-python",
       "tags": [
         "cryptography",
         "encryption",
@@ -548,18 +1022,23 @@
         "hipaa",
         "pki",
         "sdk"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:13.953000",
+      "updated_at": "2025-05-16T10:37:13.953000",
+      "trend_date": "2025-05-16T10:37:13.953000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:13.955000"
     },
     {
       "id": 240,
       "name": "hydride-android",
-      "owner": "terl",
       "full_name": "terl/hydride-android",
+      "owner": "terl",
       "description": "Hydride binds against Libhydrogen to provide a simple cryptography that is compatible with Android API 16 and above.",
+      "url": "https://github.com/terl/hydride-android",
       "language": "Java",
       "stars": 10,
       "forks": 2,
-      "url": "https://github.com/terl/hydride-android",
       "tags": [
         "android",
         "android-library",
@@ -567,53 +1046,68 @@
         "encryption",
         "hashing",
         "secret-key-encryption"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:01.700000",
+      "updated_at": "2025-05-16T10:40:01.700000",
+      "trend_date": "2025-05-16T10:40:01.700000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:01.701000"
     },
     {
       "id": 193,
       "name": "FreedomPop-Telegram-Bot",
-      "owner": "blopa",
       "full_name": "blopa/FreedomPop-Telegram-Bot",
+      "owner": "blopa",
       "description": "A freedompop telegram bot",
+      "url": "https://github.com/blopa/FreedomPop-Telegram-Bot",
       "language": "Python",
       "stars": 9,
       "forks": 1,
-      "url": "https://github.com/blopa/FreedomPop-Telegram-Bot",
       "tags": [
         "api",
         "cryptography",
         "freedompop",
         "telegram",
         "telegram-bot"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:16.985000",
+      "updated_at": "2025-05-16T10:37:16.985000",
+      "trend_date": "2025-05-16T10:37:16.985000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:16.985000"
     },
     {
       "id": 194,
       "name": "Encryptor",
-      "owner": "rafaeelaudibert",
       "full_name": "rafaeelaudibert/Encryptor",
+      "owner": "rafaeelaudibert",
       "description": "🔒 Several encryptors (cryptographic secure or not) available in a REST API fashion, using Flask",
+      "url": "https://github.com/rafaeelaudibert/Encryptor",
       "language": "Python",
       "stars": 8,
       "forks": 12,
-      "url": "https://github.com/rafaeelaudibert/Encryptor",
       "tags": [
         "encryptors",
         "flask",
         "hacktoberfest",
         "sentry"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:22.044000",
+      "updated_at": "2025-05-16T10:37:22.044000",
+      "trend_date": "2025-05-16T10:37:22.044000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:22.044000"
     },
     {
       "id": 195,
       "name": "bitmex_algo_trader",
-      "owner": "strader07",
       "full_name": "strader07/bitmex_algo_trader",
+      "owner": "strader07",
       "description": "Algorithmic trading bot using bitmex API with a simple UI in terminal",
+      "url": "https://github.com/strader07/bitmex_algo_trader",
       "language": "Python",
       "stars": 8,
       "forks": 2,
-      "url": "https://github.com/strader07/bitmex_algo_trader",
       "tags": [
         "algorithmic-trading",
         "bitmex",
@@ -624,176 +1118,236 @@
         "pyqt5",
         "python",
         "tkinter"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:25.126000",
+      "updated_at": "2025-05-16T10:37:25.126000",
+      "trend_date": "2025-05-16T10:37:25.126000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:25.127000"
     },
     {
       "id": 241,
       "name": "Apigee-CustomPolicy-AesCrypto",
-      "owner": "DinoChiesa",
       "full_name": "DinoChiesa/Apigee-CustomPolicy-AesCrypto",
+      "owner": "DinoChiesa",
       "description": "a configurable custom policy for Apigee, which performs AES encryption or decryption.",
+      "url": "https://github.com/DinoChiesa/Apigee-CustomPolicy-AesCrypto",
       "language": "Java",
       "stars": 8,
       "forks": 7,
-      "url": "https://github.com/DinoChiesa/Apigee-CustomPolicy-AesCrypto",
       "tags": [
         "aes",
         "apigee",
         "cryptography",
         "encryption",
         "java"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:03.967000",
+      "updated_at": "2025-05-16T10:40:03.967000",
+      "trend_date": "2025-05-16T10:40:03.967000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:03.968000"
     },
     {
       "id": 242,
       "name": "CamBench",
-      "owner": "CROSSINGTUD",
       "full_name": "CROSSINGTUD/CamBench",
+      "owner": "CROSSINGTUD",
       "description": "Repository for the paper: CamBench - Cryptographic API Misuse Detection Tool Benchmark Suite",
+      "url": "https://github.com/CROSSINGTUD/CamBench",
       "language": "Java",
       "stars": 8,
       "forks": 8,
-      "url": "https://github.com/CROSSINGTUD/CamBench",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:06.230000",
+      "updated_at": "2025-05-16T10:40:06.230000",
+      "trend_date": "2025-05-16T10:40:06.230000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:06.231000"
     },
     {
       "id": 243,
       "name": "JCEd25519",
-      "owner": "dufkan",
       "full_name": "dufkan/JCEd25519",
+      "owner": "dufkan",
       "description": "JavaCard implementation of Ed25519 signature algorithm for smartcards that do not support EdDSA algorithm introduced in JavaCard API version 3.1.",
+      "url": "https://github.com/dufkan/JCEd25519",
       "language": "Java",
       "stars": 8,
       "forks": 5,
-      "url": "https://github.com/dufkan/JCEd25519",
       "tags": [
         "cryptography",
         "ed25519",
         "javacard"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:08.530000",
+      "updated_at": "2025-05-16T10:40:08.530000",
+      "trend_date": "2025-05-16T10:40:08.530000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:08.530000"
     },
     {
       "id": 244,
       "name": "bouncy-castle-sha3",
-      "owner": "akoskm",
       "full_name": "akoskm/bouncy-castle-sha3",
+      "owner": "akoskm",
       "description": "Demo application showing the use of the SHA-3 cryptographic hash function through the Bouncy Castle API",
+      "url": "https://github.com/akoskm/bouncy-castle-sha3",
       "language": "Java",
       "stars": 8,
       "forks": 1,
-      "url": "https://github.com/akoskm/bouncy-castle-sha3",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:11.083000",
+      "updated_at": "2025-05-16T10:40:11.083000",
+      "trend_date": "2025-05-16T10:40:11.083000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:11.084000"
     },
     {
       "id": 196,
       "name": "AES-Image-Encryption",
-      "owner": "KasiR07",
       "full_name": "KasiR07/AES-Image-Encryption",
+      "owner": "KasiR07",
       "description": "AES Image Encryption using python harnesses the power of the Advanced Encryption Algorithm.  I utilized cryptographic APIs from standard libraries such as PyCryptoDome to create an elegant AES based image scrambling and encryption solution.",
+      "url": "https://github.com/KasiR07/AES-Image-Encryption",
       "language": "Python",
       "stars": 6,
       "forks": 0,
-      "url": "https://github.com/KasiR07/AES-Image-Encryption",
       "tags": [
         "cryptography",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:28.726000",
+      "updated_at": "2025-05-16T10:37:28.726000",
+      "trend_date": "2025-05-16T10:37:28.726000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:28.727000"
     },
     {
       "id": 245,
       "name": "OpenJCEPlus",
-      "owner": "IBM",
       "full_name": "IBM/OpenJCEPlus",
+      "owner": "IBM",
       "description": "This project makes use of Java and C/C++. This project will create  OpenJCEPlus and OpenJCEPlusFIPS cryptographic providers which are implementations of the Java™ Cryptography Extensions (JCE) APIs. The actual cryptographic code will come from the OpenCryptographyKitC  project which is based on OpenSSL.",
+      "url": "https://github.com/IBM/OpenJCEPlus",
       "language": "Java",
       "stars": 6,
       "forks": 12,
-      "url": "https://github.com/IBM/OpenJCEPlus",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:13.368000",
+      "updated_at": "2025-05-16T10:40:13.368000",
+      "trend_date": "2025-05-16T10:40:13.368000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:13.369000"
     },
     {
       "id": 246,
       "name": "CryptSL",
-      "owner": "CROSSINGTUD",
       "full_name": "CROSSINGTUD/CryptSL",
-      "description": null,
+      "owner": "CROSSINGTUD",
+      "description": "",
+      "url": "https://github.com/CROSSINGTUD/CryptSL",
       "language": "Java",
       "stars": 6,
       "forks": 5,
-      "url": "https://github.com/CROSSINGTUD/CryptSL",
       "tags": [
         "api",
         "cryptography",
         "dsl",
         "language",
         "specification"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:15.634000",
+      "updated_at": "2025-05-16T10:40:15.634000",
+      "trend_date": "2025-05-16T10:40:15.634000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:15.635000"
     },
     {
       "id": 197,
       "name": "Yasat",
-      "owner": "bluesadi",
       "full_name": "bluesadi/Yasat",
+      "owner": "bluesadi",
       "description": "(Undergraduate Capstone Project) Yasat -  Yet Another Static Analysis Tool to detect cryptographic API misuses in firmware",
+      "url": "https://github.com/bluesadi/Yasat",
       "language": "Python",
       "stars": 5,
       "forks": 0,
-      "url": "https://github.com/bluesadi/Yasat",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:37:33.301000",
+      "updated_at": "2025-05-16T10:37:33.301000",
+      "trend_date": "2025-05-16T10:37:33.301000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:33.302000"
     },
     {
       "id": 198,
       "name": "INFO3NUM",
-      "owner": "DarkLycn1976",
       "full_name": "DarkLycn1976/INFO3NUM",
+      "owner": "DarkLycn1976",
       "description": "INFO3NUM or Information Enumeration is a CLI (Command Line Interface) based Cybersecurity Tool, which is used in Linux (Debian) Operating system. It is Developed using Python3 & Bash. INFO3NUM helps security professionals to enumerate Information in various technologies like Networking, Web Applications, Open Source Intelligence (OSINT) & Cryptography. INFO3NUM uses the utilities of Offensive Security tools like Nmap, Nmap Scripting Engine (NSE), Gobuster, Assertfinder, Whois-lookup, OSINT Framework, Haiti, Hash-Identifier, Hashcat, John The Ripper, and API. it helps Security professionals to navigate quickly and uses the full potential of the listed tools with a Single Comprehensive Script. ",
+      "url": "https://github.com/DarkLycn1976/INFO3NUM",
       "language": "Python",
       "stars": 5,
       "forks": 0,
-      "url": "https://github.com/DarkLycn1976/INFO3NUM",
       "tags": [
         "cybersecurity",
         "python3"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:35.868000",
+      "updated_at": "2025-05-16T10:37:35.868000",
+      "trend_date": "2025-05-16T10:37:35.868000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:35.869000"
     },
     {
       "id": 247,
       "name": "Cryptography-Solver-for-Discrete-Math",
-      "owner": "thousandlemons",
       "full_name": "thousandlemons/Cryptography-Solver-for-Discrete-Math",
+      "owner": "thousandlemons",
       "description": "An extensible API to perform basic encryption/decryption introduecd in Discrete Math, including Affine, Caesar, Vigenere, One Time Pad, RSA, etc.",
+      "url": "https://github.com/thousandlemons/Cryptography-Solver-for-Discrete-Math",
       "language": "Java",
       "stars": 5,
       "forks": 0,
-      "url": "https://github.com/thousandlemons/Cryptography-Solver-for-Discrete-Math",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:17.906000",
+      "updated_at": "2025-05-16T10:40:17.906000",
+      "trend_date": "2025-05-16T10:40:17.906000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:17.907000"
     },
     {
       "id": 199,
       "name": "pwngrid-api",
-      "owner": "python273",
       "full_name": "python273/pwngrid-api",
+      "owner": "python273",
       "description": "Pwnagotchi's Pwngrid API client (⌐■_■)",
+      "url": "https://github.com/python273/pwngrid-api",
       "language": "Python",
       "stars": 4,
       "forks": 0,
-      "url": "https://github.com/python273/pwngrid-api",
       "tags": [
         "cryptography",
         "pwnagotchi",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:43.631000",
+      "updated_at": "2025-05-16T10:37:43.631000",
+      "trend_date": "2025-05-16T10:37:43.631000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:43.632000"
     },
     {
       "id": 200,
       "name": "Secure-Note-Blockchain",
-      "owner": "AiGptCode",
       "full_name": "AiGptCode/Secure-Note-Blockchain",
+      "owner": "AiGptCode",
       "description": "یک برنامه یادداشت امن که از رمزنگاری امن برای حفاظت از یادداشت‌های شما و سیستم بلاک چین که نوت ها به صورت بلاک سیو و استفاده می‌کند",
+      "url": "https://github.com/AiGptCode/Secure-Note-Blockchain",
       "language": "Python",
       "stars": 4,
       "forks": 0,
-      "url": "https://github.com/AiGptCode/Secure-Note-Blockchain",
       "tags": [
         "api",
         "blockchain",
@@ -806,18 +1360,23 @@
         "secure",
         "secure-note",
         "web3"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:46.715000",
+      "updated_at": "2025-05-16T10:37:46.715000",
+      "trend_date": "2025-05-16T10:37:46.715000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:46.715000"
     },
     {
       "id": 201,
       "name": "Satoshi-Sweeper",
-      "owner": "Cr0mb",
       "full_name": "Cr0mb/Satoshi-Sweeper",
+      "owner": "Cr0mb",
       "description": "Satoshi Sweeper is a Bitcoin wallet generator and balance checker. It generates mnemonic phrases, derives Bitcoin addresses (Legacy, Nested SegWit, and Native SegWit), and checks their balances using the Blockstream API.",
+      "url": "https://github.com/Cr0mb/Satoshi-Sweeper",
       "language": "Python",
       "stars": 4,
       "forks": 0,
-      "url": "https://github.com/Cr0mb/Satoshi-Sweeper",
       "tags": [
         "biputils",
         "bitcoin",
@@ -831,84 +1390,114 @@
         "ethereum-stealer",
         "ethereum-wallet",
         "hashlib"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:50.274000",
+      "updated_at": "2025-05-16T10:37:50.274000",
+      "trend_date": "2025-05-16T10:37:50.274000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:50.274000"
     },
     {
       "id": 248,
       "name": "aerogear-android-security",
-      "owner": "aerogear-attic",
       "full_name": "aerogear-attic/aerogear-android-security",
+      "owner": "aerogear-attic",
       "description": "An Android API under AeroGear Crypto Java to provide easy way to use cryptography.",
+      "url": "https://github.com/aerogear-attic/aerogear-android-security",
       "language": "Java",
       "stars": 4,
       "forks": 10,
-      "url": "https://github.com/aerogear-attic/aerogear-android-security",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:20.139000",
+      "updated_at": "2025-05-16T10:40:20.139000",
+      "trend_date": "2025-05-16T10:40:20.139000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:20.139000"
     },
     {
       "id": 249,
       "name": "scrapi",
-      "owner": "lhazlewood",
       "full_name": "lhazlewood/scrapi",
+      "owner": "lhazlewood",
       "description": "Simple CRyptography API for Java",
+      "url": "https://github.com/lhazlewood/scrapi",
       "language": "Java",
       "stars": 4,
       "forks": 0,
-      "url": "https://github.com/lhazlewood/scrapi",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:22.413000",
+      "updated_at": "2025-05-16T10:40:22.413000",
+      "trend_date": "2025-05-16T10:40:22.413000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:22.414000"
     },
     {
       "id": 250,
       "name": "tscrypto",
-      "owner": "imclab",
       "full_name": "imclab/tscrypto",
+      "owner": "imclab",
       "description": "Threshold Cryptographic Backend for PKCS11 API",
+      "url": "https://github.com/imclab/tscrypto",
       "language": null,
       "stars": 4,
       "forks": 0,
-      "url": "https://github.com/imclab/tscrypto",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:24.687000",
+      "updated_at": "2025-05-16T10:40:24.687000",
+      "trend_date": "2025-05-16T10:40:24.687000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:24.688000"
     },
     {
       "id": 202,
       "name": "crypt_example_py",
-      "owner": "metahashorg",
       "full_name": "metahashorg/crypt_example_py",
+      "owner": "metahashorg",
       "description": "This repository contains a script written in Python that describes the algorithm for the Metahash address generation using cryptography module.",
+      "url": "https://github.com/metahashorg/crypt_example_py",
       "language": "Python",
       "stars": 3,
       "forks": 2,
-      "url": "https://github.com/metahashorg/crypt_example_py",
       "tags": [
         "api"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:53.600000",
+      "updated_at": "2025-05-16T10:37:53.600000",
+      "trend_date": "2025-05-16T10:37:53.600000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:53.601000"
     },
     {
       "id": 203,
       "name": "Code_Alpha",
-      "owner": "Coder-X15",
       "full_name": "Coder-X15/Code_Alpha",
+      "owner": "Coder-X15",
       "description": "Cryptography API for Python",
+      "url": "https://github.com/Coder-X15/Code_Alpha",
       "language": "Python",
       "stars": 3,
       "forks": 1,
-      "url": "https://github.com/Coder-X15/Code_Alpha",
       "tags": [
         "cryptography-api",
         "decoding",
         "mental-ability"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:56.728000",
+      "updated_at": "2025-05-16T10:37:56.728000",
+      "trend_date": "2025-05-16T10:37:56.728000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:56.728000"
     },
     {
       "id": 204,
       "name": "img_encryption_api",
-      "owner": "karthik0309",
       "full_name": "karthik0309/img_encryption_api",
+      "owner": "karthik0309",
       "description": "Image encryption with reversible data hiding",
+      "url": "https://github.com/karthik0309/img_encryption_api",
       "language": "Python",
       "stars": 3,
       "forks": 1,
-      "url": "https://github.com/karthik0309/img_encryption_api",
       "tags": [
         "aes-encryption",
         "cryptography",
@@ -916,149 +1505,204 @@
         "django-rest-framework",
         "pillow",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-16T10:37:59.869000",
+      "updated_at": "2025-05-16T10:37:59.869000",
+      "trend_date": "2025-05-16T10:37:59.869000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:37:59.869000"
     },
     {
       "id": 205,
       "name": "Dront-Python",
-      "owner": "Pavlo0963",
       "full_name": "Pavlo0963/Dront-Python",
+      "owner": "Pavlo0963",
       "description": "Dront is multi-language, cross-platform library that provides cryptographic APIs that are secure, easy to use correctly, and hard(er) to misuse.",
+      "url": "https://github.com/Pavlo0963/Dront-Python",
       "language": "Python",
       "stars": 3,
       "forks": 0,
-      "url": "https://github.com/Pavlo0963/Dront-Python",
       "tags": [
         "django",
         "django-framework",
         "docker-container",
         "python",
         "rest-api"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:03.021000",
+      "updated_at": "2025-05-16T10:38:03.021000",
+      "trend_date": "2025-05-16T10:38:03.021000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:03.021000"
     },
     {
       "id": 206,
       "name": "Crypto-Commando",
-      "owner": "tkovacic",
       "full_name": "tkovacic/Crypto-Commando",
+      "owner": "tkovacic",
       "description": "Automated python based cryptographic trading engine built using algorithmic indicators and market fitted deep neural networking models commissioned through CoinBase Pro API Platform by Tim Kovacic using CBPro SDK by DanPaguin",
+      "url": "https://github.com/tkovacic/Crypto-Commando",
       "language": "Python",
       "stars": 3,
       "forks": 0,
-      "url": "https://github.com/tkovacic/Crypto-Commando",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:06.053000",
+      "updated_at": "2025-05-16T10:38:06.053000",
+      "trend_date": "2025-05-16T10:38:06.053000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:06.053000"
     },
     {
       "id": 207,
       "name": "IMF",
-      "owner": "anshika1307-code",
       "full_name": "anshika1307-code/IMF",
+      "owner": "anshika1307-code",
       "description": "Chat messenger decryption and analysis software (Instant Messenger Forensic System) - assists investigators in accessing encrypted instant messenger databases and enables them to analyze the data from various aspects, such as identifying potential honeytraps. Technologies used include Python, cryptography, APIs, and machine learning. ",
+      "url": "https://github.com/anshika1307-code/IMF",
       "language": "Python",
       "stars": 3,
       "forks": 0,
-      "url": "https://github.com/anshika1307-code/IMF",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:09.249000",
+      "updated_at": "2025-05-16T10:38:09.249000",
+      "trend_date": "2025-05-16T10:38:09.249000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:09.250000"
     },
     {
       "id": 251,
       "name": "jpo-security-svcs",
-      "owner": "usdot-jpo-ode",
       "full_name": "usdot-jpo-ode/jpo-security-svcs",
+      "owner": "usdot-jpo-ode",
       "description": "This module exposes a RESTful API for performing cryptographic functions.",
+      "url": "https://github.com/usdot-jpo-ode/jpo-security-svcs",
       "language": "Java",
       "stars": 3,
       "forks": 3,
-      "url": "https://github.com/usdot-jpo-ode/jpo-security-svcs",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:26.952000",
+      "updated_at": "2025-05-16T10:40:26.952000",
+      "trend_date": "2025-05-16T10:40:26.952000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:26.953000"
     },
     {
       "id": 252,
       "name": "DL-crypto-api-auto-recommendation",
-      "owner": "Anya92929",
       "full_name": "Anya92929/DL-crypto-api-auto-recommendation",
+      "owner": "Anya92929",
       "description": "An open-sourced work for deep learning based solution of cryptographic API recommendation",
+      "url": "https://github.com/Anya92929/DL-crypto-api-auto-recommendation",
       "language": "Java",
       "stars": 3,
       "forks": 2,
-      "url": "https://github.com/Anya92929/DL-crypto-api-auto-recommendation",
-      "tags": []
-    },
-    {
-      "id": 209,
-      "name": "CookieLogin",
-      "owner": "daknuett",
-      "full_name": "daknuett/CookieLogin",
-      "description": "Login To Websites/APIs using Cryptographic Cookies",
-      "language": "Python",
-      "stars": 2,
-      "forks": 0,
-      "url": "https://github.com/daknuett/CookieLogin",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:29.221000",
+      "updated_at": "2025-05-16T10:40:29.221000",
+      "trend_date": "2025-05-16T10:40:29.221000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:29.222000"
     },
     {
       "id": 208,
       "name": "Cryptography-Rest_APIs",
-      "owner": "Amn04",
       "full_name": "Amn04/Cryptography-Rest_APIs",
+      "owner": "Amn04",
       "description": "This project is to create REST APIs for all cryptographic algorithms.",
+      "url": "https://github.com/Amn04/Cryptography-Rest_APIs",
       "language": "Python",
       "stars": 2,
       "forks": 2,
-      "url": "https://github.com/Amn04/Cryptography-Rest_APIs",
       "tags": [
         "aes-encryption",
         "cryptography",
         "rest-api",
         "rsa-cryptography"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:11.809000",
+      "updated_at": "2025-05-16T10:38:11.809000",
+      "trend_date": "2025-05-16T10:38:11.809000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:11.809000"
+    },
+    {
+      "id": 209,
+      "name": "CookieLogin",
+      "full_name": "daknuett/CookieLogin",
+      "owner": "daknuett",
+      "description": "Login To Websites/APIs using Cryptographic Cookies",
+      "url": "https://github.com/daknuett/CookieLogin",
+      "language": "Python",
+      "stars": 2,
+      "forks": 0,
+      "tags": [],
+      "created_at": "2025-05-16T10:38:14.862000",
+      "updated_at": "2025-05-16T10:38:14.862000",
+      "trend_date": "2025-05-16T10:38:14.862000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:14.862000"
     },
     {
       "id": 210,
       "name": "Private-Notes-back-end-API",
-      "owner": "claremw",
       "full_name": "claremw/Private-Notes-back-end-API",
+      "owner": "claremw",
       "description": "Employed the Python cryptography library to implement symmetric cryptographic primitives to ensure user privacy in a back-end API for a private notes application",
+      "url": "https://github.com/claremw/Private-Notes-back-end-API",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/claremw/Private-Notes-back-end-API",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:18.865000",
+      "updated_at": "2025-05-16T10:38:18.865000",
+      "trend_date": "2025-05-16T10:38:18.865000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:18.867000"
     },
     {
       "id": 211,
       "name": "cryptography_project_team7",
-      "owner": "CryptographyProject-Team7",
       "full_name": "CryptographyProject-Team7/cryptography_project_team7",
+      "owner": "CryptographyProject-Team7",
       "description": " Voice assistants are a very convenient feature increasingly being found on most smartphones and other home appliances. But as the companies behind voice assistants admit that our voice commands are being recorded for quality assurance purposes, the personal data of millions of consumers is at risk.  This leaves the possibility of hackers breaking into companies' databases and stealing our personal information, preferences and the structure of our voices which can be forged to sound like us.  Thus to mitigate the potential damage posed by this intrusion, we propose a system which converts the speech commands into text, encrypted using double key RSA, and hashed and salted to be stored anonymously so that the most hackers can get would be random texts of customer preferences. This model can also help to send secure voice messages from one device to another.  Using the speech to text function and the secured encryption and authentication system, voice messages can be used for convenience or for the visually impaired. To implement this model, we use socket connection and the Google Speech to Text API to emulate the voice assistants.  It is then encrypted by a modified RSA encryption system for encrypting the text and the key to decrypt the text. The ciphertext is then hashed with a salt to prevent easy decryption.",
+      "url": "https://github.com/CryptographyProject-Team7/cryptography_project_team7",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/CryptographyProject-Team7/cryptography_project_team7",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:22.823000",
+      "updated_at": "2025-05-16T10:38:22.823000",
+      "trend_date": "2025-05-16T10:38:22.823000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:22.824000"
     },
     {
       "id": 212,
       "name": "Authentication_Engine_Python_Flask",
-      "owner": "osmanGuler19",
       "full_name": "osmanGuler19/Authentication_Engine_Python_Flask",
+      "owner": "osmanGuler19",
       "description": "Making simple authorization API for projects. This is for understanding secure software development and cryptography principles",
+      "url": "https://github.com/osmanGuler19/Authentication_Engine_Python_Flask",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/osmanGuler19/Authentication_Engine_Python_Flask",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:27.685000",
+      "updated_at": "2025-05-16T10:38:27.685000",
+      "trend_date": "2025-05-16T10:38:27.685000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:27.686000"
     },
     {
       "id": 213,
       "name": "pykeys",
-      "owner": "agu3rra",
       "full_name": "agu3rra/pykeys",
+      "owner": "agu3rra",
       "description": "Securely store and use your API keys",
+      "url": "https://github.com/agu3rra/pykeys",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/agu3rra/pykeys",
       "tags": [
         "api",
         "coding",
@@ -1066,35 +1710,45 @@
         "key",
         "secure",
         "token"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:31.268000",
+      "updated_at": "2025-05-16T10:38:31.268000",
+      "trend_date": "2025-05-16T10:38:31.268000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:31.269000"
     },
     {
       "id": 214,
       "name": "kim-ir-sen-project",
-      "owner": "Vadim-Burns",
       "full_name": "Vadim-Burns/kim-ir-sen-project",
+      "owner": "Vadim-Burns",
       "description": ":lock::floppy_disk:Kim Ir Sen project provides ability to create small encrypted notes. This project has API.",
+      "url": "https://github.com/Vadim-Burns/kim-ir-sen-project",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/Vadim-Burns/kim-ir-sen-project",
       "tags": [
         "cryptography",
         "flask",
         "peewee",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:34.291000",
+      "updated_at": "2025-05-16T10:38:34.291000",
+      "trend_date": "2025-05-16T10:38:34.291000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:34.291000"
     },
     {
       "id": 215,
       "name": "quantum_sphincs_api_demo",
-      "owner": "brunoleomenezes",
       "full_name": "brunoleomenezes/quantum_sphincs_api_demo",
+      "owner": "brunoleomenezes",
       "description": "Demonstration of post-quantum cryptography resilience using SPHINCS+ integrated with simulated quantum attacks. This project combines SPHINCS+ digital signatures with quantum circuit simulations built with Qiskit. A REST API is included to enable automated and remote execution of tests and attacks, making the framework suitable.",
+      "url": "https://github.com/brunoleomenezes/quantum_sphincs_api_demo",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/brunoleomenezes/quantum_sphincs_api_demo",
       "tags": [
         "cryptography",
         "cybersecurity",
@@ -1109,18 +1763,23 @@
         "quantum-computing",
         "sphincs",
         "sphincsplus"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:36.845000",
+      "updated_at": "2025-05-16T10:38:36.845000",
+      "trend_date": "2025-05-16T10:38:36.845000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:36.845000"
     },
     {
       "id": 216,
       "name": "cryptosnake",
-      "owner": "reppon97",
       "full_name": "reppon97/cryptosnake",
+      "owner": "reppon97",
       "description": "Simple, unofficial python wrapper for Binance API. You'll find this easy-to-use package helpful if you're interested in general market data and cryptocurrency values. You don't need to have a Binance account or API Key since you can't purchase/trade cryptocurrencies using this package.",
+      "url": "https://github.com/reppon97/cryptosnake",
       "language": "Python",
       "stars": 2,
       "forks": 2,
-      "url": "https://github.com/reppon97/cryptosnake",
       "tags": [
         "api",
         "binance",
@@ -1137,18 +1796,23 @@
         "python",
         "python3",
         "statistics"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:39.360000",
+      "updated_at": "2025-05-16T10:38:39.360000",
+      "trend_date": "2025-05-16T10:38:39.360000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:39.361000"
     },
     {
       "id": 217,
       "name": "ITBA-Proyecto-Final-Certificacion-Profesional-Python",
-      "owner": "GonzaloMartin",
       "full_name": "GonzaloMartin/ITBA-Proyecto-Final-Certificacion-Profesional-Python",
+      "owner": "GonzaloMartin",
       "description": "Proyecto Final de la Certificación Profesional en Python, dictado por ITBA. Instituto Tecnológico de Buenos Aires.",
+      "url": "https://github.com/GonzaloMartin/ITBA-Proyecto-Final-Certificacion-Profesional-Python",
       "language": "Python",
       "stars": 2,
       "forks": 1,
-      "url": "https://github.com/GonzaloMartin/ITBA-Proyecto-Final-Certificacion-Profesional-Python",
       "tags": [
         "api",
         "console-application",
@@ -1157,58 +1821,78 @@
         "network-programming",
         "polygon",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:42.394000",
+      "updated_at": "2025-05-16T10:38:42.394000",
+      "trend_date": "2025-05-16T10:38:42.394000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:42.395000"
     },
     {
       "id": 218,
       "name": "Crypto-Commando-Monitor",
-      "owner": "tkovacic",
       "full_name": "tkovacic/Crypto-Commando-Monitor",
+      "owner": "tkovacic",
       "description": "Automated python based cryptographic trading engine built using hard coded rulesets based on conceptualized and customized delegation levels commissioned through CoinBase Pro API Platform by Tim Kovacic using CBPro SDK by DanPaguin",
+      "url": "https://github.com/tkovacic/Crypto-Commando-Monitor",
       "language": "Python",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/tkovacic/Crypto-Commando-Monitor",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:45.559000",
+      "updated_at": "2025-05-16T10:38:45.559000",
+      "trend_date": "2025-05-16T10:38:45.559000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:45.559000"
     },
     {
       "id": 253,
       "name": "Apigee-CustomPolicy-RsaCrypto",
-      "owner": "DinoChiesa",
       "full_name": "DinoChiesa/Apigee-CustomPolicy-RsaCrypto",
+      "owner": "DinoChiesa",
       "description": "This is a custom Apigee policy, implemented in Java, that performs RSA Encryption and Decryption of data or message payloads, or RSA signing of data or message payloads, or verification of such signatures.",
+      "url": "https://github.com/DinoChiesa/Apigee-CustomPolicy-RsaCrypto",
       "language": "Java",
       "stars": 2,
       "forks": 4,
-      "url": "https://github.com/DinoChiesa/Apigee-CustomPolicy-RsaCrypto",
       "tags": [
         "apigee",
         "cryptography",
         "rsa"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:31.506000",
+      "updated_at": "2025-05-16T10:40:31.506000",
+      "trend_date": "2025-05-16T10:40:31.506000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:31.507000"
     },
     {
       "id": 254,
       "name": "cryptography",
-      "owner": "ericbalawejder",
       "full_name": "ericbalawejder/cryptography",
+      "owner": "ericbalawejder",
       "description": "A collection of modern cryptography practices with the Java Security API.",
+      "url": "https://github.com/ericbalawejder/cryptography",
       "language": "Java",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/ericbalawejder/cryptography",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:33.773000",
+      "updated_at": "2025-05-16T10:40:33.773000",
+      "trend_date": "2025-05-16T10:40:33.773000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:33.773000"
     },
     {
       "id": 255,
       "name": "cryptography",
-      "owner": "AtifAbbAsi19",
       "full_name": "AtifAbbAsi19/cryptography",
+      "owner": "AtifAbbAsi19",
       "description": "Cryptography using Conceal Android Conceal provides a set of Java APIs to perform cryptography on Android. It was designed to be able to encrypt large files on disk in a fast and memory efficient manner.",
+      "url": "https://github.com/AtifAbbAsi19/cryptography",
       "language": "Java",
       "stars": 2,
       "forks": 1,
-      "url": "https://github.com/AtifAbbAsi19/cryptography",
       "tags": [
         "android",
         "cryptography",
@@ -1217,71 +1901,96 @@
         "facebook",
         "java",
         "keychain"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:36.083000",
+      "updated_at": "2025-05-16T10:40:36.083000",
+      "trend_date": "2025-05-16T10:40:36.083000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:36.084000"
     },
     {
       "id": 256,
       "name": "poc-spring-boot-cryptography",
-      "owner": "miguel-armas-abt",
       "full_name": "miguel-armas-abt/poc-spring-boot-cryptography",
+      "owner": "miguel-armas-abt",
       "description": "[POC] Consumo de API RESTful con Spring Boot, aplicado al caso de uso \"Consulta de clientes y encriptación del password\". Implementa RestTemplate, H2, modos de encriptación AES, RSA.",
+      "url": "https://github.com/miguel-armas-abt/poc-spring-boot-cryptography",
       "language": "Java",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/miguel-armas-abt/poc-spring-boot-cryptography",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:38.386000",
+      "updated_at": "2025-05-16T10:40:38.386000",
+      "trend_date": "2025-05-16T10:40:38.386000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:38.388000"
     },
     {
       "id": 257,
       "name": "common-crypto",
-      "owner": "twuni",
       "full_name": "twuni/common-crypto",
+      "owner": "twuni",
       "description": "This library contains a lightweight API for cryptographic functions, particularly with respect to public key cryptography.",
+      "url": "https://github.com/twuni/common-crypto",
       "language": "Java",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/twuni/common-crypto",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:40.696000",
+      "updated_at": "2025-05-16T10:40:40.696000",
+      "trend_date": "2025-05-16T10:40:40.696000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:40.696000"
     },
     {
       "id": 258,
       "name": "cloudproof_java",
-      "owner": "Cosmian",
       "full_name": "Cosmian/cloudproof_java",
+      "owner": "Cosmian",
       "description": "The Java API library to Cosmian Cloudproof Encryption",
+      "url": "https://github.com/Cosmian/cloudproof_java",
       "language": "Java",
       "stars": 2,
       "forks": 1,
-      "url": "https://github.com/Cosmian/cloudproof_java",
       "tags": [
         "cloud",
         "cloudproof",
         "cryptography",
         "java"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:42.972000",
+      "updated_at": "2025-05-16T10:40:42.972000",
+      "trend_date": "2025-05-16T10:40:42.972000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:42.973000"
     },
     {
       "id": 259,
       "name": "SecureDataTransmission",
-      "owner": "suvadityamuk",
       "full_name": "suvadityamuk/SecureDataTransmission",
+      "owner": "suvadityamuk",
       "description": "Fast and simple client to encrypt and decrypt data, built on Java's cryptographic APIs. ",
+      "url": "https://github.com/suvadityamuk/SecureDataTransmission",
       "language": "Java",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/suvadityamuk/SecureDataTransmission",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:40:45.554000",
+      "updated_at": "2025-05-16T10:40:45.554000",
+      "trend_date": "2025-05-16T10:40:45.554000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:45.554000"
     },
     {
       "id": 260,
       "name": "libsilence-java",
-      "owner": "delthas",
       "full_name": "delthas/libsilence-java",
+      "owner": "delthas",
       "description": "Lightweight API for the Silence protocol",
+      "url": "https://github.com/delthas/libsilence-java",
       "language": "Java",
       "stars": 2,
       "forks": 0,
-      "url": "https://github.com/delthas/libsilence-java",
       "tags": [
         "cryptography",
         "java-8",
@@ -1289,152 +1998,207 @@
         "sms",
         "smssecure",
         "textsecure"
-      ]
+      ],
+      "created_at": "2025-05-16T10:40:47.847000",
+      "updated_at": "2025-05-16T10:40:47.847000",
+      "trend_date": "2025-05-16T10:40:47.847000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:40:47.848000"
     },
     {
       "id": 219,
       "name": "cryptography",
-      "owner": "boterop",
       "full_name": "boterop/cryptography",
+      "owner": "boterop",
       "description": "Cryptography API",
+      "url": "https://github.com/boterop/cryptography",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/boterop/cryptography",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:48.719000",
+      "updated_at": "2025-05-16T10:38:48.719000",
+      "trend_date": "2025-05-16T10:38:48.719000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:48.719000"
     },
     {
       "id": 220,
       "name": "CryptoAPI",
-      "owner": "DrGregDoyle",
       "full_name": "DrGregDoyle/CryptoAPI",
+      "owner": "DrGregDoyle",
       "description": "API for cryptographic tools",
+      "url": "https://github.com/DrGregDoyle/CryptoAPI",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/DrGregDoyle/CryptoAPI",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:51.700000",
+      "updated_at": "2025-05-16T10:38:51.700000",
+      "trend_date": "2025-05-16T10:38:51.700000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:51.700000"
     },
     {
       "id": 221,
       "name": "CryptographyProjects",
-      "owner": "krypt0k1",
       "full_name": "krypt0k1/CryptographyProjects",
+      "owner": "krypt0k1",
       "description": "Focuses on secure cryptographic processes and hardware interactions. Includes tools for managing PKCS#11 infrastructures, exporting public keys, performing encryption and decryption operations, uploading x.509 certificates to Hardware Security Modules (HSMs), and signing files via a Flask API. ",
+      "url": "https://github.com/krypt0k1/CryptographyProjects",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/krypt0k1/CryptographyProjects",
       "tags": [
         "cryptography",
         "pkcs11",
         "pkcs11-tool"
-      ]
+      ],
+      "created_at": "2025-05-16T10:38:54.263000",
+      "updated_at": "2025-05-16T10:38:54.263000",
+      "trend_date": "2025-05-16T10:38:54.263000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:54.263000"
     },
     {
       "id": 222,
       "name": "opentls",
-      "owner": "joao-gi",
       "full_name": "joao-gi/opentls",
+      "owner": "joao-gi",
       "description": "Cryptographic APIs for Python using OpenSSL",
+      "url": "https://github.com/joao-gi/opentls",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/joao-gi/opentls",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:38:58.834000",
+      "updated_at": "2025-05-16T10:38:58.834000",
+      "trend_date": "2025-05-16T10:38:58.834000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:38:58.834000"
     },
     {
       "id": 223,
       "name": "rsa-cryptography-auth",
-      "owner": "DennysOliveira",
       "full_name": "DennysOliveira/rsa-cryptography-auth",
+      "owner": "DennysOliveira",
       "description": "A Python RSA Encrypted Authentication CLI Application and Flask API as an experimentation for learning how to build a secure data transfer for a real world scenario.",
+      "url": "https://github.com/DennysOliveira/rsa-cryptography-auth",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/DennysOliveira/rsa-cryptography-auth",
       "tags": [
         "cli-app",
         "python",
         "rsa-cryptography"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:02.535000",
+      "updated_at": "2025-05-16T10:39:02.535000",
+      "trend_date": "2025-05-16T10:39:02.535000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:02.535000"
     },
     {
       "id": 224,
       "name": "Elliptic-Curve-Cryptography",
-      "owner": "YIboupm",
       "full_name": "YIboupm/Elliptic-Curve-Cryptography",
+      "owner": "YIboupm",
       "description": "This project provides an API service using FastAPI to encrypt and decrypt files securely with Elliptic Curve Cryptography (ECC) and AES. It ensures data confidentiality by combining asymmetric and symmetric encryption methods.",
+      "url": "https://github.com/YIboupm/Elliptic-Curve-Cryptography",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/YIboupm/Elliptic-Curve-Cryptography",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:06.739000",
+      "updated_at": "2025-05-16T10:39:06.739000",
+      "trend_date": "2025-05-16T10:39:06.739000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:06.739000"
     },
     {
       "id": 225,
       "name": "api_misuse",
-      "owner": "atharvasalunke",
       "full_name": "atharvasalunke/api_misuse",
+      "owner": "atharvasalunke",
       "description": "Python tool to analyze cryptographic API misuse in open source projects",
+      "url": "https://github.com/atharvasalunke/api_misuse",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/atharvasalunke/api_misuse",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:09.817000",
+      "updated_at": "2025-05-16T10:39:09.817000",
+      "trend_date": "2025-05-16T10:39:09.817000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:09.818000"
     },
     {
       "id": 226,
       "name": "Cryptographic_Pre-Commitments",
-      "owner": "richamehta87",
       "full_name": "richamehta87/Cryptographic_Pre-Commitments",
+      "owner": "richamehta87",
       "description": "RESTful APIs that demo principles of cryptographic pre-commitments",
+      "url": "https://github.com/richamehta87/Cryptographic_Pre-Commitments",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/richamehta87/Cryptographic_Pre-Commitments",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:12.374000",
+      "updated_at": "2025-05-16T10:39:12.374000",
+      "trend_date": "2025-05-16T10:39:12.374000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:12.374000"
     },
     {
       "id": 227,
       "name": "REST-Key-Xfer",
-      "owner": "ThalesGroup",
       "full_name": "ThalesGroup/REST-Key-Xfer",
+      "owner": "ThalesGroup",
       "description": "Utility for reading and writing cryptographic key material using REST APIs",
+      "url": "https://github.com/ThalesGroup/REST-Key-Xfer",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/ThalesGroup/REST-Key-Xfer",
-      "tags": []
+      "tags": [],
+      "created_at": "2025-05-16T10:39:17.070000",
+      "updated_at": "2025-05-16T10:39:17.070000",
+      "trend_date": "2025-05-16T10:39:17.070000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:17.070000"
     },
     {
       "id": 228,
       "name": "cryptcp-api",
-      "owner": "molodsom",
       "full_name": "molodsom/cryptcp-api",
-      "description": null,
+      "owner": "molodsom",
+      "description": "",
+      "url": "https://github.com/molodsom/cryptcp-api",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/molodsom/cryptcp-api",
       "tags": [
         "cryptcp",
         "cryptcp-api",
         "cryptography",
         "cryptopro",
         "cryptoprocsp"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:22.420000",
+      "updated_at": "2025-05-16T10:39:22.420000",
+      "trend_date": "2025-05-16T10:39:22.420000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:22.420000"
     },
     {
       "id": 229,
       "name": "password-app",
-      "owner": "4bm4",
       "full_name": "4bm4/password-app",
+      "owner": "4bm4",
       "description": "Password API management ",
+      "url": "https://github.com/4bm4/password-app",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/4bm4/password-app",
       "tags": [
         "api",
         "cryptography",
@@ -1442,35 +2206,45 @@
         "python",
         "security",
         "sqlite"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:24.979000",
+      "updated_at": "2025-05-16T10:39:24.979000",
+      "trend_date": "2025-05-16T10:39:24.979000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:24.980000"
     },
     {
       "id": 230,
       "name": "blockrypt",
-      "owner": "samarthkulshrestha",
       "full_name": "samarthkulshrestha/blockrypt",
+      "owner": "samarthkulshrestha",
       "description": "minimal blockchain implemented in python. communicates over a REST API",
+      "url": "https://github.com/samarthkulshrestha/blockrypt",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/samarthkulshrestha/blockrypt",
       "tags": [
         "blockchain",
         "cryptography",
         "python",
         "rest-api"
-      ]
+      ],
+      "created_at": "2025-05-16T10:39:28.475000",
+      "updated_at": "2025-05-16T10:39:28.475000",
+      "trend_date": "2025-05-16T10:39:28.475000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-16T10:39:28.475000"
     },
     {
       "id": 898,
       "name": "CryptoStrings",
-      "owner": "CatchySmile",
       "full_name": "CatchySmile/CryptoStrings",
+      "owner": "CatchySmile",
       "description": "Cryptographically secure random generator for strings, numbers, passwords, API keys, and bytes",
+      "url": "https://github.com/CatchySmile/CryptoStrings",
       "language": "Python",
       "stars": 1,
       "forks": 0,
-      "url": "https://github.com/CatchySmile/CryptoStrings",
       "tags": [
         "api",
         "cryptography",
@@ -1478,7 +2252,12 @@
         "encryption",
         "package",
         "python"
-      ]
+      ],
+      "created_at": "2025-05-29T17:41:50.934000",
+      "updated_at": "2025-05-29T17:41:50.934000",
+      "trend_date": "2025-05-29T17:41:50.934000",
+      "keyword": "Cryptography API",
+      "scraped_at": "2025-05-29T17:41:50.937000"
     }
   ]
 }

@@ -7,8 +7,8 @@
 确保你的系统已安装：
 
 - **Node.js 18+** - [下载地址](https://nodejs.org/)
-- **Python 3.12+** - [下载地址](https://www.python.org/)
-- **PostgreSQL 15+** - [下载地址](https://www.postgresql.org/)
+- **Python 3.8+** - [下载地址](https://www.python.org/)
+- **PostgreSQL 13+** - [下载地址](https://www.postgresql.org/)
 - **Git** - [下载地址](https://git-scm.com/)
 
 ## ⚡ 一键启动（推荐）
@@ -42,9 +42,9 @@ npm run setup:all
 npm install
 
 # 安装 Python 依赖
-cd scraper
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+cd backend
+pip install -r requirements/base.txt
+pip install -r requirements/dev.txt
 cd ..
 ```
 
@@ -76,13 +76,13 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ```bash
 # 推送数据库模式
-npx prisma db push
+npm run prisma:push
 
 # 生成 Prisma 客户端
-npx prisma generate
+npm run prisma:generate
 
 # （可选）填充测试数据
-npx prisma db seed
+npm run prisma:seed
 ```
 
 #### 4. 🧪 验证安装
@@ -92,9 +92,7 @@ npx prisma db seed
 npm run test
 
 # 测试后端
-cd scraper
-python -m pytest
-cd ..
+npm run test:backend
 
 # 启动开发服务器
 npm run dev
@@ -109,8 +107,8 @@ npm run dev
 npm run dev
 
 # 在新终端中启动爬虫（可选）
-cd scraper
-python main.py
+cd backend
+python -m scraper.main
 ```
 
 访问 http://localhost:3000 查看应用。
@@ -118,17 +116,20 @@ python main.py
 ### 🕷️ 运行爬虫
 
 ```bash
-# 进入爬虫目录
-cd scraper
+# 进入后端目录
+cd backend
 
 # 运行关键词爬虫
-python keyword_scraper.py
+python -m scraper.keyword_scraper
 
 # 运行数据分析
-python data_analysis.py
+python -m scraper.analyzers.data_analysis
 
 # 运行完整流程
-python main.py
+python -m scraper.main
+
+# 启动定时任务调度器
+python -m scraper.scheduler
 ```
 
 ### 📊 查看分析结果

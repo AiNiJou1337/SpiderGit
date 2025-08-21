@@ -44,33 +44,38 @@ GitHub趋势爬虫与分析平台是一个全栈应用程序，自动抓取GitHu
     <tr>
       <td>
         <ul>
-          <li>Next.js 13</li>
-          <li>React</li>
+          <li>Next.js 13.5.6</li>
+          <li>React 18</li>
           <li>TypeScript</li>
           <li>TailwindCSS</li>
-          <li>Shadcn UI</li>
+          <li>Shadcn/ui</li>
           <li>Recharts</li>
+          <li>Lucide React</li>
         </ul>
       </td>
       <td>
         <ul>
           <li>Next.js API Routes</li>
-          <li>Python</li>
-          <li>FastAPI</li>
+          <li>Python 3.8+</li>
+          <li>Requests</li>
+          <li>aiohttp</li>
+          <li>Pandas</li>
         </ul>
       </td>
       <td>
         <ul>
           <li>PostgreSQL</li>
           <li>Prisma ORM</li>
+          <li>psycopg2</li>
         </ul>
       </td>
       <td>
         <ul>
           <li>Python</li>
-          <li>BeautifulSoup</li>
+          <li>BeautifulSoup4</li>
           <li>Requests</li>
-          <li>GitHub API</li>
+          <li>GitHub REST API</li>
+          <li>Token 管理</li>
         </ul>
       </td>
     </tr>
@@ -95,21 +100,21 @@ graph TD
 <div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
     <p><strong>首页仪表盘</strong></p>
-    <img src="public/dashboard.png" alt="仪表盘" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <img src="public/img/dashboard.png" alt="仪表盘" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
     <p><strong>关键词分析</strong></p>
-    <img src="public/keyword-analysis.png" alt="关键词分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <img src="public/img/keyword-analysis.png" alt="关键词分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 <div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>语言分布</strong></p>
-    <img src="public/language-distribution.png" alt="语言分布" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>分析结果</strong></p>
+    <img src="public/img/keyword-detail1.png" alt="详细分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>月度趋势</strong></p>
-    <img src="public/monthly-trends.png" alt="月度趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>趋势分析</strong></p>
+    <img src="public/img/trends.png" alt="趋势分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 
@@ -118,7 +123,7 @@ graph TD
 ### 环境要求
 
 - Node.js 18+
-- Python 3.12+
+- Python 3.8+
 - PostgreSQL 数据库
 
 ### 安装步骤
@@ -126,7 +131,7 @@ graph TD
 1. **克隆仓库**
    ```bash
    git clone https://github.com/AiNiJou1337/github-trending-spider
-   cd github-trend-crawler
+   cd github-trending-spider
    ```
 
 2. **安装依赖**
@@ -135,10 +140,10 @@ graph TD
    npm install
 
    # Python 依赖
-   pip install -r scraper/requirements.txt
+   pip install -r backend/requirements/base.txt
 
    # 开发和测试依赖（可选）
-   pip install -r scraper/requirements-dev.txt
+   pip install -r backend/requirements/dev.txt
    ```
 
 3. **配置环境**
@@ -148,14 +153,18 @@ graph TD
 
    # 编辑 .env 文件，至少设置：
    # - DATABASE_URL（PostgreSQL 连接）
-   # - 可选：PYTHON_BIN（python 解释器，默认自动检测）
    # - 可选：GITHUB_TOKEN_MAIN（GitHub API Token，用于更高速率）
    # - 可选：GITHUB_TOKEN_BACKUP1, GITHUB_TOKEN_BACKUP2（备用 Token）
    ```
 
 4. **初始化数据库**
    ```bash
-   npx prisma db push
+   # 使用 Prisma 初始化数据库
+   npm run prisma:push
+   npm run prisma:generate
+
+   # 可选：填充种子数据
+   npm run prisma:seed
    ```
 
 5. **启动应用**
@@ -163,7 +172,7 @@ graph TD
    npm run dev
    ```
 
-   可以访问 http://localhost:3000 查看
+   可以访问 http://localhost:3000 查看应用
 
 ## 📖 使用指南
 
@@ -188,11 +197,20 @@ graph TD
 可以通过Python脚本自定义分析：
 
 ```bash
-# 分析特定关键词
-python analysis/data_analysis.py --keyword "机器学习" --detailed
+# 进入后端目录
+cd backend
 
-# 生成月度趋势数据
-python analysis/analyze_trends.py --period monthly --languages python,javascript
+# 运行关键词爬虫
+python -m scraper.keyword_scraper
+
+# 运行数据分析
+python -m scraper.analyzers.data_analysis
+
+# 运行完整的爬虫流程
+python -m scraper.main
+
+# 启动定时任务调度器
+python -m scraper.scheduler
 ```
 
 ## 📝 开发文档
@@ -200,17 +218,26 @@ python analysis/analyze_trends.py --period monthly --languages python,javascript
 ### 项目结构
 
 ```
-github-trend-crawler/
-├── app/                   # Next.js应用程序目录
-│   ├── api/               # API路由
-│   ├── (routes)/          # 页面路由
-│   └── components/        # 页面级组件
-├── components/            # 共享UI组件
-├── lib/                   # 工具库和共享函数
+github-trending-scraper/
+├── app/                   # Next.js App Router 页面
+│   ├── api/               # API 路由端点
+│   ├── dashboard/         # 仪表盘页面
+│   ├── keywords/          # 关键词分析页面
+│   ├── daily/             # 日趋势页面
+│   ├── weekly/            # 周趋势页面
+│   └── monthly/           # 月趋势页面
+├── src/                   # 前端源码
+│   ├── components/        # React 组件
+│   ├── lib/               # 工具库和共享函数
+│   └── types/             # TypeScript 类型定义
+├── backend/               # Python 后端
+│   ├── scraper/           # 爬虫系统
+│   └── requirements/      # Python 依赖
+├── database/              # 数据库配置
+│   └── prisma/            # Prisma 模式和迁移
 ├── public/                # 静态资源
-├── prisma/                # Prisma数据库模型
-├── scraper/               # 爬虫代码
-└── analysis/              # 数据分析代码
+├── tests/                 # 测试文件
+└── docs/                  # 项目文档
 ```
 
 ### 核心模块
@@ -226,12 +253,15 @@ github-trend-crawler/
 |---------------------|------|------|
 | `/api/stats`        | 获取总体统计数据 | GET |
 | `/api/keywords`     | 管理关键词 | GET, POST |
+| `/api/keywords/[id]` | 获取关键词详情 | GET |
 | `/api/trending`     | 获取趋势数据 | GET |
 | `/api/repositories` | 查询仓库数据 | GET |
-| `/api/analysis`     | 控制爬虫任务 | POST |
+| `/api/libraries`    | 获取库分析数据 | GET |
+| `/api/analysis`     | 数据分析接口 | GET, POST |
 | `/api/crawl`        | 控制爬虫任务 | POST |
-| `/api/crawl`        | 控制爬虫任务 | POST |
-详细API文档请参见 [API文档](./API.md)
+| `/api/export`       | 数据导出接口 | GET |
+
+详细API文档请参见 [架构文档](./docs/ARCHITECTURE.md)
 
 ## 🧪 测试
 
@@ -251,6 +281,9 @@ npm run test:backend
 
 # 生成覆盖率报告
 npm run test:coverage
+
+# 代码质量检查
+npm run ci:check
 ```
 
 ### 测试覆盖
@@ -258,9 +291,10 @@ npm run test:coverage
 - ✅ **前端测试**：API 路由、组件渲染、用户交互
 - ✅ **后端测试**：爬虫逻辑、数据处理、Token 管理
 - ✅ **集成测试**：数据库操作、API 集成
-- ✅ **CI/CD**：自动化质量检查和部署
+- ✅ **代码质量**：ESLint、TypeScript、Flake8、Black
+- ✅ **自动化**：GitHub Actions CI/CD
 
-详细测试指南请参见 [测试文档](./TESTING.md)
+详细测试指南请参见 [测试文档](./docs/TESTING.md)
 
 ### CI/CD 状态
 
@@ -286,11 +320,26 @@ npm run test:coverage
 
 ## 🤝 贡献
 
-欢迎贡献代码、报告问题或提出改进建议！请查看[贡献指南](CONTRIBUTING.md)了解详情。
+欢迎贡献代码、报告问题或提出改进建议！
+
+### 贡献方式
+- 🐛 报告Bug：在Issues中提交问题报告
+- 💡 功能建议：提出新功能或改进建议
+- 📝 文档改进：完善项目文档
+- 🔧 代码贡献：提交Pull Request
+
+### 开发指南
+1. Fork 项目仓库
+2. 创建功能分支：`git checkout -b feature/amazing-feature`
+3. 提交更改：`git commit -m 'Add amazing feature'`
+4. 推送分支：`git push origin feature/amazing-feature`
+5. 创建Pull Request
+
+详细贡献指南请参见 [架构文档](./docs/ARCHITECTURE.md)
 
 ---
 
 <div align="center">
   <p>用❤️打造 | 基于Next.js, Python和PostgreSQL</p>
-  <p>© 2023 GitHub趋势爬虫团队</p>
+  <p>© 2024 GitHub趋势爬虫团队</p>
 </div>

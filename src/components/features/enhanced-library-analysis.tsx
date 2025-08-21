@@ -57,31 +57,76 @@ export function EnhancedLibraryAnalysis({
       setLoading(true)
 
       try {
-        // 先获取所有库的基础数据
-        const basicLibraries = await Promise.all(
-          Object.entries(libraryData).map(async ([name, count]) => {
-            const repositoryCount = await getActualRepositoryCount(name)
-            return {
-              name,
-              count,
-              repositoryCount,
-              repositories: await generateRealRepositories(name, repositoryCount),
-              category: getCategoryForLibrary(name)
+        // 首先尝试获取预计算的趋势数据
+        let precomputedTrends: Record<string, any> = {}
+        let hasPrecomputedTrends = false
+
+        if (keyword) {
+          try {
+            const response = await fetch(`/api/analysis?keyword=${encodeURIComponent(keyword)}`)
+            if (response.ok) {
+              const analysisData = await response.json()
+              precomputedTrends = analysisData.trends?.libraries || {}
+              hasPrecomputedTrends = Object.keys(precomputedTrends).length > 0
+
+              if (hasPrecomputedTrends) {
+                console.log('🚀 使用预计算的趋势数据，跳过重复计算')
+              }
             }
-          })
-        )
+          } catch (error) {
+            console.warn('获取预计算趋势数据失败，将使用实时计算:', error)
+          }
+        }
 
-        // 计算统计指标用于趋势判断
-        const calculatedMetrics = calculateTrendMetrics(basicLibraries.map(lib => lib.count))
-        setTrendMetrics(calculatedMetrics)
+        if (hasPrecomputedTrends) {
+          // 使用预计算的趋势数据（性能优化路径）
+          const enhancedLibraries: LibraryInfo[] = await Promise.all(
+            Object.entries(libraryData).map(async ([name, count]) => {
+              const trendData = precomputedTrends[name] || { trend: 'stable', category: 'other' }
+              const repositoryCount = await getActualRepositoryCount(name)
 
-        // 为每个库计算趋势
-        const enhancedLibraries: LibraryInfo[] = basicLibraries.map(lib => ({
-          ...lib,
-          trend: calculateTrendWithMetrics(lib.count, calculatedMetrics)
-        }))
+              return {
+                name,
+                count,
+                repositoryCount,
+                repositories: await generateRealRepositories(name, repositoryCount),
+                trend: trendData.trend as 'up' | 'down' | 'stable',
+                category: trendData.category || getCategoryForLibrary(name)
+              }
+            })
+          )
 
-        setLibraries(enhancedLibraries)
+          setLibraries(enhancedLibraries)
+        } else {
+          // 降级到实时计算（兼容旧数据或无预计算数据的情况）
+          console.log('⚡ 使用实时计算趋势数据')
+
+          // 先获取所有库的基础数据
+          const basicLibraries = await Promise.all(
+            Object.entries(libraryData).map(async ([name, count]) => {
+              const repositoryCount = await getActualRepositoryCount(name)
+              return {
+                name,
+                count,
+                repositoryCount,
+                repositories: await generateRealRepositories(name, repositoryCount),
+                category: getCategoryForLibrary(name)
+              }
+            })
+          )
+
+          // 计算统计指标用于趋势判断
+          const calculatedMetrics = calculateTrendMetrics(basicLibraries.map(lib => lib.count))
+          setTrendMetrics(calculatedMetrics)
+
+          // 为每个库计算趋势
+          const enhancedLibraries: LibraryInfo[] = basicLibraries.map(lib => ({
+            ...lib,
+            trend: calculateTrendWithMetrics(lib.count, calculatedMetrics)
+          }))
+
+          setLibraries(enhancedLibraries)
+        }
       } catch (error) {
         console.error('加载库数据失败:', error)
         // 降级到模拟数据，但仍使用统计学趋势计算
