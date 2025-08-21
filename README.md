@@ -18,7 +18,7 @@
 GitHub趋势爬虫与分析平台是一个全栈应用程序，自动抓取GitHub上热门仓库的数据，并通过先进的数据可视化技术呈现开源社区的发展趋势。系统支持多种编程语言的数据分析，帮助开发者洞察技术潮流，发现优质项目。
 
 <div align="center">
-  <img src="public/dashboard.png" alt="仪表盘展示" width="80%" style="max-width: 800px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
+  <img src="public/img/dashboard.png" alt="仪表盘展示" width="80%" style="max-width: 800px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
 </div>
 
 ## ✨ 功能特性
@@ -103,18 +103,47 @@ graph TD
     <img src="public/img/dashboard.png" alt="仪表盘" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>关键词分析</strong></p>
-    <img src="public/img/keyword-analysis.png" alt="关键词分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>关键词总览</strong></p>
+    <img src="public/img/keywords_all.png" alt="关键词总览" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 <div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>分析结果</strong></p>
-    <img src="public/img/keyword-detail1.png" alt="详细分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>关键词详细分析</strong></p>
+    <img src="public/img/keywords_detail1.png" alt="详细分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
   <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>趋势分析</strong></p>
-    <img src="public/img/trends.png" alt="趋势分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>数据可视化</strong></p>
+    <img src="public/img/keywords_detail2.png" alt="数据可视化" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+    <p><strong>库分析与趋势</strong></p>
+    <img src="public/img/keywords_detail3.png" alt="库分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+    <p><strong>标签分析</strong></p>
+    <img src="public/img/keywords_detail4.png" alt="标签分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+    <p><strong>日趋势分析</strong></p>
+    <img src="public/img/daily.png" alt="日趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+    <p><strong>周趋势分析</strong></p>
+    <img src="public/img/weekly.png" alt="周趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>月趋势分析</strong></p>
+    <img src="public/img/monthly.png" alt="月趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 
@@ -130,8 +159,8 @@ graph TD
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/AiNiJou1337/github-trending-spider
-   cd github-trending-spider
+   git clone https://github.com/AiNiJou1337/SpiderGit.git
+   cd SpiderGit
    ```
 
 2. **安装依赖**
@@ -218,7 +247,7 @@ python -m scraper.scheduler
 ### 项目结构
 
 ```
-github-trending-scraper/
+SpiderGit/
 ├── app/                   # Next.js App Router 页面
 │   ├── api/               # API 路由端点
 │   ├── dashboard/         # 仪表盘页面
@@ -232,12 +261,18 @@ github-trending-scraper/
 │   └── types/             # TypeScript 类型定义
 ├── backend/               # Python 后端
 │   ├── scraper/           # 爬虫系统
+│   │   ├── analyzers/     # 数据分析器
+│   │   ├── core/          # 核心功能
+│   │   └── crawlers/      # 爬虫实现
 │   └── requirements/      # Python 依赖
 ├── database/              # 数据库配置
 │   └── prisma/            # Prisma 模式和迁移
 ├── public/                # 静态资源
+│   ├── analytics/         # 分析结果数据
+│   └── img/               # 界面截图
+├── docs/                  # 项目文档
 ├── tests/                 # 测试文件
-└── docs/                  # 项目文档
+└── tools/                 # 工具脚本
 ```
 
 ### 核心模块
