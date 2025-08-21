@@ -81,3 +81,17 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Temporary files and scripts
+*_fix.py
+*_test.py
+fix_*.py
+test_*.py
+reanalyze_*.py
+simple_*.py
+cleanup_*.py
+cleanup-*.js
+*修复报告.md
+*.log
+temp_*.json
+temp_*.py
