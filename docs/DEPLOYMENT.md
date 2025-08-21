@@ -1,13 +1,14 @@
-# 🚀 GitHub Trending Scraper - 部署指南
+# 🚀 SpiderGit - 部署指南
 
 ## 📋 概述
 
-本文档详细介绍了 GitHub Trending Scraper 项目的部署方案，包括开发环境、测试环境和生产环境的部署步骤。
+本文档详细介绍了 SpiderGit 项目的部署方案，包括开发环境、测试环境和生产环境的部署步骤。
 
 ## 🛠️ 环境要求
 
 ### 基础要求
-- **Node.js**: 18.0+ 
+- **Node.js**: 20.0+
+- **Python**: 3.12+
 - **Python**: 3.8+
 - **PostgreSQL**: 13.0+
 - **Git**: 2.30+

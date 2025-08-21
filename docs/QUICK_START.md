@@ -1,13 +1,14 @@
-# 🚀 快速开始指南
+# 🚀 SpiderGit - 快速开始指南
 
-本指南帮助你快速设置和运行 GitHub Trending Scraper 项目的测试环境。
+本指南帮助你快速设置和运行 SpiderGit 项目的开发环境。
 
 ## 📋 前置要求
 
 确保你的系统已安装：
 
-- **Node.js 18+** - [下载地址](https://nodejs.org/)
-- **Python 3.8+** - [下载地址](https://www.python.org/)
+- **Node.js 20+** - [下载地址](https://nodejs.org/)
+- **Python 3.12+** - [下载地址](https://www.python.org/)
+- **Git** - [下载地址](https://git-scm.com/)
 - **PostgreSQL 13+** - [下载地址](https://www.postgresql.org/)
 - **Git** - [下载地址](https://git-scm.com/)
 

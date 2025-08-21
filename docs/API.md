@@ -1,13 +1,15 @@
-# 🔌 GitHub Trending Scraper - API 文档
+# 🔌 SpiderGit - API 文档
 
 ## 📋 概述
 
-本文档详细描述了 GitHub Trending Scraper 项目的 API 接口，包括请求格式、响应格式、错误处理等。
+本文档详细描述了 SpiderGit 项目的 API 接口，包括请求格式、响应格式、错误处理等。SpiderGit 是一个 GitHub 趋势分析和关键词爬虫系统。
 
 ## 🌐 基础信息
 
 - **基础URL**: `http://localhost:3000/api`
 - **数据格式**: JSON
+- **认证方式**: 无需认证（本地开发）
+- **版本**: v1.0
 - **字符编码**: UTF-8
 - **HTTP方法**: GET, POST, PUT, DELETE
 
