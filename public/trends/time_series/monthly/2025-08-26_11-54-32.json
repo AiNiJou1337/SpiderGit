@@ -1,0 +1,254 @@
+{
+  "timestamp": "2025-08-26T11:54:32.335194",
+  "period": "monthly",
+  "count": 11,
+  "repositories": [
+    {
+      "id": 52187,
+      "name": "Archon",
+      "full_name": "coleam00/Archon",
+      "description": "Beta release of Archon OS - the knowledge and task management backbone for AI coding assistants.",
+      "html_url": "https://github.com/coleam00/Archon",
+      "stargazers_count": 10760,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.760158",
+      "updated_at": "2025-08-26T11:54:36.760158",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "coleam00",
+        "avatar_url": "https://github.com/coleam00.png"
+      },
+      "today_stars": 5547,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.760158"
+    },
+    {
+      "id": 367781,
+      "name": "airi",
+      "full_name": "moeru-ai/airi",
+      "description": "💖🧸 Self hosted, you owned Grok Companion, a container of souls of waifu, cyber livings to bring them into our worlds, wishing to achieve Neuro-sama's altitude. Capable of realtime voice chat, Minecraft, Factorio playing. Web / macOS / Windows supported.",
+      "html_url": "https://github.com/moeru-ai/airi",
+      "stargazers_count": 10455,
+      "language": "Vue",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.761132",
+      "updated_at": "2025-08-26T11:54:36.761132",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "moeru-ai",
+        "avatar_url": "https://github.com/moeru-ai.png"
+      },
+      "today_stars": 8546,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.761132"
+    },
+    {
+      "id": 843585,
+      "name": "dyad",
+      "full_name": "dyad-sh/dyad",
+      "description": "Free, local, open-source AI app builder ✨ v0 / lovable / Bolt alternative 🌟 Star if you like it!",
+      "html_url": "https://github.com/dyad-sh/dyad",
+      "stargazers_count": 13873,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.762160",
+      "updated_at": "2025-08-26T11:54:36.762160",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "dyad-sh",
+        "avatar_url": "https://github.com/dyad-sh.png"
+      },
+      "today_stars": 11788,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.762160"
+    },
+    {
+      "id": 844034,
+      "name": "sim",
+      "full_name": "simstudioai/sim",
+      "description": "Sim is an open-source AI agent workflow builder. Sim's interface is a lightweight, intuitive way to rapidly build and deploy LLMs that connect with your favorite tools.",
+      "html_url": "https://github.com/simstudioai/sim",
+      "stargazers_count": 12214,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.763169",
+      "updated_at": "2025-08-26T11:54:36.763169",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "simstudioai",
+        "avatar_url": "https://github.com/simstudioai.png"
+      },
+      "today_stars": 6129,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.763169"
+    },
+    {
+      "id": 938549,
+      "name": "claude-code-router",
+      "full_name": "musistudio/claude-code-router",
+      "description": "Use Claude Code as the foundation for coding infrastructure, allowing you to decide how to interact with the model while enjoying updates from Anthropic.",
+      "html_url": "https://github.com/musistudio/claude-code-router",
+      "stargazers_count": 15284,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.764159",
+      "updated_at": "2025-08-26T11:54:36.764159",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "musistudio",
+        "avatar_url": "https://github.com/musistudio.png"
+      },
+      "today_stars": 7826,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.764159"
+    },
+    {
+      "id": 430001,
+      "name": "magic",
+      "full_name": "dtyq/magic",
+      "description": "Super Magic. The first open-source all-in-one AI productivity platform (Generalist AI Agent + Workflow Engine + IM + Online collaborative office system)",
+      "html_url": "https://github.com/dtyq/magic",
+      "stargazers_count": 3522,
+      "language": "PHP",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.765100",
+      "updated_at": "2025-08-26T11:54:36.765100",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "dtyq",
+        "avatar_url": "https://github.com/dtyq.png"
+      },
+      "today_stars": 2415,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.765100"
+    },
+    {
+      "id": 379183,
+      "name": "winapps",
+      "full_name": "winapps-org/winapps",
+      "description": "Run Windows apps such as Microsoft Office/Adobe in Linux (Ubuntu/Fedora) and GNOME/KDE as if they were a part of the native OS, including Nautilus integration. Hard fork ofhttps://github.com/Fmstrat/winapps/",
+      "html_url": "https://github.com/winapps-org/winapps",
+      "stargazers_count": 7319,
+      "language": "Shell",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.766099",
+      "updated_at": "2025-08-26T11:54:36.766099",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "winapps-org",
+        "avatar_url": "https://github.com/winapps-org.png"
+      },
+      "today_stars": 4205,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.766099"
+    },
+    {
+      "id": 158202,
+      "name": "nautilus_trader",
+      "full_name": "nautechsystems/nautilus_trader",
+      "description": "A high-performance algorithmic trading platform and event-driven backtester",
+      "html_url": "https://github.com/nautechsystems/nautilus_trader",
+      "stargazers_count": 14570,
+      "language": "Rust",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.768103",
+      "updated_at": "2025-08-26T11:54:36.768103",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "nautechsystems",
+        "avatar_url": "https://github.com/nautechsystems.png"
+      },
+      "today_stars": 4749,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.768103"
+    },
+    {
+      "id": 799675,
+      "name": "OpenBB",
+      "full_name": "OpenBB-finance/OpenBB",
+      "description": "Financial data platform for analysts, quants and AI agents.",
+      "html_url": "https://github.com/OpenBB-finance/OpenBB",
+      "stargazers_count": 51329,
+      "language": "Python",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.769105",
+      "updated_at": "2025-08-26T11:54:36.769105",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "OpenBB-finance",
+        "avatar_url": "https://github.com/OpenBB-finance.png"
+      },
+      "today_stars": 5512,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.769105"
+    },
+    {
+      "id": 986506,
+      "name": "drawnix",
+      "full_name": "plait-board/drawnix",
+      "description": "开源白板工具（SaaS），一体化白板，包含思维导图、流程图、自由画等。All in one open-source whiteboard tool with mind, flowchart, freehand and etc.",
+      "html_url": "https://github.com/plait-board/drawnix",
+      "stargazers_count": 8037,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.770102",
+      "updated_at": "2025-08-26T11:54:36.770102",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "plait-board",
+        "avatar_url": "https://github.com/plait-board.png"
+      },
+      "today_stars": 4257,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.770102"
+    },
+    {
+      "id": 529255,
+      "name": "vllm",
+      "full_name": "vllm-project/vllm",
+      "description": "A high-throughput and memory-efficient inference and serving engine for LLMs",
+      "html_url": "https://github.com/vllm-project/vllm",
+      "stargazers_count": 56306,
+      "language": "Python",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:36.771103",
+      "updated_at": "2025-08-26T11:54:36.771103",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "vllm-project",
+        "avatar_url": "https://github.com/vllm-project.png"
+      },
+      "today_stars": 3180,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:36.771103"
+    }
+  ],
+  "metadata": {
+    "collectionTime": "2025-08-26T11:54:32.335194",
+    "apiVersion": "2024-01-24",
+    "dataVersion": "1.0"
+  }
+}

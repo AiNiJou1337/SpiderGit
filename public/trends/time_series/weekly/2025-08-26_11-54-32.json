@@ -1,0 +1,320 @@
+{
+  "timestamp": "2025-08-26T11:54:32.335194",
+  "period": "weekly",
+  "count": 14,
+  "repositories": [
+    {
+      "id": 367781,
+      "name": "airi",
+      "full_name": "moeru-ai/airi",
+      "description": "💖🧸 Self hosted, you owned Grok Companion, a container of souls of waifu, cyber livings to bring them into our worlds, wishing to achieve Neuro-sama's altitude. Capable of realtime voice chat, Minecraft, Factorio playing. Web / macOS / Windows supported.",
+      "html_url": "https://github.com/moeru-ai/airi",
+      "stargazers_count": 10455,
+      "language": "Vue",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.603067",
+      "updated_at": "2025-08-26T11:54:35.603067",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "moeru-ai",
+        "avatar_url": "https://github.com/moeru-ai.png"
+      },
+      "today_stars": 7814,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.603067"
+    },
+    {
+      "id": 844034,
+      "name": "sim",
+      "full_name": "simstudioai/sim",
+      "description": "Sim is an open-source AI agent workflow builder. Sim's interface is a lightweight, intuitive way to rapidly build and deploy LLMs that connect with your favorite tools.",
+      "html_url": "https://github.com/simstudioai/sim",
+      "stargazers_count": 12214,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.604060",
+      "updated_at": "2025-08-26T11:54:35.604060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "simstudioai",
+        "avatar_url": "https://github.com/simstudioai.png"
+      },
+      "today_stars": 4874,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.604060"
+    },
+    {
+      "id": 379183,
+      "name": "winapps",
+      "full_name": "winapps-org/winapps",
+      "description": "Run Windows apps such as Microsoft Office/Adobe in Linux (Ubuntu/Fedora) and GNOME/KDE as if they were a part of the native OS, including Nautilus integration. Hard fork ofhttps://github.com/Fmstrat/winapps/",
+      "html_url": "https://github.com/winapps-org/winapps",
+      "stargazers_count": 7319,
+      "language": "Shell",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.605060",
+      "updated_at": "2025-08-26T11:54:35.605060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "winapps-org",
+        "avatar_url": "https://github.com/winapps-org.png"
+      },
+      "today_stars": 3530,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.605060"
+    },
+    {
+      "id": 52187,
+      "name": "Archon",
+      "full_name": "coleam00/Archon",
+      "description": "Beta release of Archon OS - the knowledge and task management backbone for AI coding assistants.",
+      "html_url": "https://github.com/coleam00/Archon",
+      "stargazers_count": 10760,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.606056",
+      "updated_at": "2025-08-26T11:54:35.606056",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "coleam00",
+        "avatar_url": "https://github.com/coleam00.png"
+      },
+      "today_stars": 2228,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.606056"
+    },
+    {
+      "id": 230922,
+      "name": "parlant",
+      "full_name": "emcie-co/parlant",
+      "description": "LLM agents built for control. Designed for real-world use. Deployed in minutes.",
+      "html_url": "https://github.com/emcie-co/parlant",
+      "stargazers_count": 7865,
+      "language": "Python",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.607068",
+      "updated_at": "2025-08-26T11:54:35.607068",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "emcie-co",
+        "avatar_url": "https://github.com/emcie-co.png"
+      },
+      "today_stars": 2252,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.607068"
+    },
+    {
+      "id": 986506,
+      "name": "drawnix",
+      "full_name": "plait-board/drawnix",
+      "description": "开源白板工具（SaaS），一体化白板，包含思维导图、流程图、自由画等。All in one open-source whiteboard tool with mind, flowchart, freehand and etc.",
+      "html_url": "https://github.com/plait-board/drawnix",
+      "stargazers_count": 8036,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.608060",
+      "updated_at": "2025-08-26T11:54:35.608060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "plait-board",
+        "avatar_url": "https://github.com/plait-board.png"
+      },
+      "today_stars": 2619,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.608060"
+    },
+    {
+      "id": 971467,
+      "name": "DeepCode",
+      "full_name": "HKUDS/DeepCode",
+      "description": "\"DeepCode: Open Agentic Coding (Paper2Code & Text2Web & Text2Backend)\"",
+      "html_url": "https://github.com/HKUDS/DeepCode",
+      "stargazers_count": 3542,
+      "language": "Python",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.608060",
+      "updated_at": "2025-08-26T11:54:35.608060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "HKUDS",
+        "avatar_url": "https://github.com/HKUDS.png"
+      },
+      "today_stars": 2228,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.608060"
+    },
+    {
+      "id": 325202,
+      "name": "leantime",
+      "full_name": "Leantime/leantime",
+      "description": "Leantime is a goals focused project management system for non-project managers. Building with ADHD, Autism, and dyslexia in mind.",
+      "html_url": "https://github.com/Leantime/leantime",
+      "stargazers_count": 7517,
+      "language": "PHP",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.609060",
+      "updated_at": "2025-08-26T11:54:35.609060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "Leantime",
+        "avatar_url": "https://github.com/Leantime.png"
+      },
+      "today_stars": 1802,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.609060"
+    },
+    {
+      "id": 380530,
+      "name": "googletest",
+      "full_name": "google/googletest",
+      "description": "GoogleTest - Google Testing and Mocking Framework",
+      "html_url": "https://github.com/google/googletest",
+      "stargazers_count": 36897,
+      "language": "C++",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.610060",
+      "updated_at": "2025-08-26T11:54:35.610060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "google",
+        "avatar_url": "https://github.com/google.png"
+      },
+      "today_stars": 296,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.610060"
+    },
+    {
+      "id": 953074,
+      "name": "firecrawl",
+      "full_name": "firecrawl/firecrawl",
+      "description": "The Web Data API for AI - Turn entire websites into LLM-ready markdown or structured data 🔥",
+      "html_url": "https://github.com/firecrawl/firecrawl",
+      "stargazers_count": 52041,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.611060",
+      "updated_at": "2025-08-26T11:54:35.611060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "firecrawl",
+        "avatar_url": "https://github.com/firecrawl.png"
+      },
+      "today_stars": 3080,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.611060"
+    },
+    {
+      "id": 122841,
+      "name": "cai",
+      "full_name": "aliasrobotics/cai",
+      "description": "Cybersecurity AI (CAI), the framework for AI Security",
+      "html_url": "https://github.com/aliasrobotics/cai",
+      "stargazers_count": 3220,
+      "language": "Python",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.612060",
+      "updated_at": "2025-08-26T11:54:35.612060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "aliasrobotics",
+        "avatar_url": "https://github.com/aliasrobotics.png"
+      },
+      "today_stars": 335,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.612060"
+    },
+    {
+      "id": 180219,
+      "name": "clients",
+      "full_name": "bitwarden/clients",
+      "description": "Bitwarden client apps (web, browser extension, desktop, and cli).",
+      "html_url": "https://github.com/bitwarden/clients",
+      "stargazers_count": 11058,
+      "language": "TypeScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.612060",
+      "updated_at": "2025-08-26T11:54:35.612060",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "bitwarden",
+        "avatar_url": "https://github.com/bitwarden.png"
+      },
+      "today_stars": 430,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.612060"
+    },
+    {
+      "id": 564019,
+      "name": "PixiEditor",
+      "full_name": "PixiEditor/PixiEditor",
+      "description": "PixiEditor is a Universal Editor for all your 2D needs",
+      "html_url": "https://github.com/PixiEditor/PixiEditor",
+      "stargazers_count": 5785,
+      "language": "C#",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.613055",
+      "updated_at": "2025-08-26T11:54:35.613055",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "PixiEditor",
+        "avatar_url": "https://github.com/PixiEditor.png"
+      },
+      "today_stars": 1425,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.613055"
+    },
+    {
+      "id": 880850,
+      "name": "system_prompts_leaks",
+      "full_name": "asgeirtj/system_prompts_leaks",
+      "description": "Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini",
+      "html_url": "https://github.com/asgeirtj/system_prompts_leaks",
+      "stargazers_count": 9739,
+      "language": "JavaScript",
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "created_at": "2025-08-26T11:54:35.614061",
+      "updated_at": "2025-08-26T11:54:35.614061",
+      "topics": [],
+      "license": null,
+      "owner": {
+        "login": "asgeirtj",
+        "avatar_url": "https://github.com/asgeirtj.png"
+      },
+      "today_stars": 795,
+      "pushed_at": null,
+      "scraped_at": "2025-08-26T11:54:35.614061"
+    }
+  ],
+  "metadata": {
+    "collectionTime": "2025-08-26T11:54:32.335194",
+    "apiVersion": "2024-01-24",
+    "dataVersion": "1.0"
+  }
+}

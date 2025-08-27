@@ -1,7 +1,7 @@
 {
   "keyword": "Estate API",
   "repository_count": 110,
-  "analysis_date": "2025-08-21T17:28:12.255744",
+  "analysis_date": "2025-08-26T23:09:09.698099",
   "charts": {
     "language_distribution": {
       "data": {
@@ -35,7 +35,7 @@
             29
           ]
         ],
-        "analyzed_at": "2025-08-21T17:28:12.187841"
+        "analyzed_at": "2025-08-26T23:09:09.610149"
       }
     },
     "stars_distribution": {
@@ -335,377 +335,256 @@
             2
           ]
         ],
-        "analyzed_at": "2025-08-21T17:28:12.187841"
+        "analyzed_at": "2025-08-26T23:09:09.611149"
       }
     }
   },
   "trends": {
     "libraries": {
       "os": {
-        "trend": "up",
-        "count": 20,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
       },
       "pandas": {
-        "trend": "up",
-        "count": 12,
-        "percentile": 92.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "json": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 82.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "flask": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "web-framework"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "dotenv": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "requests": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "express": {
-        "trend": "stable",
-        "count": 8,
-        "percentile": 62.5,
-        "category": "web-framework"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "time": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "logging": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "config": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "io": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "numpy": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "utility"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "streamlit": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "decouple": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "fastapi": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "Utils": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "pymongo": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       }
     },
     "packages": {
       "os": {
-        "trend": "up",
-        "count": 20,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 20,
+        "popularity": "高"
       },
       "pandas": {
-        "trend": "up",
-        "count": 12,
-        "percentile": 92.5,
-        "category": "utility"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "json": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 82.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "flask": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "web-framework"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "dotenv": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "requests": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "utility"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "express": {
-        "trend": "stable",
-        "count": 8,
-        "percentile": 62.5,
-        "category": "web-framework"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 8,
+        "popularity": "高"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "time": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "logging": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "config": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "io": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "numpy": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "streamlit": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "decouple": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "fastapi": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "Utils": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "pymongo": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       }
     },
-    "functions": {
-      "os": {
-        "trend": "up",
-        "count": 20,
-        "percentile": 97.5,
-        "category": "other"
-      },
-      "pandas": {
-        "trend": "up",
-        "count": 12,
-        "percentile": 92.5,
-        "category": "utility"
-      },
-      "json": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 87.5,
-        "category": "other"
-      },
-      "sys": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 82.5,
-        "category": "other"
-      },
-      "flask": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "web-framework"
-      },
-      "dotenv": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "other"
-      },
-      "requests": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 72.5,
-        "category": "utility"
-      },
-      "express": {
-        "trend": "stable",
-        "count": 8,
-        "percentile": 62.5,
-        "category": "web-framework"
-      },
-      "datetime": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
-      },
-      "time": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
-      },
-      "logging": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 52.5,
-        "category": "other"
-      },
-      "config": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "io": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "numpy": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "utility"
-      },
-      "streamlit": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "decouple": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "fastapi": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "Utils": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      },
-      "pymongo": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 22.5,
-        "category": "other"
-      }
-    }
+    "functions": {}
   },
   "repositories": [
     {

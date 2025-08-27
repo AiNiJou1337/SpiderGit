@@ -1,0 +1,18 @@
+{
+  "suite": "frontend",
+  "status": "success",
+  "message": "测试套件 frontend 执行完成",
+  "startTime": "2025-08-26T03:10:59.688Z",
+  "endTime": "2025-08-26T03:11:01.640Z",
+  "results": {
+    "type": "frontend",
+    "framework": "Jest + React Testing Library",
+    "totalTests": 0,
+    "passedTests": 0,
+    "failedTests": 0,
+    "coverage": 0,
+    "duration": 0,
+    "output": "",
+    "error": "Command failed: npm run test:frontend -- --passWithNoTests --json\n● Validation Warning:\n\n  Unknown option \"moduleNameMapping\" with value {\"^@/(.*)$\": \"<rootDir>/src/$1\", \"^@/components/(.*)$\": \"<rootDir>/src/components/$1\", \"^@/lib/(.*)$\": \"<rootDir>/src/lib/$1\", \"^@/types/(.*)$\": \"<rootDir>/src/types/$1\"} was found.\n  This is probably a typing mistake. Fixing it will remove this message.\n\n  Configuration Documentation:\n  https://jestjs.io/docs/configuration\n\n● Validation Error:\n\n  Module <rootDir>/tests/frontend/jest.setup.js in the setupFilesAfterEnv option was not found.\n         <rootDir> is: D:\\ProJect\\spiderGit\\tests\\frontend\n\n  Configuration Documentation:\n  https://jestjs.io/docs/configuration\n\n"
+  }
+}

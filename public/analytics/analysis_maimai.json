@@ -1,7 +1,7 @@
 {
   "keyword": "maimai",
   "repository_count": 120,
-  "analysis_date": "2025-08-21T17:44:12.475918",
+  "analysis_date": "2025-08-27T10:26:27.808115",
   "charts": {
     "language_distribution": {
       "data": {
@@ -42,7 +42,7 @@
             29
           ]
         ],
-        "analyzed_at": "2025-08-21T17:44:12.173652"
+        "analyzed_at": "2025-08-27T10:26:27.714531"
       }
     },
     "stars_distribution": {
@@ -59,14 +59,12 @@
         "os": 11,
         "nonebot": 10,
         "re": 7,
-        "@vitejs": 6,
         "vite": 6,
         "time": 6,
         "typing": 6,
         "PIL": 5,
         "sys": 5,
         "fs": 5,
-        "@": 5,
         "axios": 5,
         "path": 4,
         "threading": 4,
@@ -74,7 +72,9 @@
         "math": 4,
         "asyncio": 4,
         "node:fs": 4,
-        "xpath": 4
+        "xpath": 4,
+        "effect": 4,
+        "datetime": 3
       }
     },
     "imported_libraries": {
@@ -83,14 +83,12 @@
         "os": 11,
         "nonebot": 10,
         "re": 7,
-        "@vitejs": 6,
         "vite": 6,
         "time": 6,
         "typing": 6,
         "PIL": 5,
         "sys": 5,
         "fs": 5,
-        "@": 5,
         "axios": 5,
         "path": 4,
         "threading": 4,
@@ -98,7 +96,9 @@
         "math": 4,
         "asyncio": 4,
         "node:fs": 4,
-        "xpath": 4
+        "xpath": 4,
+        "effect": 4,
+        "datetime": 3
       }
     },
     "common_functions": {
@@ -127,17 +127,27 @@
     },
     "tag_analysis": {
       "data": {
-        "total_topics": 29,
+        "total_topics": 45,
         "topic_distribution": {
+          "ai": 104,
           "maimai": 10,
+          "tool": 6,
           "maimai-dx": 5,
           "bot": 4,
+          "android": 4,
           "maimaidx": 4,
           "sega": 4,
+          "java": 4,
+          "web": 4,
           "qqbot": 3,
           "maimainet": 3,
+          "api": 3,
           "go-cqhttp": 2,
           "nonebot": 2,
+          "react": 2,
+          "rest": 2,
+          "javascript": 2,
+          "vue": 2,
           "coolq": 1,
           "hoshino": 1,
           "simai": 1,
@@ -148,6 +158,9 @@
           "chunithm": 1,
           "ongeki": 1,
           "rhythm-game": 1,
+          "typescript": 1,
+          "frontend": 1,
+          "docker": 1,
           "arcade": 1,
           "arcade-game": 1,
           "discord": 1,
@@ -155,14 +168,25 @@
           "express": 1,
           "google-assistant": 1,
           "i18n": 1,
-          "javascript": 1,
           "nodejs": 1,
-          "request-promise": 1
+          "request-promise": 1,
+          "go": 1,
+          "mobile": 1,
+          "ios": 1,
+          "backend": 1
         },
         "top_topics": [
           [
+            "ai",
+            104
+          ],
+          [
             "maimai",
             10
+          ],
+          [
+            "tool",
+            6
           ],
           [
             "maimai-dx",
@@ -170,6 +194,10 @@
           ],
           [
             "bot",
+            4
+          ],
+          [
+            "android",
             4
           ],
           [
@@ -181,11 +209,23 @@
             4
           ],
           [
+            "java",
+            4
+          ],
+          [
+            "web",
+            4
+          ],
+          [
             "qqbot",
             3
           ],
           [
             "maimainet",
+            3
+          ],
+          [
+            "api",
             3
           ],
           [
@@ -197,421 +237,276 @@
             2
           ],
           [
+            "react",
+            2
+          ],
+          [
+            "rest",
+            2
+          ],
+          [
+            "javascript",
+            2
+          ],
+          [
+            "vue",
+            2
+          ],
+          [
             "coolq",
-            1
-          ],
-          [
-            "hoshino",
-            1
-          ],
-          [
-            "simai",
-            1
-          ],
-          [
-            "diving-fish",
-            1
-          ],
-          [
-            "lxns",
-            1
-          ],
-          [
-            "maimai-prober",
-            1
-          ],
-          [
-            "python",
-            1
-          ],
-          [
-            "chunithm",
-            1
-          ],
-          [
-            "ongeki",
-            1
-          ],
-          [
-            "rhythm-game",
-            1
-          ],
-          [
-            "arcade",
             1
           ]
         ],
-        "analyzed_at": "2025-08-21T17:44:12.174648"
+        "analyzed_at": "2025-08-27T10:26:27.715531"
       }
     }
   },
   "trends": {
     "libraries": {
       "json": {
-        "trend": "up",
-        "count": 14,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 14,
+        "popularity": "高"
       },
       "os": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "nonebot": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "re": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 82.5,
-        "category": "other"
-      },
-      "@vitejs": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "vite": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "build-tool"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "time": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "typing": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "PIL": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "fs": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "@": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "axios": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "path": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "threading": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "math": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "asyncio": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "node:fs": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "xpath": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
+      },
+      "effect": {
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
+      },
+      "datetime": {
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       }
     },
     "packages": {
       "json": {
-        "trend": "up",
-        "count": 14,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 14,
+        "popularity": "高"
       },
       "os": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "nonebot": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "re": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 82.5,
-        "category": "other"
-      },
-      "@vitejs": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "vite": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "build-tool"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "time": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "typing": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "PIL": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "fs": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "@": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "axios": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "utility"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "path": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "threading": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "math": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "asyncio": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "node:fs": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "xpath": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
+      },
+      "effect": {
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 4,
+        "popularity": "中"
+      },
+      "datetime": {
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 3,
+        "popularity": "中"
       }
     },
-    "functions": {
-      "json": {
-        "trend": "up",
-        "count": 14,
-        "percentile": 97.5,
-        "category": "other"
-      },
-      "os": {
-        "trend": "up",
-        "count": 11,
-        "percentile": 92.5,
-        "category": "other"
-      },
-      "nonebot": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 87.5,
-        "category": "other"
-      },
-      "re": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 82.5,
-        "category": "other"
-      },
-      "@vitejs": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
-      },
-      "vite": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "build-tool"
-      },
-      "time": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
-      },
-      "typing": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 70.0,
-        "category": "other"
-      },
-      "PIL": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "sys": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "fs": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "@": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "other"
-      },
-      "axios": {
-        "trend": "stable",
-        "count": 5,
-        "percentile": 47.5,
-        "category": "utility"
-      },
-      "path": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "threading": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "sqlite3": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "math": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "asyncio": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "node:fs": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      },
-      "xpath": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 17.5,
-        "category": "other"
-      }
-    }
+    "functions": {}
   },
   "repositories": [
     {
@@ -2723,5 +2618,10 @@
       "keyword": "maimai",
       "scraped_at": "2025-08-21T11:49:01.202000"
     }
+  ],
+  "insights": [
+    "最受欢迎的编程语言是 TypeScript，占 30 个仓库",
+    "平均星数为 16.7",
+    "最热门的主题是 'ai'，出现在 104 个仓库中"
   ]
 }

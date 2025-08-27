@@ -47,6 +47,11 @@
     /* 渐变背景颜色 */
     --gradient-start: 210 100% 92%;
     --gradient-end: 260 100% 92%;
+
+    /* 现代化仪表盘样式 */
+    --dashboard-bg: 210 20% 98%;
+    --glass-bg: 255 255 255 / 0.8;
+    --glass-border: 255 255 255 / 0.2;
     
     /* 毛玻璃效果变量 */
     --glass-blur: 12px;
@@ -135,5 +140,51 @@
   .glass-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px hsla(0, 0%, 0%, calc(var(--glass-shadow-opacity) * 2));
+  }
+
+  /* 现代化仪表盘样式 */
+  .dashboard-gradient {
+    background: linear-gradient(135deg,
+      hsl(var(--gradient-start)) 0%,
+      hsl(var(--gradient-end)) 100%);
+  }
+
+  .card-hover-effect {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover-effect:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--primary-color, #3b82f6) 0%,
+      var(--secondary-color, #8b5cf6) 100%);
+  }
+
+  .pulse-animation {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .5;
+    }
   }
 }

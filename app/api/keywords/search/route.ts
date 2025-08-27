@@ -116,7 +116,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const scraperPath = path.join(process.cwd(), 'backend', 'scraper', 'keyword_scraper.py');
+    const scraperPath = path.join(process.cwd(), 'backend', 'scraper', 'crawlers', 'keyword_scraper.py');
     let cmd = `${PYTHON_BIN} "${scraperPath}" --keywords "${keyword}" --task-id ${crawlTask.id}`;
 
     // 添加语言参数

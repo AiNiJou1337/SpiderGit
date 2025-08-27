@@ -26,22 +26,33 @@ class GitHubTokenManager:
         
     def load_tokens(self) -> None:
         """从环境变量加载 Token"""
-        # 从环境变量获取 Token
+        # 从环境变量获取 Token（支持多种格式）
         tokens_env = os.getenv('GITHUB_TOKENS', '')
         if tokens_env:
             self.tokens = [token.strip() for token in tokens_env.split(',') if token.strip()]
-        
+
         # 如果没有从环境变量获取到，尝试从单个 Token 环境变量获取
         if not self.tokens:
             single_token = os.getenv('GITHUB_TOKEN', '')
             if single_token:
                 self.tokens = [single_token.strip()]
-        
-        # 如果还是没有，使用默认的测试 Token（仅用于开发）
+
+        # 尝试从多个具名Token环境变量获取
         if not self.tokens:
-            logger.warning("未找到 GitHub Token，请设置 GITHUB_TOKENS 环境变量")
-            # 这里可以添加一些默认的测试 Token，但不建议在生产环境中使用
-        
+            token_names = [
+                'GITHUB_TOKEN_PQG', 'GITHUB_TOKEN_LR', 'GITHUB_TOKEN_HXZ',
+                'GITHUB_TOKEN_XHY', 'GITHUB_TOKEN_GMAIL', 'GITHUB_TOKEN_QQ'
+            ]
+            for token_name in token_names:
+                token = os.getenv(token_name, '')
+                if token.strip():
+                    self.tokens.append(token.strip())
+                    logger.info(f"[SUCCESS] 找到Token: {token_name}")
+
+        # 如果还是没有，警告用户
+        if not self.tokens:
+            logger.warning("未找到 GitHub Token，请设置 GITHUB_TOKENS 或 GITHUB_TOKEN_* 环境变量")
+
         logger.info(f"加载了 {len(self.tokens)} 个 GitHub Token")
         
         # 初始化 Token 状态

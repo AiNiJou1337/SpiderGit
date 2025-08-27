@@ -1,7 +1,7 @@
 {
   "keyword": "Video API",
   "repository_count": 80,
-  "analysis_date": "2025-08-21T17:38:46.482831",
+  "analysis_date": "2025-08-26T23:09:10.386137",
   "charts": {
     "language_distribution": {
       "data": {
@@ -28,7 +28,7 @@
             29
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:46.388185"
+        "analyzed_at": "2025-08-26T23:09:10.299045"
       }
     },
     "stars_distribution": {
@@ -491,131 +491,131 @@
             3
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:46.389183"
+        "analyzed_at": "2025-08-26T23:09:10.299045"
       }
     }
   },
   "trends": {
     "libraries": {
       "os": {
-        "trend": "up",
-        "count": 51,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 51,
+        "popularity": "高"
       },
       "json": {
-        "trend": "up",
-        "count": 22,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 22,
+        "popularity": "高"
       },
       "time": {
-        "trend": "up",
-        "count": 19,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 19,
+        "popularity": "高"
       },
       "logging": {
-        "trend": "up",
-        "count": 17,
-        "percentile": 82.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 17,
+        "popularity": "高"
       },
       "numpy as np": {
-        "trend": "up",
-        "count": 13,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 13,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "stable",
-        "count": 12,
-        "percentile": 67.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 12,
-        "percentile": 67.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "PIL": {
-        "trend": "stable",
-        "count": 12,
-        "percentile": 67.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "setuptools": {
-        "trend": "stable",
-        "count": 10,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "cv2": {
-        "trend": "stable",
-        "count": 10,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
       },
       "threading": {
-        "trend": "stable",
-        "count": 9,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "fastapi": {
-        "trend": "stable",
-        "count": 9,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "requests": {
-        "trend": "stable",
-        "count": 9,
-        "percentile": 42.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "asyncio": {
-        "trend": "stable",
-        "count": 8,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
       },
       "shutil": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "io": {
-        "trend": "stable",
-        "count": 7,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "re": {
-        "trend": "down",
-        "count": 6,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "utils": {
-        "trend": "down",
-        "count": 6,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "collections": {
-        "trend": "down",
-        "count": 6,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "six": {
-        "trend": "down",
-        "count": 6,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       }
     },
     "packages": {},

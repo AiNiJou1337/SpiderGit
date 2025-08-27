@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
     }
 
     const keyword = originalTask.keyword.text;
-    const scraperPath = path.join(process.cwd(), 'backend', 'scraper', 'keyword_scraper.py');
+    const scraperPath = path.join(process.cwd(), 'backend', 'scraper', 'crawlers', 'keyword_scraper.py');
     
     // 构建爬虫命令（使用默认参数）
     let cmd = `${PYTHON_BIN} "${scraperPath}" --keywords "${keyword}" --task-id ${retryTask.id}`;

@@ -133,7 +133,7 @@ export async function POST(request: Request) {
     }
 
     // 准备爬虫命令参数
-    let cmd = `${PYTHON_BIN} "${path.join(process.cwd(), 'backend', 'scraper', 'keyword_scraper.py')}" --keywords "${keyword}" --task-id ${crawlTask.id}`;
+    let cmd = `${PYTHON_BIN} "${path.join(process.cwd(), 'backend', 'scraper', 'crawlers', 'keyword_scraper.py')}" --keywords "${keyword}" --task-id ${crawlTask.id}`;
 
     // 添加语言参数
     if (languages && Array.isArray(languages) && languages.length > 0) {

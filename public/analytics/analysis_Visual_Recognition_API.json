@@ -1,7 +1,7 @@
 {
   "keyword": "Visual Recognition API",
   "repository_count": 29,
-  "analysis_date": "2025-08-21T17:39:37.603427",
+  "analysis_date": "2025-08-26T23:09:10.484605",
   "charts": {
     "language_distribution": {
       "data": {
@@ -28,7 +28,7 @@
             13
           ]
         ],
-        "analyzed_at": "2025-08-21T17:39:37.483866"
+        "analyzed_at": "2025-08-26T23:09:10.395148"
       }
     },
     "stars_distribution": {
@@ -161,131 +161,131 @@
             1
           ]
         ],
-        "analyzed_at": "2025-08-21T17:39:37.484864"
+        "analyzed_at": "2025-08-26T23:09:10.395148"
       }
     }
   },
   "trends": {
     "libraries": {
       "os": {
-        "trend": "up",
-        "count": 20,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
       },
       "time": {
-        "trend": "up",
-        "count": 12,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "json": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 85.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "cv2": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 85.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "google": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "speech": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sys": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "random": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "urllib": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "io": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "numpy as np": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "PIL": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "ConfigParser": {
-        "trend": "stable",
-        "count": 4,
-        "percentile": 55.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "watson_developer_cloud": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "subprocess as sp": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "re": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "gtts": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "speech_recognition as sr": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "pyttsx3": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "config_t": {
-        "trend": "stable",
-        "count": 3,
-        "percentile": 17.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       }
     },
     "packages": {},

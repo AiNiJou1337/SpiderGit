@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db/prisma'
 import fs from 'fs'
 import path from 'path'
 
 export async function POST(request: NextRequest) {
-  const prisma = new PrismaClient()
   
   try {
     const { searchParams } = new URL(request.url)

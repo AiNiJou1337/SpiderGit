@@ -1,33 +1,109 @@
-# 🔌 SpiderGit - API 文档
+# 🔌 GitHub趋势爬虫平台 - API 文档
+
+<div align="center">
+  <img src="../public/logo.png" alt="GitHub趋势爬虫" width="120" height="120" />
+  <h1>API 文档</h1>
+  <p><strong>完整的API接口说明和使用指南</strong></p>
+</div>
 
 ## 📋 概述
 
-本文档详细描述了 SpiderGit 项目的 API 接口，包括请求格式、响应格式、错误处理等。SpiderGit 是一个 GitHub 趋势分析和关键词爬虫系统。
+本文档详细描述了GitHub趋势爬虫平台的API接口，包括趋势数据、统计分析、时间序列等核心功能的API使用方法。
 
 ## 🌐 基础信息
 
 - **基础URL**: `http://localhost:3000/api`
 - **数据格式**: JSON
 - **认证方式**: 无需认证（本地开发）
-- **版本**: v1.0
+- **版本**: v2.0
 - **字符编码**: UTF-8
-- **HTTP方法**: GET, POST, PUT, DELETE
+- **HTTP方法**: GET, POST
+- **响应格式**: 统一的JSON响应格式
 
-## 📊 统计数据 API
+## 📊 核心API接口
 
-### GET /api/stats
+### 1. 趋势数据API
 
-获取项目总体统计数据。
+#### GET /api/trends
 
-**响应示例**:
+获取GitHub趋势数据，支持多时间维度查询。
+
+**请求参数**:
+- `period` (string): 时间周期，可选值：`daily`, `weekly`, `monthly`
+- `limit` (number): 返回数量限制，默认300
+- `language` (string): 编程语言过滤，默认`all`
+
+**请求示例**:
+```bash
+GET /api/trends?period=monthly&limit=6&language=all
+```
+
+**响应格式**:
 ```json
 {
-  "totalRepositories": 1250,
-  "totalStars": 45678,
-  "totalKeywords": 25,
-  "languageDistribution": {
-    "JavaScript": 320,
-    "Python": 280,
+  "success": true,
+  "data": [
+    {
+      "id": 748207,
+      "name": "Archon",
+      "full_name": "coleam00/Archon",
+      "description": "项目描述",
+      "html_url": "https://github.com/coleam00/Archon",
+      "language": "TypeScript",
+      "stargazers_count": 10768,
+      "forks_count": 1853,
+      "today_stars": 5547,
+      "owner": {
+        "login": "coleam00",
+        "avatar_url": "https://github.com/coleam00.png"
+      },
+      "created_at": "2025-08-26T12:54:58.770335",
+      "scraped_at": "2025-08-26T12:54:58.770335"
+    }
+  ],
+  "metadata": {
+    "period": "monthly",
+    "total": 6,
+    "lastUpdated": "2025-08-26T12:56:03.126447"
+  }
+}
+```
+
+### 2. 技术栈统计API
+
+#### GET /api/trends/stats
+
+获取编程语言分布和技术栈统计数据。
+
+**请求参数**:
+- `period` (string): 时间周期，默认`monthly`
+
+**请求示例**:
+```bash
+GET /api/trends/stats?period=monthly
+```
+
+**响应格式**:
+```json
+{
+  "success": true,
+  "data": {
+    "languageDistribution": [
+      {
+        "language": "TypeScript",
+        "count": 120,
+        "percentage": 26
+      },
+      {
+        "language": "Python",
+        "count": 89,
+        "percentage": 20
+      }
+    ],
+    "totalRepositories": 454,
+    "totalLanguages": 26
+  }
+}
     "TypeScript": 250,
     "Java": 200,
     "Go": 150

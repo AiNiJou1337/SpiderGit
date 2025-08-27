@@ -15,7 +15,7 @@ export type Repository = {
   stars: number
   forks: number
   todayStars: number
-  url: string
+  url?: string
   trendPeriod?: string
 }
 
@@ -61,18 +61,26 @@ export function RepositoryCard({
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <CardTitle className="text-lg font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-              <Link 
-                href={repository.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:underline"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {repository.name}
-              </Link>
+              {repository.url ? (
+                <Link
+                  href={repository.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {repository.name}
+                </Link>
+              ) : (
+                <span>
+                  {repository.name}
+                </span>
+              )}
             </CardTitle>
             <CardDescription className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {repository.owner}
+              {typeof repository.owner === 'string' ? repository.owner :
+               typeof repository.owner === 'object' && repository.owner?.login ? repository.owner.login :
+               'Unknown'}
             </CardDescription>
           </div>
           
@@ -113,21 +121,8 @@ export function RepositoryCard({
       </CardContent>
 
       <CardFooter className="pt-0">
-        <div className="flex items-center justify-between w-full">
-          <div className="text-xs text-gray-500 dark:text-gray-400">
-            {repository.fullName}
-          </div>
-          
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation()
-              window.open(repository.url, '_blank')
-            }}
-          >
-            <ExternalLink className="w-4 h-4" />
-          </Button>
+        <div className="text-xs text-gray-500 dark:text-gray-400">
+          {repository.fullName}
         </div>
       </CardFooter>
     </Card>

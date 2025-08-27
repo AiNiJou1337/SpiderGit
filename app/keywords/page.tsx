@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { flushSync } from 'react-dom'
 
 import { useState, useEffect, useRef, Component, ErrorInfo, ReactNode, useMemo, useCallback } from 'react'
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RefreshCw } from 'lucide-react'
 import {
@@ -64,10 +65,8 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   static getDerivedStateFromError(error: Error) {
     // 检查是否是 removeChild 或 DOM 相关错误
     if (error.message.includes('removeChild') ||
-        error.message.includes('Node') ||
-        error.message.includes('DOM') ||
         error.message.includes('NotFoundError')) {
-      console.warn('捕获到 DOM 操作错误，尝试自动恢复:', error.message)
+      console.warn('捕获到 DOM 操作错误，自动恢复:', error.message)
       // 对于 DOM 错误，不显示错误页面，尝试自动恢复
       return { hasError: false, errorType: 'dom', errorCount: 0 }
     }
@@ -85,41 +84,22 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
     // 如果是 DOM 错误，尝试自动恢复
     if (error.message.includes('removeChild') ||
-        error.message.includes('Node') ||
-        error.message.includes('DOM') ||
         error.message.includes('NotFoundError')) {
       console.log('尝试从 DOM 错误中恢复...')
-      
+
       // 增加错误计数
-      this.setState(prev => ({ 
+      this.setState(prev => ({
         errorCount: prev.errorCount + 1,
         errorType: 'dom'
       }))
-      
-      // 更激进的恢复策略
-      if (this.state.errorCount > 2) {
+
+      // 如果错误次数过多，强制刷新页面
+      if (this.state.errorCount > 3) {
         console.log('DOM 错误次数过多，强制刷新页面...')
         setTimeout(() => {
           window.location.reload()
-        }, 500)
+        }, 1000)
         return
-      }
-      
-      // 尝试清理可能的 DOM 残留
-      try {
-        // 清理所有可能的定时器
-        const highestTimeoutId = setTimeout(";");
-        for (let i = 0; i < highestTimeoutId; i++) {
-          clearTimeout(i);
-        }
-        
-        // 清理所有可能的 interval
-        const highestIntervalId = setInterval(";");
-        for (let i = 0; i < highestIntervalId; i++) {
-          clearInterval(i);
-        }
-      } catch (e) {
-        console.warn('清理定时器失败:', e)
       }
       
       // 强制重新渲染
@@ -172,6 +152,14 @@ function KeywordsPage() {
   // DOM 错误防护状态
   const [domErrorCount, setDomErrorCount] = useState(0)
   const [lastErrorTime, setLastErrorTime] = useState<number>(0)
+
+  // 通知状态
+  const [notifications, setNotifications] = useState<Array<{
+    id: string;
+    type: 'success' | 'error' | 'info';
+    message: string;
+    keyword?: string;
+  }>>([]);
   
   // 如果DOM错误过多，强制刷新
   useEffect(() => {
@@ -189,9 +177,26 @@ function KeywordsPage() {
         setDomErrorCount(0)
       }
     }, 60000) // 每分钟检查一次
-    
+
     return () => window.clearInterval(timer)
   }, [lastErrorTime])
+
+  // 通知管理函数
+  const addNotification = (type: 'success' | 'error' | 'info', message: string, keyword?: string) => {
+    const id = `${Date.now()}-${Math.random()}`;
+    setNotifications(prev => [...prev, { id, type, message, ...(keyword && { keyword }) }]);
+
+    // 自动移除通知
+    setTimeout(() => {
+      removeNotification(id);
+    }, 5000);
+
+    return id;
+  };
+
+  const removeNotification = (id: string) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
 
   const [keyword, setKeyword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -211,6 +216,8 @@ function KeywordsPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [keywordToDelete, setKeywordToDelete] = useState<string | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [aiSummary, setAiSummary] = useState('')
+  const [isGeneratingSummary, setIsGeneratingSummary] = useState(false)
 
   // 使用ref存储当前爬取的关键词，避免闭包问题
   const currentTaskKeyword = useRef('')
@@ -354,8 +361,19 @@ function KeywordsPage() {
           stopPolling()
 
           if (data.status === 'completed') {
-            // 直接调用刷新
-            await forceRefreshResults(keyword);
+            // 添加成功通知
+            addNotification('success', `关键词 "${keyword}" 爬取完成！数据已自动刷新`, keyword);
+
+            // 自动刷新分析结果和关键词列表
+            await Promise.all([
+              forceRefreshResults(keyword),
+              fetchKeywords()
+            ]);
+
+            setTaskStatus(null);
+          } else if (data.status === 'failed') {
+            // 添加失败通知
+            addNotification('error', `关键词 "${keyword}" 爬取失败：${data.message || '未知错误'}`, keyword);
             setTaskStatus(null);
           }
         }
@@ -392,9 +410,17 @@ function KeywordsPage() {
       const data = await response.json();
       console.log('成功加载分析结果:', file);
 
-      // 检查并处理数据结构
-      const processedData = processAnalysisData(data, file);
-      setAnalysisResults(processedData);
+      // 异步处理数据结构，避免阻塞UI
+      setTimeout(() => {
+        try {
+          const processedData = processAnalysisData(data, file);
+          setAnalysisResults(processedData);
+        } catch (processError) {
+          console.error('数据处理失败:', processError);
+          setAnalysisResults(null);
+          setSearchMessage(`数据处理失败: ${processError.message}`);
+        }
+      }, 0); // 使用setTimeout(0)让数据处理异步执行
 
     } catch (error: any) {
       console.error('加载分析结果失败:', error);
@@ -470,7 +496,7 @@ function KeywordsPage() {
       }
     }
 
-    // 处理标签分析数据
+    // 处理标签分析数据（优化版，处理新旧数据格式差异）
     if (!data.charts.tag_analysis) {
       console.log('缺少标签分析数据，尝试从仓库标签创建');
       data.charts.tag_analysis = { data: {} };
@@ -478,13 +504,50 @@ function KeywordsPage() {
       // 如果有仓库数据，尝试从中构建标签分析
       if (data.repositories && Array.isArray(data.repositories)) {
         const tags: Record<string, number> = {};
-        data.repositories.forEach((repo: any) => {
-          if (repo.tags && Array.isArray(repo.tags)) {
+
+        // 限制处理的仓库数量，避免性能问题
+        const maxRepos = Math.min(data.repositories.length, 200);
+
+        for (let i = 0; i < maxRepos; i++) {
+          const repo = data.repositories[i];
+          // 优先使用仓库的tags字段（旧数据格式）
+          if (repo.tags && Array.isArray(repo.tags) && repo.tags.length > 0) {
             repo.tags.forEach((tag: string) => {
-              tags[tag] = (tags[tag] || 0) + 1;
+              if (tag && typeof tag === 'string' && tag.length > 1) {
+                tags[tag] = (tags[tag] || 0) + 1;
+              }
             });
           }
-        });
+        }
+
+        // 如果从tags字段没有获取到数据，则从描述中提取（新数据格式的备用方案）
+        if (Object.keys(tags).length === 0) {
+          console.log('tags字段为空，从仓库描述中提取关键词');
+          // 内联关键词提取逻辑（限制处理数量）
+          const maxDescRepos = Math.min(data.repositories.length, 100);
+
+          for (let i = 0; i < maxDescRepos; i++) {
+            const repo = data.repositories[i];
+            if (repo.description && typeof repo.description === 'string') {
+              // 简化的关键词提取，专门用于标签分析
+              const words = repo.description
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .split(/\s+/)
+                .filter((word: string) => {
+                  return word.length > 3 &&
+                         !/^\d+$/.test(word) &&
+                         !['that', 'with', 'based', 'using', 'from', 'simple', 'this', 'the'].includes(word);
+                })
+                .slice(0, 10); // 每个仓库最多提取10个词
+
+              words.forEach((word: string) => {
+                tags[word] = (tags[word] || 0) + 1;
+              });
+            }
+          }
+        }
+
         data.charts.tag_analysis.data = tags;
       }
     } else if (data.charts.tag_analysis.data) {
@@ -507,16 +570,46 @@ function KeywordsPage() {
       data.charts.description_keywords = { data: {} };
 
       // 如果有仓库数据，尝试从中提取关键词
-      // 这只是一个简单实现，实际上需要更复杂的文本处理
       if (data.repositories && Array.isArray(data.repositories)) {
+        // 英文停用词列表
+        const stopWords = new Set([
+          'that', 'with', 'based', 'using', 'from', 'simple', 'this', 'the', 'added',
+          'have', 'what', 'they', 'your', 'them', 'when', 'how', 'just', 'dont',
+          'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had', 'her',
+          'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how',
+          'its', 'may', 'new', 'now', 'old', 'see', 'two', 'who', 'boy', 'did',
+          'she', 'use', 'way', 'will', 'also', 'been', 'each', 'make', 'most',
+          'over', 'said', 'some', 'time', 'very', 'what', 'with', 'word', 'work',
+          'could', 'first', 'great', 'might', 'other', 'right', 'small', 'sound',
+          'still', 'such', 'take', 'than', 'think', 'where', 'would', 'write',
+          'after', 'again', 'before', 'being', 'below', 'between', 'both', 'during',
+          'each', 'few', 'further', 'here', 'into', 'more', 'most', 'only', 'other',
+          'same', 'should', 'since', 'some', 'such', 'their', 'then', 'there',
+          'these', 'through', 'until', 'while', 'above', 'against', 'because',
+          'down', 'during', 'under', 'once', 'only', 'over', 'same', 'then',
+          'those', 'through', 'until', 'very', 'were', 'while', 'about', 'across',
+          'after', 'against', 'along', 'among', 'around', 'before', 'behind',
+          'below', 'beneath', 'beside', 'between', 'beyond', 'during', 'except',
+          'inside', 'outside', 'since', 'through', 'throughout', 'toward', 'under',
+          'within', 'without', 'easy', 'fast', 'good', 'high', 'large', 'local',
+          'long', 'open', 'public', 'small', 'strong', 'young', 'build', 'built',
+          'create', 'made', 'make', 'provide', 'support', 'help', 'allow', 'enable'
+        ]);
+
         const keywords: Record<string, number> = {};
         data.repositories.forEach((repo: any) => {
           if (repo.description) {
             const words = repo.description
               .toLowerCase()
-              .replace(/[^\w\s]/g, '')
+              .replace(/[^\w\s-]/g, '') // 保留连字符
               .split(/\s+/)
-              .filter((word: string) => word.length > 3);
+              .filter((word: string) => {
+                // 过滤条件：长度大于3，不是停用词，不是纯数字
+                return word.length > 3 &&
+                       !stopWords.has(word) &&
+                       !/^\d+$/.test(word) &&
+                       !/^[a-z]{1,2}$/.test(word); // 过滤1-2个字母的词
+              });
 
             words.forEach((word: string) => {
               keywords[word] = (keywords[word] || 0) + 1;
@@ -524,8 +617,9 @@ function KeywordsPage() {
           }
         });
 
-        // 只保留出现频率最高的前30个关键词
+        // 只保留出现频率最高的前30个关键词，并且至少出现2次
         const sortedKeywords = Object.entries(keywords)
+          .filter(([, count]) => count >= 2) // 至少出现2次
           .sort((a: [string, number], b: [string, number]) => b[1] - a[1])
           .slice(0, 30)
           .reduce((obj: Record<string, number>, [key, value]) => {
@@ -573,6 +667,8 @@ function KeywordsPage() {
 
       if (data.success) {
         setSearchMessage(`爬取请求已提交! ${data.message || ''}`)
+        addNotification('info', `关键词 "${keyword}" 爬取任务已开始，请等待完成通知`, keyword);
+
         // 更新当前选中的关键词
         setSelectedKeyword(keyword)
         // 重置分析结果，准备接收新数据
@@ -587,6 +683,7 @@ function KeywordsPage() {
         startPolling(keyword, 3000)
       } else {
         setSearchMessage(`爬取请求失败: ${data.error || '未知错误'}`)
+        addNotification('error', `关键词 "${keyword}" 爬取请求失败: ${data.error || '未知错误'}`, keyword);
       }
     } catch (error) {
       console.error('提交爬取请求失败:', error)
@@ -607,30 +704,48 @@ function KeywordsPage() {
     }
   }
 
-  // 重新生成分析
+  // 重新生成分析（增强版，包含仓库数修复）
   async function regenerateCharts() {
     if (!analysisResults || isRegenerating) return;
     setIsRegenerating(true);
-    setSearchMessage('正在重新生成分析数据...');
+    setSearchMessage('正在重新生成分析数据并修复仓库计数...');
+
     try {
+      // 第一步：重新生成分析数据
       const response = await fetch('/api/analysis/regenerate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ keyword: analysisResults.keyword })
+        body: JSON.stringify({
+          keyword: analysisResults.keyword,
+          fixRepositoryCounts: true, // 新增参数，指示需要修复仓库计数
+          regenerateLibraryAnalysis: true // 重新生成库分析
+        })
       });
+
       const data = await response.json();
       if (data.success) {
-        setSearchMessage('分析数据已重新生成!');
-        // 重新获取分析结果
-        const file = analysisFiles.find(f => f.name === selectedKeyword)?.file
-        if (file) fetchAnalysisByFile(file)
+        setSearchMessage('分析数据重新生成成功，正在刷新显示...');
+
+        // 第二步：重新获取分析结果
+        const file = analysisFiles.find(f => f.name === selectedKeyword)?.file;
+        if (file) {
+          await fetchAnalysisByFile(file);
+          setSearchMessage('分析数据已更新，仓库计数已修复！');
+        } else {
+          setSearchMessage('分析数据已重新生成，但无法找到对应文件');
+        }
       } else {
         setSearchMessage(`重新生成失败: ${data.error || '未知错误'}`);
       }
     } catch (error) {
-      setSearchMessage('重新生成请求失败，请稍后重试');
+      console.error('重新生成分析失败:', error);
+      setSearchMessage('重新生成请求失败，请检查网络连接后重试');
     } finally {
       setIsRegenerating(false);
+      // 3秒后清除消息
+      setTimeout(() => {
+        setSearchMessage('');
+      }, 3000);
     }
   }
 
@@ -750,25 +865,90 @@ function KeywordsPage() {
     return adjustedData;
   };
 
-  // 准备星标数据
-  const prepareStarsData = (starsData: any) => {
-    if (!starsData) return [];
+  // AI总结生成函数
+  const generateAISummary = async () => {
+    if (!analysisResults?.repositories || isGeneratingSummary) return;
 
-    // 检查是否所有值都是0或无效
-    const min = Number(starsData.min) || 0;
-    const mean = Number(starsData.mean) || 0;
-    const max = Number(starsData.max) || 0;
+    setIsGeneratingSummary(true);
+    try {
+      // 准备分析数据
+      const repoData = analysisResults.repositories.slice(0, 10); // 只分析前10个仓库
+      const languageStats = prepareChartData();
+      const qualityStats = prepareQualityData();
 
-    // 如果所有值都是0，返回空数组（将显示无数据提示）
-    if (min === 0 && mean === 0 && max === 0) {
-      return [];
+      const analysisData = {
+        keyword: selectedKeyword,
+        totalRepos: analysisResults.repositories.length,
+        topRepos: repoData.map((repo: any) => ({
+          name: repo.name,
+          owner: repo.owner?.login || repo.owner,
+          stars: repo.stargazers_count || 0,
+          language: repo.language,
+          description: repo.description
+        })),
+        languageDistribution: languageStats,
+        qualityDistribution: qualityStats
+      };
+
+      const response = await fetch('/api/ai/summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(analysisData)
+      });
+
+      if (!response.ok) {
+        throw new Error('AI总结生成失败');
+      }
+
+      const result = await response.json();
+      setAiSummary(result.summary);
+    } catch (error) {
+      console.error('生成AI总结失败:', error);
+      setAiSummary('抱歉，AI总结生成失败，请稍后重试。');
+    } finally {
+      setIsGeneratingSummary(false);
     }
+  };
+
+  // 准备质量评估数据
+  const prepareQualityData = () => {
+    if (!analysisResults?.repositories) return [];
+
+    let highQuality = 0, mediumQuality = 0, lowQuality = 0;
+
+    analysisResults.repositories.forEach((repo: any) => {
+      const stars = repo.stars || repo.stargazers_count || 0;
+      const forks = repo.forks || repo.forks_count || 0;
+      const hasDescription = !!(repo.description && repo.description.trim());
+      const hasReadme = !!(repo.readme && repo.readme.trim());
+
+      // 质量评估算法
+      let score = 0;
+      if (stars > 100) score += 2;
+      else if (stars > 10) score += 1;
+
+      if (forks > 20) score += 2;
+      else if (forks > 5) score += 1;
+
+      if (hasDescription) score += 1;
+      if (hasReadme) score += 1;
+
+      if (score >= 4) {
+        highQuality++;
+      } else if (score >= 2) {
+        mediumQuality++;
+      } else {
+        lowQuality++;
+      }
+    });
 
     return [
-      { name: '最小值', value: min },
-      { name: '平均值', value: Math.round(mean * 100) / 100 }, // 保留2位小数
-      { name: '最大值', value: max }
-    ];
+      { name: '高质量', count: highQuality },
+      { name: '中等质量', count: mediumQuality },
+      { name: '待改进', count: lowQuality }
+    ].filter(item => item.count > 0);
   };
 
   // 判断是否有任务正在运行
@@ -800,11 +980,13 @@ function KeywordsPage() {
 
       if (data.success) {
         setSearchMessage(`重新爬取请求已提交! ${data.message || ''}`)
+        addNotification('info', `关键词 "${selectedKeyword}" 重新爬取任务已开始，请等待完成通知`, selectedKeyword);
 
         // 开始轮询任务状态（统一控制）
         startPolling(selectedKeyword, 3000)
       } else {
         setSearchMessage(`重新爬取请求失败: ${data.error || '未知错误'}`)
+        addNotification('error', `关键词 "${selectedKeyword}" 重新爬取请求失败: ${data.error || '未知错误'}`, selectedKeyword);
       }
     } catch (error) {
       console.error('提交重新爬取请求失败:', error)
@@ -1097,22 +1279,23 @@ function KeywordsPage() {
     }
   }
 
-  // 切换关键词时加载对应分析文件
+  // 简化的关键词切换函数，避免DOM冲突
   const handleKeywordChange = (name: string) => {
     if (name === selectedKeyword) return; // 避免相同关键词重复加载
 
     console.log(`切换关键词: ${selectedKeyword} -> ${name}`)
 
+    // 简单直接的状态更新，不使用复杂的异步操作
     setSelectedKeyword(name);
-    // 立即清空分析结果，避免显示错误的数据
+    setActiveTab('overview');
     setAnalysisResults(null);
-    setActiveTab('overview'); // 重置为默认标签页
+    setSearchMessage('');
 
+    // 查找并加载分析文件
     const file = analysisFiles.find(f => f.name === name)?.file;
     console.log(`查找分析文件: ${name} -> ${file}`)
 
     if (file) {
-      // 先设置loading状态，然后加载新数据
       setIsLoading(true);
       fetchAnalysisByFile(file);
     } else {
@@ -1236,38 +1419,57 @@ function KeywordsPage() {
     }
   }, [selectedKeyword, analysisNames])
 
-  // 暂时注释掉加载状态检查，避免页面一直显示加载动画
-  /*
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    )
-  }
-  */
-
-  // 安全的点击处理函数 - 恢复为直接调用，避免额外异步包装
+  // 简化的安全点击处理函数
   const safeClickHandler = (handler: Function, ...args: any[]) => {
     try {
       handler(...args)
-    } catch (error) {
+    } catch (error: any) {
       console.warn('点击处理出错:', error)
+      // 只对DOM相关错误进行特殊处理
+      if (error.message?.includes('removeChild') ||
+          error.message?.includes('NotFoundError')) {
+        console.warn('DOM错误，尝试恢复')
+      }
     }
   }
 
-  // 安全的语言选择处理
-  const safeLanguageChange = (language: string) => {
-    safeClickHandler(handleLanguageChange, language)
-  }
 
-  // 安全的语言限制处理
-  const safeLimitChange = (language: string, value: string) => {
-    safeClickHandler(handleLimitChange, language, value)
-  }
 
   return (
     <div className="container mx-auto py-6 space-y-6">
+      {/* 通知区域 */}
+      {notifications.length > 0 && (
+        <div className="fixed top-4 right-4 z-[9999] space-y-2">
+          {notifications.map((notification) => (
+            <div
+              key={notification.id}
+              className={`p-4 rounded-lg shadow-lg max-w-sm ${
+                notification.type === 'success'
+                  ? 'bg-green-500 text-white'
+                  : notification.type === 'error'
+                  ? 'bg-red-500 text-white'
+                  : 'bg-blue-500 text-white'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium">{notification.message}</p>
+                  {notification.keyword && (
+                    <p className="text-xs opacity-90 mt-1">关键词: {notification.keyword}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => removeNotification(notification.id)}
+                  className="ml-2 text-white hover:text-gray-200"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* 标题区域 */}
       <Card className="glass-card bg-gradient-to-br from-purple-500/10 to-pink-500/10">
         <CardHeader>
@@ -1323,7 +1525,7 @@ function KeywordsPage() {
                         key={language}
                         variant={selectedLanguages.includes(language) ? "default" : "outline"}
                         className="cursor-pointer"
-                        onClick={() => safeLanguageChange(language)}
+                        onClick={() => handleLanguageChange(language)}
                       >
                         {language}
                       </Badge>
@@ -1343,7 +1545,7 @@ function KeywordsPage() {
                             min="1"
                             max="100"
                             value={languageLimits[language] || 30}
-                            onChange={(e) => safeLimitChange(language, e.target.value)}
+                            onChange={(e) => handleLimitChange(language, e.target.value)}
                             className="w-20"
                           />
                           <span className="text-sm">个项目</span>
@@ -1413,17 +1615,17 @@ function KeywordsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => safeClickHandler(() => {
+                    onClick={() => {
                       const allKeywords = new Set(availableKeywords.map(kw => kw.name))
                       setSelectedForDeletion(allKeywords)
-                    })}
+                    }}
                   >
                     全选
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => safeClickHandler(() => setSelectedForDeletion(new Set()))}
+                    onClick={() => setSelectedForDeletion(new Set())}
                   >
                     清空
                   </Button>
@@ -1431,7 +1633,7 @@ function KeywordsPage() {
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => safeClickHandler(() => setShowDeleteConfirm(true))}
+                      onClick={() => setShowDeleteConfirm(true)}
                     >
                       删除选中 ({selectedForDeletion.size})
                     </Button>
@@ -1439,10 +1641,10 @@ function KeywordsPage() {
                   <Button
                     variant="default"
                     size="sm"
-                    onClick={() => safeClickHandler(() => {
+                    onClick={() => {
                       setIsEditMode(false)
                       setSelectedForDeletion(new Set())
-                    })}
+                    }}
                   >
                     完成
                   </Button>
@@ -1452,10 +1654,10 @@ function KeywordsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => safeClickHandler(() => {
+                  onClick={() => {
                     setIsEditMode(true)
                     setSelectedForDeletion(new Set())
-                  })}
+                  }}
                 >
                   编辑
                 </Button>
@@ -1484,9 +1686,9 @@ function KeywordsPage() {
                     }`}
                     onClick={() => {
                       if (isEditMode) {
-                        safeClickHandler(toggleSelection, kw.name)
+                        toggleSelection(kw.name)
                       } else {
-                        safeClickHandler(handleKeywordChange, kw.name)
+                        handleKeywordChange(kw.name)
                       }
                     }}
                     onMouseDown={() => {
@@ -1571,24 +1773,31 @@ function KeywordsPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex flex-col md:flex-row gap-4 items-center">
-              <Select
-                value={analysisNames.includes(selectedKeyword) ? selectedKeyword : undefined}
-                onValueChange={(value) => safeClickHandler(handleKeywordChange, value)}
-              >
-                <SelectTrigger className="md:w-[280px] w-full">
-                  <SelectValue placeholder="选择分析主题" />
-                </SelectTrigger>
-                <SelectContent>
+              {/* 使用原生select替代复杂的Select组件，避免DOM冲突 */}
+              <div className="relative md:w-[280px] w-full">
+                <select
+                  value={analysisNames.includes(selectedKeyword) ? selectedKeyword : ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value && value !== selectedKeyword) {
+                      handleKeywordChange(value);
+                    }
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                >
+                  <option value="">选择分析主题</option>
                   {analysisFiles.map((item) => (
-                    <SelectItem key={`select-item-${item.name}`} value={item.name}>{item.name}</SelectItem>
+                    <option key={`option-${item.name}`} value={item.name}>
+                      {item.name}
+                    </option>
                   ))}
-                </SelectContent>
-              </Select>
+                </select>
+              </div>
 
               <Button
                 variant="default"
                 size="sm"
-                onClick={() => safeClickHandler(forceRefreshResults)}
+                onClick={() => forceRefreshResults()}
                 disabled={isLoading || !selectedKeyword}
                 className="bg-blue-500 hover:bg-blue-600"
               >
@@ -1599,10 +1808,10 @@ function KeywordsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => safeClickHandler(() => {
+                onClick={() => {
                   const file = analysisFiles.find(f => f.name === selectedKeyword)?.file
                   if (file) fetchAnalysisByFile(file)
-                })}
+                }}
                 disabled={isLoading || !selectedKeyword}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
@@ -1612,7 +1821,7 @@ function KeywordsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => safeClickHandler(regenerateCharts)}
+                onClick={regenerateCharts}
                 disabled={isRegenerating || !selectedKeyword}
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isRegenerating ? 'animate-spin' : ''}`} />
@@ -1625,7 +1834,11 @@ function KeywordsPage() {
                 <h3 className="analysis-section-title mb-4">
                   {selectedKeyword} 关键词分析结果
                 </h3>
-                <Tabs key="analysis-tabs" defaultValue="overview" value={activeTab} onValueChange={(value) => safeClickHandler(setActiveTab, value)} className="w-full">
+                <Tabs key="analysis-tabs" defaultValue="overview" value={activeTab} onValueChange={(value) => {
+                  React.startTransition(() => {
+                    setActiveTab(value);
+                  });
+                }} className="w-full">
                   <TabsList className="grid w-full md:w-auto grid-cols-4 mb-6">
                     <TabsTrigger value="overview">概览</TabsTrigger>
                     <TabsTrigger value="repositories">项目列表</TabsTrigger>
@@ -1666,35 +1879,47 @@ function KeywordsPage() {
                           </Card>
                         )}
 
-                        {analysisResults.charts && analysisResults.charts.stars_distribution && (
+                        {/* AI总结分析 */}
+                        {analysisResults.repositories && (
                           <Card>
-                            <CardHeader>
-                              <CardTitle>星标统计</CardTitle>
+                            <CardHeader className="flex flex-row items-center justify-between">
+                              <CardTitle>AI智能总结</CardTitle>
+                              <Button
+                                onClick={generateAISummary}
+                                disabled={isGeneratingSummary}
+                                size="sm"
+                                variant="outline"
+                              >
+                                {isGeneratingSummary ? (
+                                  <>
+                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                                    生成中...
+                                  </>
+                                ) : (
+                                  <>
+                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
+                                    生成总结
+                                  </>
+                                )}
+                              </Button>
                             </CardHeader>
-                            <CardContent className="h-64">
-                              {prepareStarsData(analysisResults.charts.stars_distribution.data).length === 0 ? (
-                                <div className="flex items-center justify-center h-full text-gray-500">
-                                  <div className="text-center">
-                                    <div className="text-4xl mb-2">📊</div>
-                                    <div>暂无星标数据</div>
-                                    <div className="text-sm mt-1">所有仓库的星标数为0</div>
+                            <CardContent className="h-64 overflow-y-auto">
+                              {aiSummary ? (
+                                <div className="prose prose-sm max-w-none">
+                                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                                    {aiSummary}
                                   </div>
                                 </div>
                               ) : (
-                                <ResponsiveContainer key="stars-container" width="100%" height="100%">
-                                  <BarChart
-                                    key="stars-bar-chart"
-                                    data={prepareStarsData(analysisResults.charts.stars_distribution.data)}
-                                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                                  >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip formatter={(value: any) => new Intl.NumberFormat().format(value)} />
-                                    <Legend />
-                                    <Bar dataKey="value" fill="#8884d8" name="星标数" />
-                                  </BarChart>
-                                </ResponsiveContainer>
+                                <div className="flex items-center justify-center h-full text-gray-500">
+                                  <div className="text-center">
+                                    <div className="text-4xl mb-2">🤖</div>
+                                    <div>AI智能分析</div>
+                                    <div className="text-sm mt-1">点击"生成总结"获取AI分析报告</div>
+                                  </div>
+                                </div>
                               )}
                             </CardContent>
                           </Card>
@@ -1712,6 +1937,69 @@ function KeywordsPage() {
                                 data={analysisResults.charts.tag_analysis.data}
                                 isSimplified={true}
                               />
+                            </CardContent>
+                          </Card>
+                        )}
+
+                        {/* 仓库质量评估 - 新增的第四个组件 */}
+                        {analysisResults.repositories && (
+                          <Card key="quality-assessment-card">
+                            <CardHeader>
+                              <CardTitle>仓库质量评估</CardTitle>
+                            </CardHeader>
+                            <CardContent className="h-64">
+                              {prepareQualityData().length === 0 ? (
+                                <div className="flex items-center justify-center h-full text-gray-500">
+                                  <div className="text-center">
+                                    <div className="text-4xl mb-2">⭐</div>
+                                    <div>暂无质量数据</div>
+                                    <div className="text-sm mt-1">无法评估仓库质量</div>
+                                  </div>
+                                </div>
+                              ) : (
+                                <ResponsiveContainer key="quality-container" width="100%" height="100%">
+                                  <PieChart key="quality-pie-chart">
+                                    <Pie
+                                      data={prepareQualityData()}
+                                      nameKey="name"
+                                      dataKey="count"
+                                      cx="50%"
+                                      cy="50%"
+                                      outerRadius={80}
+                                      fill="#8884d8"
+                                      label={({ name, count }) => `${name}: ${count}`}
+                                    >
+                                      {prepareQualityData().map((entry, index) => (
+                                        <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
+                                      ))}
+                                    </Pie>
+                                    <Tooltip formatter={(value: any, name: string) => [value, '仓库数量']} />
+                                    <Legend />
+                                  </PieChart>
+                                </ResponsiveContainer>
+                              )}
+                            </CardContent>
+                          </Card>
+                        )}
+
+                        {/* 指标指南分析 */}
+                        {analysisResults.insights && analysisResults.insights.length > 0 && (
+                          <Card key="insights-card" className="md:col-span-2">
+                            <CardHeader>
+                              <CardTitle>指标指南分析</CardTitle>
+                              <CardDescription>基于数据分析的关键洞察</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                              <div className="space-y-3">
+                                {analysisResults.insights.map((insight: string, index: number) => (
+                                  <div key={`insight-${index}`} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                                    <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                                      {index + 1}
+                                    </div>
+                                    <p className="text-sm text-gray-700">{insight}</p>
+                                  </div>
+                                ))}
+                              </div>
                             </CardContent>
                           </Card>
                         )}
@@ -1759,8 +2047,54 @@ function KeywordsPage() {
                               keyword={selectedKeyword}
                               title="常用库/包分析"
                               libraryData={analysisResults.charts?.imported_libraries?.data || {}}
+                              trendsData={analysisResults.trends || {}}
                             />
                           )}
+
+                          {/* 趋势计算方法解释 */}
+                          <Card key="trend-calculation-explanation">
+                            <CardHeader>
+                              <CardTitle>趋势计算方法说明</CardTitle>
+                              <CardDescription>了解库分析中趋势指标的计算原理</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                              <div className="space-y-4">
+                                <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                                  <h4 className="font-semibold text-green-800 mb-2">🔥 热门趋势 (上升)</h4>
+                                  <p className="text-sm text-green-700">
+                                    基于以下指标综合评估：使用频率 &gt; 15次、GitHub星标增长率 &gt; 10%、
+                                    近期提交活跃度高、社区讨论热度上升
+                                  </p>
+                                </div>
+
+                                <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                                  <h4 className="font-semibold text-blue-800 mb-2">📊 常用趋势 (稳定)</h4>
+                                  <p className="text-sm text-blue-700">
+                                    成熟稳定的库：使用频率 5-15次、星标增长平稳、
+                                    文档完善、版本更新规律、企业级应用广泛
+                                  </p>
+                                </div>
+
+                                <div className="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                                  <h4 className="font-semibold text-orange-800 mb-2">📉 冷门趋势 (下降)</h4>
+                                  <p className="text-sm text-orange-700">
+                                    使用频率 &lt; 5次、星标增长缓慢或负增长、
+                                    维护活跃度低、可能被新技术替代
+                                  </p>
+                                </div>
+
+                                <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                  <h4 className="font-semibold text-gray-800 mb-2">🔍 计算依据</h4>
+                                  <ul className="text-sm text-gray-600 space-y-1">
+                                    <li>• <strong>使用频率</strong>：在分析的仓库中被导入的次数</li>
+                                    <li>• <strong>涉及仓库数</strong>：使用该库的不同仓库数量</li>
+                                    <li>• <strong>星标趋势</strong>：GitHub星标的增长变化率</li>
+                                    <li>• <strong>社区活跃度</strong>：提交频率、Issue讨论、PR活动</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
                         </div>
                       ) : (
                         <div className="py-8 text-center">

@@ -1,7 +1,7 @@
 {
   "keyword": "React",
   "repository_count": 60,
-  "analysis_date": "2025-08-21T17:33:49.720060",
+  "analysis_date": "2025-08-27T09:35:21.974694",
   "charts": {
     "language_distribution": {
       "data": {
@@ -35,12 +35,12 @@
             20
           ]
         ],
-        "analyzed_at": "2025-08-21T17:33:49.535043"
+        "analyzed_at": "2025-08-27T09:35:21.862580"
       }
     },
     "stars_distribution": {
       "data": {
-        "mean": 49313.9,
+        "mean": 49317.583333333336,
         "min": 1609,
         "max": 426133,
         "total": 0
@@ -120,380 +120,363 @@
     },
     "tag_analysis": {
       "data": {
-        "total_topics": 0,
-        "topic_distribution": {},
-        "top_topics": [],
-        "analyzed_at": "2025-08-21T17:33:49.535043"
+        "total_topics": 22,
+        "topic_distribution": {
+          "react": 34,
+          "web": 14,
+          "ai": 9,
+          "framework": 7,
+          "go": 7,
+          "javascript": 7,
+          "java": 7,
+          "python": 6,
+          "android": 4,
+          "ios": 4,
+          "library": 3,
+          "vue": 3,
+          "angular": 2,
+          "tool": 2,
+          "api": 2,
+          "react-native": 2,
+          "sql": 2,
+          "fullstack": 1,
+          "typescript": 1,
+          "database": 1,
+          "postgresql": 1,
+          "docker": 1
+        },
+        "top_topics": [
+          [
+            "react",
+            34
+          ],
+          [
+            "web",
+            14
+          ],
+          [
+            "ai",
+            9
+          ],
+          [
+            "framework",
+            7
+          ],
+          [
+            "go",
+            7
+          ],
+          [
+            "javascript",
+            7
+          ],
+          [
+            "java",
+            7
+          ],
+          [
+            "python",
+            6
+          ],
+          [
+            "android",
+            4
+          ],
+          [
+            "ios",
+            4
+          ],
+          [
+            "library",
+            3
+          ],
+          [
+            "vue",
+            3
+          ],
+          [
+            "angular",
+            2
+          ],
+          [
+            "tool",
+            2
+          ],
+          [
+            "api",
+            2
+          ],
+          [
+            "react-native",
+            2
+          ],
+          [
+            "sql",
+            2
+          ],
+          [
+            "fullstack",
+            1
+          ],
+          [
+            "typescript",
+            1
+          ],
+          [
+            "database",
+            1
+          ]
+        ],
+        "analyzed_at": "2025-08-27T09:35:21.863574"
       }
     }
   },
   "trends": {
     "libraries": {
       "path": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "fs": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "os": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "@jest/types": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "setuptools": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "time": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "json": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "pathlib": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "re": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "sys": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "ts-node": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "__future__": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "io": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "dateutil": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "urllib": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "@hey-api/openapi-ts": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "pytest": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "testing"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "tensorflow": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "atexit": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       }
     },
     "packages": {
       "path": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 7,
+        "popularity": "高"
       },
       "fs": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "os": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "@jest/types": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "setuptools": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "time": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+12%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "json": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "pathlib": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "re": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "sys": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "ts-node": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "__future__": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "io": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "dateutil": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "urllib": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "@hey-api/openapi-ts": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "pytest": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "testing"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "tensorflow": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "atexit": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+20%",
+        "usage_count": 1,
+        "popularity": "低"
       }
     },
-    "functions": {
-      "path": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 97.5,
-        "category": "other"
-      },
-      "fs": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
-      },
-      "os": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 90.0,
-        "category": "other"
-      },
-      "@jest/types": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
-      },
-      "setuptools": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
-      },
-      "time": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 77.5,
-        "category": "other"
-      },
-      "json": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
-      },
-      "pathlib": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
-      },
-      "re": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
-      },
-      "sys": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 60.0,
-        "category": "other"
-      },
-      "ts-node": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "__future__": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "io": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "datetime": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "dateutil": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "urllib": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "@hey-api/openapi-ts": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "pytest": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "testing"
-      },
-      "tensorflow": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      },
-      "atexit": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 25.0,
-        "category": "other"
-      }
-    }
+    "functions": {}
   },
   "repositories": [
     {
@@ -521,11 +504,11 @@
       "description": "The library for web and native user interfaces.",
       "url": "https://github.com/facebook/react",
       "language": "JavaScript",
-      "stars": 238278,
-      "forks": 49174,
+      "stars": 238396,
+      "forks": 49206,
       "tags": [],
       "created_at": "2013-05-24T16:15:54",
-      "updated_at": "2025-08-21T16:50:34.509000",
+      "updated_at": "2025-08-26T18:03:19.878000",
       "trend_date": "2025-08-21T16:50:34.509000",
       "keyword": "React",
       "scraped_at": "2025-08-21T16:50:34.510000"
@@ -538,11 +521,11 @@
       "description": "The React Framework",
       "url": "https://github.com/vercel/next.js",
       "language": "JavaScript",
-      "stars": 133899,
-      "forks": 29129,
+      "stars": 134004,
+      "forks": 29154,
       "tags": [],
       "created_at": "2016-10-05T23:32:51",
-      "updated_at": "2025-08-21T16:50:39.042000",
+      "updated_at": "2025-08-26T17:59:51.534000",
       "trend_date": "2025-08-21T16:50:39.042000",
       "keyword": "React",
       "scraped_at": "2025-08-21T16:50:39.044000"
@@ -742,11 +725,11 @@
       "description": "The best React-based framework with performance, scalability and security built in.",
       "url": "https://github.com/gatsbyjs/gatsby",
       "language": "JavaScript",
-      "stars": 55919,
+      "stars": 55917,
       "forks": 10286,
       "tags": [],
       "created_at": "2015-05-21T22:43:05",
-      "updated_at": "2025-08-21T16:50:47.403000",
+      "updated_at": "2025-08-26T17:59:51.539000",
       "trend_date": "2025-08-21T16:50:47.403000",
       "keyword": "React",
       "scraped_at": "2025-08-21T16:50:47.409000"
@@ -1516,5 +1499,10 @@
       "keyword": "React",
       "scraped_at": "2025-08-21T16:50:28.299000"
     }
+  ],
+  "insights": [
+    "最受欢迎的编程语言是 TypeScript，占 20 个仓库",
+    "平均星数为 49317.6",
+    "最热门的主题是 'react'，出现在 34 个仓库中"
   ]
 }

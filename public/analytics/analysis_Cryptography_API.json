@@ -1,7 +1,7 @@
 {
   "keyword": "Cryptography API",
   "repository_count": 81,
-  "analysis_date": "2025-08-21T17:38:25.531552",
+  "analysis_date": "2025-08-26T23:09:09.601401",
   "charts": {
     "language_distribution": {
       "data": {
@@ -28,7 +28,7 @@
             29
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:25.453843"
+        "analyzed_at": "2025-08-26T23:09:09.200329"
       }
     },
     "stars_distribution": {
@@ -368,131 +368,131 @@
             2
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:25.454836"
+        "analyzed_at": "2025-08-26T23:09:09.201329"
       }
     }
   },
   "trends": {
     "libraries": {
       "os": {
-        "trend": "up",
-        "count": 29,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 29,
+        "popularity": "高"
       },
       "sys": {
-        "trend": "up",
-        "count": 18,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 18,
+        "popularity": "高"
       },
       "setuptools": {
-        "trend": "up",
-        "count": 16,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 16,
+        "popularity": "高"
       },
       "time": {
-        "trend": "up",
-        "count": 14,
-        "percentile": 82.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 14,
+        "popularity": "高"
       },
       "json": {
-        "trend": "up",
-        "count": 12,
-        "percentile": 77.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 12,
+        "popularity": "高"
       },
       "hashlib": {
-        "trend": "stable",
-        "count": 11,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "datetime": {
-        "trend": "stable",
-        "count": 11,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 11,
+        "popularity": "高"
       },
       "logging": {
-        "trend": "stable",
-        "count": 9,
-        "percentile": 62.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "subprocess": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "re": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "cryptography": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "requests": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "utility"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "flask": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "web-framework"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "org": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "java": {
-        "trend": "stable",
-        "count": 6,
-        "percentile": 42.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
       },
       "random": {
-        "trend": "down",
-        "count": 5,
-        "percentile": 22.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
       },
       "shutil": {
-        "trend": "down",
-        "count": 4,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "threading": {
-        "trend": "down",
-        "count": 4,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "User": {
-        "trend": "down",
-        "count": 4,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "ConfigParser": {
-        "trend": "down",
-        "count": 4,
-        "percentile": 10.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       }
     },
     "packages": {},

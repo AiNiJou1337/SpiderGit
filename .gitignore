@@ -28,6 +28,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+# next
+.next/
 
 # typescript
 *.tsbuildinfo
@@ -109,3 +111,6 @@ cleanup-*.js
 *.log
 temp_*.json
 temp_*.py
+
+# log
+*.log

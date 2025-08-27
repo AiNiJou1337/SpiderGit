@@ -1,7 +1,7 @@
 <div align="center">
   <img src="public/logo.png" alt="GitHub趋势爬虫" width="180" height="180" style="max-width: 100%;" />
-  <h1> GitHub趋势爬虫与分析平台 </h1>
-  <p><strong>探索GitHub热门项目，挖掘编程语言与开源趋势</strong></p>
+  <h1>GitHub趋势爬虫与分析平台</h1>
+  <p><strong>智能化的GitHub数据采集与分析平台，为开发者提供数据驱动的技术洞察</strong></p>
 
   <p>
     <a href="#功能特性">功能特性</a> •
@@ -15,21 +15,30 @@
 
 ## 🌟 项目介绍
 
-GitHub趋势爬虫与分析平台是一个全栈应用程序，自动抓取GitHub上热门仓库的数据，并通过先进的数据可视化技术呈现开源社区的发展趋势。系统支持多种编程语言的数据分析，帮助开发者洞察技术潮流，发现优质项目。
+GitHub趋势爬虫与分析平台是一个现代化的全栈应用程序，专注于自动抓取和分析GitHub上的热门仓库数据。通过智能爬虫系统和先进的数据可视化技术，为开发者提供全面的开源社区趋势洞察。
 
-<div align="center">
-  <img src="public/img/dashboard.png" alt="仪表盘展示" width="80%" style="max-width: 800px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" />
-</div>
+
+
 
 ## ✨ 功能特性
 
-- **📊 实时数据仪表盘** - 展示项目总数、星标总数、语言分布等关键指标
-- **🔍 关键词分析** - 按技术关键词抓取并分析GitHub仓库
-- **📈 趋势可视化** - 多维度图表展示开源项目发展趋势
-- **🧩 语言分布分析** - 直观展示不同编程语言的流行度和使用情况
-- **📚 库与依赖分析** - 分析项目中使用的热门库和框架
-- **🔄 自动化爬虫** - 支持定时任务，保持数据更新
-- **🎨 现代UI设计** - 渐变背景与毛玻璃效果，提供出色的视觉体验
+### 🏠 Dashboard 仪表盘
+- **📊 热门仓库展示** - 实时显示GitHub月度热门项目，按星标增长排序
+- **📈 技术栈概览** - 可视化展示编程语言分布和趋势变化
+- **🔥 趋势分析** - 多时间维度（日/周/月）的项目趋势追踪
+- **📋 数据统计** - 项目总数、语言种类、活跃度等关键指标
+
+### 🔍 数据采集与分析
+- **🤖 智能爬虫系统** - 自动抓取GitHub Trending页面数据
+- **🔄 多源数据整合** - 结合GitHub API和HTML解析，确保数据完整性
+- **⏰ 时间序列存储** - 支持历史数据追踪和趋势分析
+- **🎯 精准过滤** - 支持按编程语言、时间周期等维度筛选
+
+### 🎨 用户体验
+- **🌈 现代化UI设计** - 采用渐变背景和毛玻璃效果
+- **📱 响应式布局** - 完美适配桌面和移动设备
+- **⚡ 快速加载** - 优化的数据结构和缓存策略
+- **🔧 实时刷新** - 支持手动刷新和自动更新
 
 ## 🛠️ 技术架构
 
@@ -85,161 +94,311 @@ GitHub趋势爬虫与分析平台是一个全栈应用程序，自动抓取GitHu
 ### 系统架构图
 
 ```mermaid
-graph TD
-    A[爬虫模块] -->|抓取数据| B[数据库]
-    C[数据分析模块] -->|读取数据| B
-    C -->|生成分析结果| D[JSON分析文件]
-    E[前端应用] -->|API请求| F[Next.js API]
-    F -->|查询数据| B
-    F -->|读取分析| D
-    E -->|展示| G[数据可视化]
+graph TB
+    subgraph "数据采集层"
+        A[GitHub Trending HTML爬虫]
+        B[GitHub REST API客户端]
+        C[多Token管理器]
+    end
+
+    subgraph "数据处理层"
+        D[数据清洗与标准化]
+        E[时间序列数据生成]
+        F[统计分析引擎]
+    end
+
+    subgraph "数据存储层"
+        G[JSON文件存储]
+        H[时间序列数据]
+        I[备份数据]
+    end
+
+    subgraph "API服务层"
+        J[Next.js API Routes]
+        K[RESTful API]
+        L[数据缓存]
+    end
+
+    subgraph "前端展示层"
+        M[Dashboard仪表盘]
+        N[Trends分析页面]
+        O[图表可视化组件]
+    end
+
+    A -->|HTML解析| D
+    B -->|API数据| D
+    C -->|Token轮换| B
+    D -->|处理后数据| E
+    E -->|时间序列| F
+    F -->|统计结果| G
+    G -->|存储| H
+    H -->|备份| I
+    J -->|读取| G
+    K -->|API响应| J
+    L -->|缓存| K
+    M -->|请求| J
+    N -->|请求| J
+    O -->|渲染| M
+    O -->|渲染| N
 ```
 
-## 🖥️ 界面展示
+## 🖥️ 界面展示 
 
 <div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>首页仪表盘</strong></p>
+<div align="center" style="margin-top: 20px;">
+    <p><strong>数据仪表盘</strong></p>
     <img src="public/img/dashboard.png" alt="仪表盘" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+
+
+
+<div align="center" style="margin-top: 20px;">
     <p><strong>关键词总览</strong></p>
     <img src="public/img/keywords_all.png" alt="关键词总览" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
-</div>
-<div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>关键词详细分析</strong></p>
-    <img src="public/img/keywords_detail1.png" alt="详细分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+
+
+
+<div align="center" style="margin-top: 20px;">
+    <p><strong>分析结果总览</strong></p>
+    <img src="public/img/分析结果总览.jpeg" alt="分析结果总览" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+
+
+
+<div align="center" style="margin-top: 20px;">
     <p><strong>数据可视化</strong></p>
-    <img src="public/img/keywords_detail2.png" alt="数据可视化" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <img src="public/img/项目列表.jpeg" alt="数据可视化" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
-</div>
 
-<div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+
+  <!-- 库分析与趋势 -->
+<div align="center" style="margin-top: 20px;">
     <p><strong>库分析与趋势</strong></p>
-    <img src="public/img/keywords_detail3.png" alt="库分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <img src="public/img/常用库分析.jpeg" alt="库分析与趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
+
+
+
+<div align="center" style="margin-top: 20px;">
     <p><strong>标签分析</strong></p>
-    <img src="public/img/keywords_detail4.png" alt="标签分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <img src="public/img/标签分析.jpeg" alt="标签分析" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
+
+
+
+<div align="center" style="margin-top: 20px;">
+    <p><strong>趋势分析总览</strong></p>
+    <img src="public/img/趋势分析总览.jpeg" alt="趋势分析总览" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+
+
+  <!-- 导出数据 -->
+<div align="center" style="margin-top: 20px;">
+    <p><strong>导出数据</strong></p>
+    <img src="public/img/导出数据.jpeg" alt="导出数据" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+
+
 </div>
 
-<div align="center" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>日趋势分析</strong></p>
-    <img src="public/img/daily.png" alt="日趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
-  </div>
-  <div style="flex: 1; min-width: 300px; max-width: 400px;">
-    <p><strong>周趋势分析</strong></p>
-    <img src="public/img/weekly.png" alt="周趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+<!-- 单列展示部分 -->
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>分析列表展示</strong></p>
+    <img src="public/img/分析列表展示.jpeg" alt="分析列表展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 
 <div align="center" style="margin-top: 20px;">
   <div style="max-width: 400px;">
-    <p><strong>月趋势分析</strong></p>
-    <img src="public/img/monthly.png" alt="月趋势" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+    <p><strong>分析队列展示</strong></p>
+    <img src="public/img/分析队列展示.jpeg" alt="分析队列展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
   </div>
 </div>
 
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>尾部分页展示</strong></p>
+    <img src="public/img/尾部分页展示.jpeg" alt="尾部分页展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>增长趋势展示</strong></p>
+    <img src="public/img/增长趋势展示.jpeg" alt="增长趋势展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>活跃度分析展示</strong></p>
+    <img src="public/img/活跃度分析展示.jpeg" alt="活跃度分析展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<div align="center" style="margin-top: 20px;">
+  <div style="max-width: 400px;">
+    <p><strong>技术栈雷达展示</strong></p>
+    <img src="public/img/技术栈雷达展示.jpeg" alt="技术栈雷达展示" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+
+
 ## 🚀 快速开始
 
-### 环境要求
+### 🔧 环境要求
 
-- Node.js 18+
-- Python 3.8+
-- PostgreSQL 数据库
+- **Node.js**: 18+ (推荐 20+)
+- **Python**: 3.8+ (推荐 3.9+)
+- **GitHub Token**: Personal Access Token (用于API访问)
+- **内存**: 建议 4GB+ 可用内存
+- **存储**: 建议 1GB+ 可用空间
 
-### 安装步骤
+### 📥 安装步骤
 
-1. **克隆仓库**
-   ```bash
-   git clone https://github.com/AiNiJou1337/SpiderGit.git
-   cd SpiderGit
-   ```
+#### 1. 克隆项目
+```bash
+git clone https://github.com/AiNiJou1337/SpiderGit.git
+cd SpiderGit
+```
 
-2. **安装依赖**
-   ```bash
-   # 前端依赖
-   npm install
+#### 2. 前端环境配置
+```bash
+# 安装前端依赖
+npm install
 
-   # Python 依赖
-   pip install -r backend/requirements/base.txt
+# 验证安装
+npm run build
+```
 
-   # 开发和测试依赖（可选）
-   pip install -r backend/requirements/dev.txt
-   ```
-
-3. **配置环境**
-   ```bash
-   # 复制环境变量示例文件
-   cp .env.example .env
-
-   # 编辑 .env 文件，至少设置：
-   # - DATABASE_URL（PostgreSQL 连接）
-   # - 可选：GITHUB_TOKEN_MAIN（GitHub API Token，用于更高速率）
-   # - 可选：GITHUB_TOKEN_BACKUP1, GITHUB_TOKEN_BACKUP2（备用 Token）
-   ```
-
-4. **初始化数据库**
-   ```bash
-   # 使用 Prisma 初始化数据库
-   npm run prisma:push
-   npm run prisma:generate
-
-   # 可选：填充种子数据
-   npm run prisma:seed
-   ```
-
-5. **启动应用**
-   ```bash
-   npm run dev
-   ```
-
-   可以访问 http://localhost:3000 查看应用
-
-## 📖 使用指南
-
-### 爬取GitHub数据
-
-1. 在首页或关键词页面输入想要分析的关键词
-2. 选择需要爬取的编程语言和数量
-3. 点击"搜索并分析"按钮开始爬取
-4. 系统会在后台处理数据，完成后自动生成分析结果
-
-### 查看分析结果
-
-- **首页仪表盘**：查看总体统计数据和趋势
-- **关键词分析**：查看特定关键词的详细分析
-  - 概览：语言分布、星标统计等基本信息
-  - 项目列表：查看所有爬取的仓库
-  - 库分析：分析项目中使用的库和依赖
-  - 关键词分析：深入分析描述和标签
-
-### 自定义分析
-
-可以通过Python脚本自定义分析：
-
+#### 3. 后端环境配置
 ```bash
 # 进入后端目录
 cd backend
 
-# 运行关键词爬虫
-python -m scraper.keyword_scraper
+# 安装Python依赖
+pip install -r requirements/base.txt
 
-# 运行数据分析
-python -m scraper.analyzers.data_analysis
+# 验证安装
+python -c "import requests, bs4; print('✅ 依赖安装成功')"
+```
 
-# 运行完整的爬虫流程
-python -m scraper.main
+#### 4. GitHub Token配置
+创建项目根目录下的 `.env` 文件：
+```bash
+# 主要Token（必需）
+GITHUB_TOKEN_GMAIL=ghp_your_token_here
 
-# 启动定时任务调度器
-python -m scraper.scheduler
+# 备用Token（可选，提高API限制）
+GITHUB_TOKEN_QQ=ghp_your_second_token_here
+GITHUB_TOKEN_BACKUP1=ghp_your_third_token_here
+```
+
+> 💡 **获取GitHub Token**:
+> 1. 访问 [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
+> 2. 点击 "Generate new token (classic)"
+> 3. 选择权限：`public_repo`, `read:user`
+> 4. 复制token到 `.env` 文件
+
+#### 5. 启动应用
+```bash
+# 启动前端开发服务器
+npm run dev
+```
+
+应用将在 http://localhost:3000 启动
+
+#### 6. 数据采集（可选）
+```bash
+# 进入后端目录
+cd backend
+
+# 爬取最新的GitHub趋势数据
+python scraper/trending_manager.py
+
+# 收集时间序列数据
+python scraper/time_series_trending_manager.py
+
+# 启动定时任务（后台运行）
+python scraper/scheduler.py
+```
+
+### 🎯 快速体验
+
+项目已包含示例数据，可以直接体验所有功能：
+
+#### 🏠 访问页面
+- **首页**: http://localhost:3000 - 项目介绍和功能概览
+- **Dashboard**: http://localhost:3000/dashboard - 热门仓库和技术栈统计
+- **Trends分析**: http://localhost:3000/trends - 完整的趋势分析功能
+
+#### 📊 主要功能
+1. **热门仓库展示** - 实时显示GitHub月度热门项目
+2. **技术栈分析** - 编程语言分布和趋势统计
+3. **时间序列分析** - 历史数据追踪和趋势变化
+4. **日历热力图** - 每日趋势活动可视化
+5. **分页浏览** - 支持大量数据的分页展示
+
+## 📖 使用指南
+
+### 🏠 Dashboard 使用
+
+1. **查看热门仓库**
+   - 访问 `/dashboard` 页面
+   - 查看按月度星标增长排序的热门项目
+   - 点击项目链接直接跳转到GitHub
+
+2. **技术栈分析**
+   - 查看编程语言分布饼图
+   - 了解各语言在热门项目中的占比
+   - 识别技术趋势和流行语言
+
+3. **数据刷新**
+   - 点击刷新按钮获取最新数据
+   - 系统会自动从数据文件加载最新信息
+
+### 🤖 数据爬虫使用
+
+1. **基础趋势爬取**
+   ```bash
+   python backend/scraper/trending_manager.py
+   ```
+   - 爬取GitHub Trending页面的日/周/月度数据
+   - 支持多种编程语言
+   - 自动保存到 `public/trends/data/trends.json`
+
+2. **时间序列数据收集**
+   ```bash
+   python backend/scraper/time_series_trending_manager.py
+   ```
+   - 收集历史趋势数据
+   - 生成时间序列分析文件
+   - 支持趋势变化追踪
+
+### 🔧 自定义配置
+
+```python
+# 支持的编程语言
+LANGUAGES = ['javascript', 'python', 'java', 'typescript', 'go', 'rust']
+
+# 时间周期
+PERIODS = ['daily', 'weekly', 'monthly']
+
+# 每个语言爬取的项目数量
+PROJECTS_PER_LANGUAGE = 25
+```
+
+**API端点自定义:**
+可以修改 `app/api/trends/route.ts` 来调整API行为：
+```typescript
+// 默认返回数量
+const limit = parseInt(searchParams.get('limit') || '300');
+
+// 支持的时间周期
+const validPeriods = ['daily', 'weekly', 'monthly'];
 ```
 
 ## 📝 开发文档
@@ -248,19 +407,35 @@ python -m scraper.scheduler
 
 ```
 SpiderGit/
-├── app/                   # Next.js App Router 页面
+├── app/                   # Next.js App Router
 │   ├── api/               # API 路由端点
+│   │   ├── trends/        # 趋势数据API
+│   │   │   ├── route.ts   # 主趋势API
+│   │   │   └── stats/     # 技术栈统计API
+│   │   └── trending/      # 兼容性路由
 │   ├── dashboard/         # 仪表盘页面
-│   ├── keywords/          # 关键词分析页面
-│   ├── daily/             # 日趋势页面
-│   ├── weekly/            # 周趋势页面
-│   └── monthly/           # 月趋势页面
+│   └── globals.css        # 全局样式
 ├── src/                   # 前端源码
 │   ├── components/        # React 组件
-│   ├── lib/               # 工具库和共享函数
-│   └── types/             # TypeScript 类型定义
-├── backend/               # Python 后端
-│   ├── scraper/           # 爬虫系统
+│   │   ├── ui/            # 基础UI组件
+│   │   └── features/      # 功能组件
+│   │       ├── trending-hot-repositories.tsx
+│   │       └── tech-stats-overview.tsx
+│   └── lib/               # 工具库
+├── backend/               # Python 爬虫系统
+│   └── scraper/           # 爬虫核心
+│       ├── core/          # 核心模块
+│       │   ├── api_client.py      # GitHub API客户端
+│       │   └── token_manager.py   # Token管理
+│       ├── crawlers/      # 爬虫实现
+│       │   └── github_trending_html.py
+│       ├── trending_manager.py    # 主趋势管理器
+│       └── time_series_trending_manager.py
+├── public/                # 静态资源
+│   └── trends/            # 趋势数据文件
+│       ├── data/          # 主数据文件
+│       └── time_series/   # 时间序列数据
+└── components/            # Shadcn/ui 组件
 │   │   ├── analyzers/     # 数据分析器
 │   │   ├── core/          # 核心功能
 │   │   └── crawlers/      # 爬虫实现

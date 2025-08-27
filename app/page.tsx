@@ -13,9 +13,20 @@ export default function IntroductionPage() {
         {/* 项目标题和简介 */}
         <div className="text-center mb-8">
           <div className="flex flex-col items-center mb-4">
-            <h1 className="text-4xl font-bold mb-4">GitHub趋势爬虫与分析平台</h1>
+            <div className="mb-6">
+              <Image
+                src="/logo.png"
+                alt="GitHub趋势爬虫与分析平台"
+                width={120}
+                height={120}
+                className="mx-auto"
+              />
+            </div>
+            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              GitHub趋势爬虫与分析平台
+            </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              探索GitHub热门项目，挖掘编程语言与开源趋势
+              实时追踪GitHub热门项目，智能分析开源技术趋势，为开发者提供数据驱动的技术洞察
             </p>
           </div>
         </div>
@@ -30,41 +41,46 @@ export default function IntroductionPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <FeatureCard 
+              <FeatureCard
                 icon={<BarChart3 className="w-8 h-8 text-blue-500" />}
-                title="实时数据仪表盘"
-                description="展示项目总数、星标总数、语言分布等关键指标"
+                title="热门仓库Dashboard"
+                description="实时展示GitHub月度热门项目，按星标增长排序，支持多语言筛选"
                 gradient="from-blue-500/10 to-indigo-500/10"
+                link="/dashboard"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<LineChart className="w-8 h-8 text-green-500" />}
-                title="趋势可视化"
-                description="多维度图表展示开源项目发展趋势"
+                title="趋势分析页面"
+                description="日/周/月多时间维度趋势分析，支持分页浏览和高级筛选"
                 gradient="from-green-500/10 to-teal-500/10"
+                link="/trends"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<Layers className="w-8 h-8 text-purple-500" />}
-                title="语言分布分析"
-                description="直观展示不同编程语言的流行度和使用情况"
+                title="技术栈统计"
+                description="可视化展示编程语言分布，识别技术趋势和流行度变化"
                 gradient="from-purple-500/10 to-pink-500/10"
+                link="/dashboard"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<Code className="w-8 h-8 text-yellow-500" />}
-                title="库与依赖分析"
-                description="分析项目中使用的热门库和框架"
+                title="时间序列分析"
+                description="历史数据追踪，项目发展轨迹分析，趋势预测"
                 gradient="from-yellow-500/10 to-orange-500/10"
+                link="/trends"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<Cpu className="w-8 h-8 text-red-500" />}
-                title="自动化爬虫"
-                description="支持定时任务，保持数据更新"
+                title="智能爬虫系统"
+                description="自动抓取GitHub Trending数据，支持多Token管理和API限制处理"
                 gradient="from-red-500/10 to-rose-500/10"
               />
-              <FeatureCard 
+              <FeatureCard
                 icon={<UserCheck className="w-8 h-8 text-teal-500" />}
-                title="关键词分析"
-                description="按技术关键词抓取并分析GitHub仓库"
+                title="日历热力图"
+                description="直观展示每日趋势变化，识别热门项目爆发时间点"
                 gradient="from-teal-500/10 to-cyan-500/10"
+                link="/trends"
               />
             </div>
           </CardContent>
@@ -80,42 +96,46 @@ export default function IntroductionPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <TechStackCard 
-                title="前端"
+              <TechStackCard
+                title="前端框架"
                 items={[
-                  "Next.js 13",
-                  "React",
+                  "Next.js 14 (App Router)",
+                  "React 18",
                   "TypeScript",
                   "TailwindCSS",
-                  "Shadcn UI",
+                  "Shadcn/ui",
                   "Recharts"
                 ]}
                 gradient="from-blue-500/10 to-indigo-500/10"
               />
-              <TechStackCard 
-                title="后端"
+              <TechStackCard
+                title="API & 后端"
                 items={[
                   "Next.js API Routes",
-                  "Python",
-                  "FastAPI"
+                  "RESTful API",
+                  "JSON数据存储",
+                  "文件系统缓存"
                 ]}
                 gradient="from-green-500/10 to-teal-500/10"
               />
-              <TechStackCard 
-                title="数据库"
+              <TechStackCard
+                title="数据存储"
                 items={[
-                  "PostgreSQL",
-                  "Prisma ORM"
+                  "JSON文件存储",
+                  "时间序列数据",
+                  "静态资源管理",
+                  "增量数据更新"
                 ]}
                 gradient="from-amber-500/10 to-orange-500/10"
               />
-              <TechStackCard 
-                title="爬虫"
+              <TechStackCard
+                title="爬虫系统"
                 items={[
-                  "Python",
-                  "BeautifulSoup",
+                  "Python 3.8+",
+                  "BeautifulSoup4",
                   "Requests",
-                  "GitHub API"
+                  "GitHub REST API",
+                  "智能Token管理"
                 ]}
                 gradient="from-purple-500/10 to-pink-500/10"
               />
@@ -134,24 +154,24 @@ export default function IntroductionPage() {
           <CardContent>
             <div className="p-6 bg-muted rounded-lg">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <WorkflowStep 
+                <WorkflowStep
                   step="1"
-                  title="数据爬取"
-                  description="爬虫模块从GitHub抓取仓库数据，按关键词和语言分类，存储到数据库"
+                  title="智能数据采集"
+                  description="Python爬虫自动抓取GitHub Trending页面，结合API获取详细仓库信息，支持多时间维度数据收集"
                   icon={<Github className="w-12 h-12 text-blue-500" />}
                   gradient="from-blue-500/20 to-indigo-500/20"
                 />
-                <WorkflowStep 
+                <WorkflowStep
                   step="2"
-                  title="数据分析"
-                  description="分析模块处理原始数据，生成趋势报告、语言分布和依赖分析"
+                  title="数据处理存储"
+                  description="实时处理爬取数据，生成时间序列文件，按日/周/月分类存储，支持增量更新和历史追踪"
                   icon={<Database className="w-12 h-12 text-purple-500" />}
                   gradient="from-purple-500/20 to-violet-500/20"
                 />
-                <WorkflowStep 
+                <WorkflowStep
                   step="3"
-                  title="可视化展示"
-                  description="前端应用通过API获取数据，以图表和交互式界面展示分析结果"
+                  title="智能分析展示"
+                  description="Next.js前端通过RESTful API获取数据，提供Dashboard、趋势分析、日历热力图等多种可视化方式"
                   icon={<BarChart3 className="w-12 h-12 text-green-500" />}
                   gradient="from-green-500/20 to-emerald-500/20"
                 />
@@ -159,7 +179,49 @@ export default function IntroductionPage() {
             </div>
           </CardContent>
         </Card>
-        
+
+        {/* 实时数据统计 */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">📊 平台数据概览</CardTitle>
+            <CardDescription>
+              基于最新收集的GitHub趋势数据统计
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                title="热门仓库"
+                value="1,362+"
+                description="已收集的热门项目"
+                icon={<Star className="w-8 h-8 text-yellow-500" />}
+                gradient="from-yellow-500/10 to-orange-500/10"
+              />
+              <StatCard
+                title="编程语言"
+                value="26+"
+                description="涵盖的技术栈"
+                icon={<Code className="w-8 h-8 text-blue-500" />}
+                gradient="from-blue-500/10 to-indigo-500/10"
+              />
+              <StatCard
+                title="数据更新"
+                value="实时"
+                description="自动化数据收集"
+                icon={<Cpu className="w-8 h-8 text-green-500" />}
+                gradient="from-green-500/10 to-teal-500/10"
+              />
+              <StatCard
+                title="时间跨度"
+                value="日/周/月"
+                description="多维度趋势分析"
+                icon={<BarChart3 className="w-8 h-8 text-purple-500" />}
+                gradient="from-purple-500/10 to-pink-500/10"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* UI设计特点 */}
         <Card>
           <CardHeader>
@@ -210,8 +272,8 @@ export default function IntroductionPage() {
               >
                 进入仪表盘
               </Link>
-              <Link 
-                href="/daily"
+              <Link
+                href="/trends"
                 className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
               >
                 趋势分析
@@ -236,15 +298,44 @@ interface FeatureCardProps {
   title: string;
   description: string;
   gradient?: string;
+  link?: string;
 }
 
-function FeatureCard({ icon, title, description, gradient = "from-blue-500/10 to-purple-500/10" }: FeatureCardProps) {
-  return (
-    <div className={`p-6 rounded-lg border glass-card bg-gradient-to-br ${gradient} hover:shadow-md transition-all`}>
+function FeatureCard({ icon, title, description, gradient = "from-blue-500/10 to-purple-500/10", link }: FeatureCardProps) {
+  const content = (
+    <div className={`p-6 rounded-lg border glass-card bg-gradient-to-br ${gradient} hover:shadow-md transition-all ${link ? 'cursor-pointer hover:scale-105' : ''}`}>
       <div className="mb-4">
         {icon}
       </div>
       <h3 className="text-lg font-medium mb-2">{title}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
+    </div>
+  )
+
+  if (link) {
+    return <Link href={link}>{content}</Link>
+  }
+
+  return content
+}
+
+// 统计卡片组件
+interface StatCardProps {
+  title: string;
+  value: string;
+  description: string;
+  icon: React.ReactNode;
+  gradient?: string;
+}
+
+function StatCard({ title, value, description, icon, gradient = "from-blue-500/10 to-purple-500/10" }: StatCardProps) {
+  return (
+    <div className={`p-6 rounded-lg border glass-card bg-gradient-to-br ${gradient} text-center`}>
+      <div className="flex justify-center mb-4">
+        {icon}
+      </div>
+      <div className="text-2xl font-bold mb-1">{value}</div>
+      <div className="text-lg font-medium mb-2">{title}</div>
       <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   )

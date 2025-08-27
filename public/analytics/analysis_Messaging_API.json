@@ -1,14 +1,48 @@
 {
   "keyword": "Messaging API",
   "repository_count": 95,
-  "analysis_date": "2025-08-21T07:55:55.868Z",
+  "analysis_date": "2025-08-26T23:09:10.010170",
   "charts": {
     "language_distribution": {
       "data": {
-        "Java": 30,
-        "Python": 50,
-        "JavaScript": 10,
-        "Rust": 5
+        "total_languages": 4,
+        "language_distribution": {
+          "Python": 50,
+          "Java": 30,
+          "JavaScript": 10,
+          "Rust": 5
+        },
+        "language_stars": {
+          "Java": 0,
+          "Python": 0,
+          "JavaScript": 0,
+          "Rust": 0
+        },
+        "language_avg_stars": {
+          "Java": 0.0,
+          "Python": 0.0,
+          "JavaScript": 0.0,
+          "Rust": 0.0
+        },
+        "top_languages": [
+          [
+            "Python",
+            50
+          ],
+          [
+            "Java",
+            30
+          ],
+          [
+            "JavaScript",
+            10
+          ],
+          [
+            "Rust",
+            5
+          ]
+        ],
+        "analyzed_at": "2025-08-26T23:09:09.896695"
       }
     },
     "stars_distribution": {
@@ -16,576 +50,595 @@
         "mean": 301.06315789473683,
         "min": 34,
         "max": 2806,
-        "total": 28601
+        "total": 0
       }
+    },
+    "common_packages": {
+      "data": {}
     },
     "imported_libraries": {
       "data": {
-        "importlib": 5,
-        "linebot": 1,
-        "pkgutil": 1,
         "os": 41,
-        "json": 15,
-        "hashlib": 3,
-        "multiprocessing": 1,
-        "calendar": 1,
-        "random": 9,
-        "base64": 6,
-        "argparse": 8,
-        "ssl": 3,
-        "google_auth_oauthlib": 1,
-        "google_auth_httplib2": 1,
-        "itertools": 3,
-        "google": 4,
-        "configparser": 3,
-        "re": 15,
-        "threading": 2,
-        "urllib": 8,
-        "googleapiclient": 1,
         "sys": 26,
-        "string": 2,
         "time": 19,
-        "csv": 6,
-        "fmbox": 1,
-        "xml": 1,
-        "wsgiref": 2,
-        "httplib2": 2,
-        "struct": 1,
-        "labellang": 1,
-        "sqlite3": 3,
-        "ipaddress": 1,
-        "platform": 2,
-        "io": 5,
-        "email": 1,
-        "datetime": 10,
-        "socket": 4,
-        "webbrowser": 2,
         "setuptools": 19,
-        "ast": 2,
-        "codecs": 4,
-        "subprocess": 7,
-        "pytest": 1,
-        "pickle": 8,
-        "pathlib": 5,
-        "decouple": 1,
-        "types": 2,
-        "functools": 2,
-        "yaml": 3,
-        "typing": 1,
-        "dataclasses": 1,
-        "config": 1,
-        "telethon": 9,
-        "asyncio": 5,
-        "uvloop": 2,
-        "aiohttp": 4,
-        "telemirror": 1,
-        "logging": 8,
-        "sendsms": 1,
-        "unittest": 4,
-        "mock": 1,
-        "django": 2,
-        "prompt_toolkit": 1,
+        "json": 15,
+        "re": 15,
         "requests": 14,
-        "dotenv": 3,
-        "rich": 1,
-        "Bard": 1,
-        "fastapi": 1,
-        "pydantic": 1,
-        "ez_setup": 2,
-        "__future__": 4,
-        "invoke": 1,
-        "pathlib2": 1,
-        "shutil": 2,
-        "requests_toolbelt": 1,
-        "flask": 4,
-        "workers": 3,
-        "appium": 3,
-        "uuid": 5,
-        "selenium": 3,
-        "pika": 3,
-        "configs": 4,
-        "flasgger": 1,
-        "flask_restful as restful": 1,
-        "controllers": 1,
-        "app": 1,
-        "g4f": 1,
-        "memory": 1,
-        "process_plugins": 1,
-        "faiss": 1,
-        "numpy as np": 1,
-        "wolframalpha": 1,
-        "oauth2client": 1,
-        "bs4": 2,
-        "dateutil": 2,
-        "apiclient": 1,
-        "ultrabot": 1,
-        "colorama": 5,
-        "pyfiglet": 4,
-        "traceback": 5,
-        "beepy": 1,
-        "keyboard": 1,
-        "wheel": 1,
-        "distutils": 1,
-        "glob": 1,
-        "mimetypes": 1,
-        "ConfigParser as configparser": 2,
-        "setproctitle": 1,
-        "mattersend": 1,
-        "localconfig": 1,
-        "heroku_config": 1,
-        "groupy": 1,
-        "cryptography": 1,
-        "getpass": 1,
-        "openai": 1,
-        "aiosqlite": 1,
-        "sentry_sdk": 1,
-        "telegram": 1,
-        "magic": 1,
-        "cPickle as pickle": 1,
-        "eventlet": 1,
-        "inspect": 1,
-        "_thread as thread": 1,
-        "mako": 1,
-        "bjoern": 1,
-        "Cheetah": 1,
-        "collections": 1,
-        "httplib": 1,
-        "http": 1,
-        "tornado": 1,
-        "StringIO": 1,
-        "twisted": 1,
-        "gevent": 1,
-        "fapws": 1,
-        "signal": 1,
-        "gunicorn": 1,
-        "thread": 1,
-        "unicodedata": 1,
-        "flup": 1,
-        "cherrypy": 1,
-        "ujson": 1,
-        "cheroot": 1,
-        "imp": 1,
-        "Cookie": 1,
-        "jinja2": 2,
-        "urlparse": 1,
-        "diesel": 1,
-        "aiohttp_wsgi": 1,
-        "paste": 1,
-        "waitress": 2,
-        "meinheld": 1,
-        "tempfile": 1,
-        "bottle": 1,
-        "ingrex": 3,
-        "kafka": 1,
-        "socks": 1,
-        "discord": 1,
-        "conf as config": 1,
-        "box": 1,
-        "replicate": 1,
-        "pytz": 2,
-        "emoji": 1,
-        "azure": 1,
-        "lingua": 1,
-        "tuya_connector": 1,
-        "pandas as pd": 1,
-        "pdb": 1,
-        "common": 2,
-        "fyers": 1,
-        "important": 2,
-        "pafy": 1,
-        "atexit": 1,
-        "math": 1,
-        "livejson": 1,
-        "linepy": 1,
-        "timeago": 1,
-        "humanfriendly": 1,
-        "akad": 1,
-        "selfbotv2": 1,
-        "filters": 1,
-        "parsedatetime": 1,
-        "pythonjsonlogger": 1,
-        "falcon": 1,
-        "helpers": 1,
-        "zipfile": 4
+        "datetime": 10,
+        "random": 9,
+        "telethon": 9,
+        "argparse": 8,
+        "urllib": 8,
+        "pickle": 8,
+        "logging": 8,
+        "subprocess": 7,
+        "base64": 6,
+        "csv": 6,
+        "importlib": 5,
+        "io": 5,
+        "pathlib": 5
+      }
+    },
+    "common_functions": {
+      "data": {
+        "run": 24,
+        "main": 18,
+        "prepare": 6,
+        "get": 5,
+        "decorator": 5,
+        "render": 5,
+        "get_header": 4,
+        "banner": 4,
+        "close": 4,
+        "wrapper": 4,
+        "compareFiles": 4,
+        "msgworker": 3,
+        "callback": 3,
+        "start": 3,
+        "help": 3,
+        "clr": 3,
+        "append": 3,
+        "keys": 3,
+        "apply": 3,
+        "load_config": 3
       }
     },
     "tag_analysis": {
       "data": {
-        "api": 12,
-        "business-process": 1,
-        "esb": 1,
-        "integration": 2,
-        "messaging": 15,
-        "middleware": 1,
-        "rest": 3,
-        "services": 2,
-        "soap": 2,
-        "synapse": 2,
-        "wso2": 2,
-        "consumer": 1,
-        "consumer-group": 1,
-        "jmx": 1,
-        "kafka": 4,
-        "kafka-manager": 1,
-        "kafka-topic": 1,
-        "lag": 1,
-        "offset": 1,
-        "partition": 1,
-        "reassignment": 1,
-        "restful-api": 1,
-        "topic": 1,
-        "zookeeper": 1,
-        "avro": 1,
-        "docker": 2,
-        "elasticsearch": 1,
-        "java": 7,
-        "jib": 1,
-        "json": 1,
-        "kafka-connect": 1,
-        "kafka-streams": 1,
-        "mysql": 1,
-        "schema-registry": 1,
-        "spring-boot": 1,
-        "spring-cloud-stream": 1,
-        "spring-data-jpa": 1,
-        "spring-web-mvc": 1,
-        "springdoc-openapi": 1,
-        "bot": 6,
-        "line": 5,
-        "linebot": 4,
-        "python": 18,
-        "sdk": 4,
-        "message-sending": 1,
-        "notifications": 2,
-        "wechat": 2,
-        "wecom": 1,
-        "wework": 1,
-        "forwarder": 1,
-        "heroku": 1,
-        "mirroring": 1,
-        "telegram": 4,
-        "telegram-bot": 2,
-        "telegram-forward-bot": 1,
-        "telegram-forwarder": 1,
-        "telethon": 1,
-        "django": 2,
-        "sms": 3,
-        "ai-assistant": 1,
-        "bard": 1,
-        "bard-api": 1,
-        "chat-gpt": 1,
-        "chat-interface": 1,
-        "chatbot-development": 1,
-        "dialog-systems": 1,
-        "fastapi": 1,
-        "google-bard": 1,
-        "machine-learning": 2,
-        "natural-language-processing": 1,
-        "line-bot": 1,
-        "messaging-api": 2,
-        "pypi": 2,
-        "python3": 2,
-        "slack": 2,
-        "slack-api": 2,
-        "slack-cleaner": 1,
-        "slack-free-plan": 1,
-        "slackapi": 1,
-        "meetings": 1,
-        "messenger": 1,
-        "nexmo": 1,
-        "phone": 2,
-        "server-sdk": 2,
-        "silent-authentication": 1,
-        "text-message": 1,
-        "two-factor-authentication": 2,
-        "verification": 2,
-        "verification-code": 1,
-        "video": 1,
-        "voice": 3,
-        "vonage": 2,
-        "whatsapp": 7,
-        "assistant": 1,
-        "chatbot": 6,
-        "claude": 1,
-        "claude-api": 1,
-        "claude3": 1,
-        "documented": 1,
-        "easy-to-use": 1,
-        "file-attachment": 1,
-        "firefox": 1,
-        "free": 1,
-        "image-processing": 1,
-        "image-recognition": 1,
-        "large-file-upload": 1,
-        "long-text": 1,
-        "scraper": 1,
-        "selenium": 1,
-        "summarizer": 1,
-        "unofficial-api": 1,
-        "whatsapp-api": 4,
-        "whatsapp-api-python": 1,
-        "whatsapp-bot": 3,
-        "bots": 1,
-        "facebook-messenger-bot": 1,
-        "kikbot": 1,
-        "api-client": 2,
-        "asyncio": 1,
-        "centrifugo": 1,
-        "http": 1,
-        "pubsub": 2,
-        "chatglm": 1,
-        "chatgpt": 1,
-        "gpt": 1,
-        "langchain": 1,
-        "llm": 2,
-        "llms": 1,
-        "cli": 2,
-        "mattermost": 1,
-        "webhooks": 1,
-        "groupme": 1,
-        "python-library": 1,
-        "script": 1,
-        "scripts": 1,
-        "telegram-api": 1,
-        "telegram-bot-api": 1,
-        "telegram-bots": 1,
-        "telegram-userbot": 1,
-        "plivo": 1,
-        "blocks": 1,
-        "slack-bot": 1,
-        "artificial-intelligence": 1,
-        "cms": 2,
-        "data-workflow": 1,
-        "deep-learning": 1,
-        "devops": 1,
-        "distributed-computing": 1,
-        "enterprise-integrations": 1,
-        "frameworks": 1,
-        "parallel-computing": 1,
-        "pipeline": 1,
-        "task-queue": 1,
-        "web-crawling": 1,
-        "webapp": 1,
-        "linkedin": 1,
-        "linkedin-api": 1,
-        "cloud": 2,
-        "groups": 1,
-        "whatsapp-automation": 1,
-        "whatsappbot": 1,
-        "automation": 1,
-        "chat": 3,
-        "iot": 3,
-        "whatsapp-web": 2,
-        "tuya": 1,
-        "algo-trading": 1,
-        "fyers-api": 1,
-        "cloud-run": 1,
-        "gcp-cloud-functions": 1,
-        "google-cloud": 1,
-        "google-cloud-platform": 1,
-        "kotlin": 1,
-        "spring": 1,
-        "android": 3,
-        "cloud-native": 1,
-        "kubernetes": 1,
-        "microservices": 1,
-        "api-whatsapp": 1,
-        "sdk-whatsapp": 1,
-        "whatsapp-api-java": 1,
-        "whatsapp-business": 1,
-        "whatsapp-business-api": 1,
-        "whatsapp-business-bot": 1,
-        "whatsapp-business-sdk": 1,
-        "whatsapp-chat": 1,
-        "whatsapp-client": 1,
-        "whatsapp-cloud": 1,
-        "whatsapp-cloud-api-client": 1,
-        "whatsapp-cloud-api-java": 1,
-        "whatsapp-java": 1,
-        "whatsapp-java-sdk": 1,
-        "whatsapp-sdk": 1,
-        "format-converter": 1,
-        "mail": 1,
-        "outlook": 1,
-        "kafka-consumer": 1,
-        "performance": 1,
-        "queueing": 1,
-        "android-application": 1,
-        "android-library": 1,
-        "hijack": 1,
-        "hijacking-methods": 1,
-        "cache": 1,
-        "chaos-engineering": 1,
-        "eventing": 1,
-        "authentication": 1,
-        "dtmf": 1,
-        "phone-numbers": 1,
-        "sms-api": 1,
-        "telecom": 1,
-        "two-factor": 1,
-        "verify": 1,
-        "video-api": 1,
-        "hacktoberfest": 3,
-        "i18n": 1,
-        "minecraft": 1,
-        "minecraft-plugin": 1,
-        "spigot": 1,
-        "spigot-plugin": 1,
-        "hypixel": 1,
-        "fcm": 1,
-        "fcm-notifications": 1,
-        "firebase": 1,
-        "firebase-cloud-messaging": 1,
-        "notification": 1,
-        "push": 1,
-        "amqp": 2,
-        "api-gateway": 1,
-        "apikey-manager": 1,
-        "aws": 1,
-        "aws-eks": 1,
-        "docker-compose": 1,
-        "eureka-server": 1,
-        "feign-client": 1,
-        "git-actions": 1,
-        "grafana-prometheus": 1,
-        "k8s": 1,
-        "oauth2-and-keycloak": 1,
-        "postgresql-database": 1,
-        "rabbitmq": 1,
-        "resilience4j-circuitbreaker": 1,
-        "service-discovery": 1,
-        "zipkin-sleuth": 1,
-        "beacon": 1,
-        "connection": 1,
-        "demo": 1,
-        "exchange-card": 1,
-        "friends": 1,
-        "game": 1,
-        "gamesnake": 1,
-        "hms": 1,
-        "hms-nearby": 1,
-        "huawei": 1,
-        "message": 1,
-        "nearby": 1,
-        "nearby-service": 1,
-        "online-game": 1,
-        "jakartaee": 1,
-        "javaee": 1,
-        "jms": 1,
-        "pulsar": 1,
-        "bungeecord": 1,
-        "channel": 1,
-        "reactive-kafka": 1,
-        "server-sent-events": 1,
-        "spring-webflux": 1,
-        "webflux-server": 1,
-        "assert": 1,
-        "power-assert": 1,
-        "browser": 1,
-        "jazz-plugin": 1,
-        "midi": 1,
-        "midi-messages": 1,
-        "node": 1,
-        "sysex": 1,
-        "web-midi": 1,
-        "web-midi-api": 1,
-        "webmidi": 1,
-        "mcp": 1,
-        "mcp-server": 1,
-        "realtime": 1,
-        "scalability": 1,
-        "synchronization": 1,
-        "content-management": 1,
-        "cosmicjs": 1,
-        "headless-cms": 1,
-        "javascript": 1,
-        "nodejs": 1,
-        "bulk-messages": 1,
-        "bulk-messages-api": 1,
-        "message-sender": 1,
-        "phone-number": 1,
-        "send-message": 1,
-        "send-message-api": 1,
-        "send-messages-api": 1,
-        "wbm": 1,
-        "whatsapp-bulk-message": 1,
-        "whatsapp-bulk-messages": 1,
-        "whatsapp-bulk-sender": 1,
-        "whatsapp-library": 1,
-        "whatsapp-message-sender": 1,
-        "whatsapp-messages": 1,
-        "whatsapp-sender": 1,
-        "amqp-client": 1,
-        "amqp0-9-1": 1,
-        "async": 1,
-        "rust": 2,
-        "commit": 1,
-        "git": 1,
-        "openai": 1,
-        "edge-computing": 1,
-        "micro-controllers": 1,
-        "networking": 1,
-        "robotics": 1,
-        "ros2": 1,
-        "chatterino": 1,
-        "irc": 1,
-        "twitch": 1
-      }
-    },
-    "description_keywords": {
-      "data": {
-        "android": 187,
-        "command:`": 147,
-        "push": 146,
-        "description:`": 144,
-        "notification": 137,
-        "added": 129,
-        "with": 122,
-        "blocks": 117,
-        "name": 113,
-        "that": 103,
-        "support": 101,
-        "from": 99,
-        "description": 99,
-        "this": 95,
-        "<br>": 89,
-        "robot": 78,
-        "when": 74,
-        "version": 67,
-        "user": 65,
-        "controller": 64,
-        "using": 63,
-        "messages": 62,
-        "data": 60,
-        "will": 58,
-        "mode": 56,
-        "control": 52,
-        "fixes": 52,
-        "type": 52,
-        "driver": 49,
-        "changes": 49,
-        "message": 48,
-        "java": 47,
-        "have": 45,
-        "classification": 42,
-        "safety": 41,
-        "sample": 40,
-        "expansion": 39,
-        "station": 38,
-        "issue": 37,
-        "modes": 37,
-        "your": 35,
-        "file": 35,
-        "which": 34,
-        "sensor": 34,
-        "example": 34,
-        "more": 33,
-        "class": 32,
-        "number": 30,
-        "code": 29,
-        "block": 29
+        "total_topics": 319,
+        "topic_distribution": {
+          "python": 18,
+          "messaging": 15,
+          "api": 12,
+          "java": 7,
+          "whatsapp": 7,
+          "bot": 6,
+          "chatbot": 6,
+          "line": 5,
+          "kafka": 4,
+          "linebot": 4,
+          "sdk": 4,
+          "telegram": 4,
+          "whatsapp-api": 4,
+          "rest": 3,
+          "sms": 3,
+          "voice": 3,
+          "whatsapp-bot": 3,
+          "chat": 3,
+          "iot": 3,
+          "android": 3,
+          "hacktoberfest": 3,
+          "integration": 2,
+          "services": 2,
+          "soap": 2,
+          "synapse": 2,
+          "wso2": 2,
+          "docker": 2,
+          "notifications": 2,
+          "wechat": 2,
+          "telegram-bot": 2,
+          "django": 2,
+          "machine-learning": 2,
+          "messaging-api": 2,
+          "pypi": 2,
+          "python3": 2,
+          "slack": 2,
+          "slack-api": 2,
+          "phone": 2,
+          "server-sdk": 2,
+          "two-factor-authentication": 2,
+          "verification": 2,
+          "vonage": 2,
+          "api-client": 2,
+          "pubsub": 2,
+          "llm": 2,
+          "cli": 2,
+          "cms": 2,
+          "cloud": 2,
+          "whatsapp-web": 2,
+          "amqp": 2,
+          "rust": 2,
+          "business-process": 1,
+          "esb": 1,
+          "middleware": 1,
+          "consumer": 1,
+          "consumer-group": 1,
+          "jmx": 1,
+          "kafka-manager": 1,
+          "kafka-topic": 1,
+          "lag": 1,
+          "offset": 1,
+          "partition": 1,
+          "reassignment": 1,
+          "restful-api": 1,
+          "topic": 1,
+          "zookeeper": 1,
+          "avro": 1,
+          "elasticsearch": 1,
+          "jib": 1,
+          "json": 1,
+          "kafka-connect": 1,
+          "kafka-streams": 1,
+          "mysql": 1,
+          "schema-registry": 1,
+          "spring-boot": 1,
+          "spring-cloud-stream": 1,
+          "spring-data-jpa": 1,
+          "spring-web-mvc": 1,
+          "springdoc-openapi": 1,
+          "message-sending": 1,
+          "wecom": 1,
+          "wework": 1,
+          "forwarder": 1,
+          "heroku": 1,
+          "mirroring": 1,
+          "telegram-forward-bot": 1,
+          "telegram-forwarder": 1,
+          "telethon": 1,
+          "ai-assistant": 1,
+          "bard": 1,
+          "bard-api": 1,
+          "chat-gpt": 1,
+          "chat-interface": 1,
+          "chatbot-development": 1,
+          "dialog-systems": 1,
+          "fastapi": 1,
+          "google-bard": 1,
+          "natural-language-processing": 1,
+          "line-bot": 1,
+          "slack-cleaner": 1,
+          "slack-free-plan": 1,
+          "slackapi": 1,
+          "meetings": 1,
+          "messenger": 1,
+          "nexmo": 1,
+          "silent-authentication": 1,
+          "text-message": 1,
+          "verification-code": 1,
+          "video": 1,
+          "assistant": 1,
+          "claude": 1,
+          "claude-api": 1,
+          "claude3": 1,
+          "documented": 1,
+          "easy-to-use": 1,
+          "file-attachment": 1,
+          "firefox": 1,
+          "free": 1,
+          "image-processing": 1,
+          "image-recognition": 1,
+          "large-file-upload": 1,
+          "long-text": 1,
+          "scraper": 1,
+          "selenium": 1,
+          "summarizer": 1,
+          "unofficial-api": 1,
+          "whatsapp-api-python": 1,
+          "bots": 1,
+          "facebook-messenger-bot": 1,
+          "kikbot": 1,
+          "asyncio": 1,
+          "centrifugo": 1,
+          "http": 1,
+          "chatglm": 1,
+          "chatgpt": 1,
+          "gpt": 1,
+          "langchain": 1,
+          "llms": 1,
+          "mattermost": 1,
+          "webhooks": 1,
+          "groupme": 1,
+          "python-library": 1,
+          "script": 1,
+          "scripts": 1,
+          "telegram-api": 1,
+          "telegram-bot-api": 1,
+          "telegram-bots": 1,
+          "telegram-userbot": 1,
+          "plivo": 1,
+          "blocks": 1,
+          "slack-bot": 1,
+          "artificial-intelligence": 1,
+          "data-workflow": 1,
+          "deep-learning": 1,
+          "devops": 1,
+          "distributed-computing": 1,
+          "enterprise-integrations": 1,
+          "frameworks": 1,
+          "parallel-computing": 1,
+          "pipeline": 1,
+          "task-queue": 1,
+          "web-crawling": 1,
+          "webapp": 1,
+          "linkedin": 1,
+          "linkedin-api": 1,
+          "groups": 1,
+          "whatsapp-automation": 1,
+          "whatsappbot": 1,
+          "automation": 1,
+          "tuya": 1,
+          "algo-trading": 1,
+          "fyers-api": 1,
+          "cloud-run": 1,
+          "gcp-cloud-functions": 1,
+          "google-cloud": 1,
+          "google-cloud-platform": 1,
+          "kotlin": 1,
+          "spring": 1,
+          "cloud-native": 1,
+          "kubernetes": 1,
+          "microservices": 1,
+          "api-whatsapp": 1,
+          "sdk-whatsapp": 1,
+          "whatsapp-api-java": 1,
+          "whatsapp-business": 1,
+          "whatsapp-business-api": 1,
+          "whatsapp-business-bot": 1,
+          "whatsapp-business-sdk": 1,
+          "whatsapp-chat": 1,
+          "whatsapp-client": 1,
+          "whatsapp-cloud": 1,
+          "whatsapp-cloud-api-client": 1,
+          "whatsapp-cloud-api-java": 1,
+          "whatsapp-java": 1,
+          "whatsapp-java-sdk": 1,
+          "whatsapp-sdk": 1,
+          "format-converter": 1,
+          "mail": 1,
+          "outlook": 1,
+          "kafka-consumer": 1,
+          "performance": 1,
+          "queueing": 1,
+          "android-application": 1,
+          "android-library": 1,
+          "hijack": 1,
+          "hijacking-methods": 1,
+          "cache": 1,
+          "chaos-engineering": 1,
+          "eventing": 1,
+          "authentication": 1,
+          "dtmf": 1,
+          "phone-numbers": 1,
+          "sms-api": 1,
+          "telecom": 1,
+          "two-factor": 1,
+          "verify": 1,
+          "video-api": 1,
+          "i18n": 1,
+          "minecraft": 1,
+          "minecraft-plugin": 1,
+          "spigot": 1,
+          "spigot-plugin": 1,
+          "hypixel": 1,
+          "fcm": 1,
+          "fcm-notifications": 1,
+          "firebase": 1,
+          "firebase-cloud-messaging": 1,
+          "notification": 1,
+          "push": 1,
+          "api-gateway": 1,
+          "apikey-manager": 1,
+          "aws": 1,
+          "aws-eks": 1,
+          "docker-compose": 1,
+          "eureka-server": 1,
+          "feign-client": 1,
+          "git-actions": 1,
+          "grafana-prometheus": 1,
+          "k8s": 1,
+          "oauth2-and-keycloak": 1,
+          "postgresql-database": 1,
+          "rabbitmq": 1,
+          "resilience4j-circuitbreaker": 1,
+          "service-discovery": 1,
+          "zipkin-sleuth": 1,
+          "beacon": 1,
+          "connection": 1,
+          "demo": 1,
+          "exchange-card": 1,
+          "friends": 1,
+          "game": 1,
+          "gamesnake": 1,
+          "hms": 1,
+          "hms-nearby": 1,
+          "huawei": 1,
+          "message": 1,
+          "nearby": 1,
+          "nearby-service": 1,
+          "online-game": 1,
+          "jakartaee": 1,
+          "javaee": 1,
+          "jms": 1,
+          "pulsar": 1,
+          "bungeecord": 1,
+          "channel": 1,
+          "reactive-kafka": 1,
+          "server-sent-events": 1,
+          "spring-webflux": 1,
+          "webflux-server": 1,
+          "assert": 1,
+          "power-assert": 1,
+          "browser": 1,
+          "jazz-plugin": 1,
+          "midi": 1,
+          "midi-messages": 1,
+          "node": 1,
+          "sysex": 1,
+          "web-midi": 1,
+          "web-midi-api": 1,
+          "webmidi": 1,
+          "mcp": 1,
+          "mcp-server": 1,
+          "realtime": 1,
+          "scalability": 1,
+          "synchronization": 1,
+          "content-management": 1,
+          "cosmicjs": 1,
+          "headless-cms": 1,
+          "javascript": 1,
+          "nodejs": 1,
+          "bulk-messages": 1,
+          "bulk-messages-api": 1,
+          "message-sender": 1,
+          "phone-number": 1,
+          "send-message": 1,
+          "send-message-api": 1,
+          "send-messages-api": 1,
+          "wbm": 1,
+          "whatsapp-bulk-message": 1,
+          "whatsapp-bulk-messages": 1,
+          "whatsapp-bulk-sender": 1,
+          "whatsapp-library": 1,
+          "whatsapp-message-sender": 1,
+          "whatsapp-messages": 1,
+          "whatsapp-sender": 1,
+          "amqp-client": 1,
+          "amqp0-9-1": 1,
+          "async": 1,
+          "commit": 1,
+          "git": 1,
+          "openai": 1,
+          "edge-computing": 1,
+          "micro-controllers": 1,
+          "networking": 1,
+          "robotics": 1,
+          "ros2": 1,
+          "chatterino": 1,
+          "irc": 1,
+          "twitch": 1
+        },
+        "top_topics": [
+          [
+            "python",
+            18
+          ],
+          [
+            "messaging",
+            15
+          ],
+          [
+            "api",
+            12
+          ],
+          [
+            "java",
+            7
+          ],
+          [
+            "whatsapp",
+            7
+          ],
+          [
+            "bot",
+            6
+          ],
+          [
+            "chatbot",
+            6
+          ],
+          [
+            "line",
+            5
+          ],
+          [
+            "kafka",
+            4
+          ],
+          [
+            "linebot",
+            4
+          ],
+          [
+            "sdk",
+            4
+          ],
+          [
+            "telegram",
+            4
+          ],
+          [
+            "whatsapp-api",
+            4
+          ],
+          [
+            "rest",
+            3
+          ],
+          [
+            "sms",
+            3
+          ],
+          [
+            "voice",
+            3
+          ],
+          [
+            "whatsapp-bot",
+            3
+          ],
+          [
+            "chat",
+            3
+          ],
+          [
+            "iot",
+            3
+          ],
+          [
+            "android",
+            3
+          ]
+        ],
+        "analyzed_at": "2025-08-26T23:09:09.898122"
       }
     }
+  },
+  "trends": {
+    "libraries": {
+      "os": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 41,
+        "popularity": "高"
+      },
+      "sys": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 26,
+        "popularity": "高"
+      },
+      "time": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 19,
+        "popularity": "高"
+      },
+      "setuptools": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 19,
+        "popularity": "高"
+      },
+      "json": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 15,
+        "popularity": "高"
+      },
+      "re": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 15,
+        "popularity": "高"
+      },
+      "requests": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 14,
+        "popularity": "高"
+      },
+      "datetime": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "random": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
+      },
+      "telethon": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
+      },
+      "argparse": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
+      },
+      "urllib": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
+      },
+      "pickle": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
+      },
+      "logging": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 8,
+        "popularity": "高"
+      },
+      "subprocess": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 7,
+        "popularity": "高"
+      },
+      "base64": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
+      },
+      "csv": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 6,
+        "popularity": "高"
+      },
+      "importlib": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
+      },
+      "io": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
+      },
+      "pathlib": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 5,
+        "popularity": "高"
+      }
+    },
+    "packages": {},
+    "functions": {}
   },
   "repositories": [
     {
@@ -2233,1127 +2286,5 @@
       "url": "https://github.com/dikkadev/turboCommit",
       "tags": []
     }
-  ],
-  "trends": {
-    "libraries": {
-      "importlib": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "linebot": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pkgutil": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "os": {
-        "trend": "up",
-        "count": 41,
-        "percentile": 99.7,
-        "category": "utility"
-      },
-      "json": {
-        "trend": "up",
-        "count": 15,
-        "percentile": 97.3,
-        "category": "utility"
-      },
-      "hashlib": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "multiprocessing": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "calendar": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "random": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 95.2,
-        "category": "other"
-      },
-      "base64": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 91.4,
-        "category": "other"
-      },
-      "argparse": {
-        "trend": "up",
-        "count": 8,
-        "percentile": 93.5,
-        "category": "other"
-      },
-      "ssl": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "google_auth_oauthlib": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "google_auth_httplib2": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "itertools": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "google": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "configparser": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "re": {
-        "trend": "up",
-        "count": 15,
-        "percentile": 97.3,
-        "category": "other"
-      },
-      "threading": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "urllib": {
-        "trend": "up",
-        "count": 8,
-        "percentile": 93.5,
-        "category": "other"
-      },
-      "googleapiclient": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "sys": {
-        "trend": "up",
-        "count": 26,
-        "percentile": 99.2,
-        "category": "utility"
-      },
-      "string": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "time": {
-        "trend": "up",
-        "count": 19,
-        "percentile": 98.4,
-        "category": "other"
-      },
-      "csv": {
-        "trend": "up",
-        "count": 6,
-        "percentile": 91.4,
-        "category": "other"
-      },
-      "fmbox": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "xml": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "wsgiref": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "httplib2": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "struct": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "labellang": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "sqlite3": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "database"
-      },
-      "ipaddress": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "platform": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "io": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "email": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "datetime": {
-        "trend": "up",
-        "count": 10,
-        "percentile": 96,
-        "category": "other"
-      },
-      "socket": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "webbrowser": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "setuptools": {
-        "trend": "up",
-        "count": 19,
-        "percentile": 98.4,
-        "category": "other"
-      },
-      "ast": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "codecs": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "subprocess": {
-        "trend": "up",
-        "count": 7,
-        "percentile": 92.2,
-        "category": "other"
-      },
-      "pytest": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "testing"
-      },
-      "pickle": {
-        "trend": "up",
-        "count": 8,
-        "percentile": 93.5,
-        "category": "other"
-      },
-      "pathlib": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "decouple": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "types": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "functools": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "yaml": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "typing": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "dataclasses": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "config": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "telethon": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 95.2,
-        "category": "other"
-      },
-      "asyncio": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "uvloop": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "aiohttp": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "telemirror": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "logging": {
-        "trend": "up",
-        "count": 8,
-        "percentile": 93.5,
-        "category": "other"
-      },
-      "sendsms": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "unittest": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "mock": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "django": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "web-framework"
-      },
-      "prompt_toolkit": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "requests": {
-        "trend": "up",
-        "count": 14,
-        "percentile": 96.5,
-        "category": "utility"
-      },
-      "dotenv": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "rich": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "Bard": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "fastapi": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "web-framework"
-      },
-      "pydantic": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "ez_setup": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "__future__": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "invoke": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pathlib2": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "shutil": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "requests_toolbelt": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "flask": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "web-framework"
-      },
-      "workers": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "appium": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "uuid": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "selenium": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "pika": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "configs": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "flasgger": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "flask_restful as restful": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "controllers": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "app": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "g4f": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "memory": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "process_plugins": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "faiss": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "numpy as np": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "wolframalpha": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "oauth2client": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "bs4": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "dateutil": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "apiclient": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "ultrabot": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "colorama": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "pyfiglet": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      },
-      "traceback": {
-        "trend": "up",
-        "count": 5,
-        "percentile": 89,
-        "category": "other"
-      },
-      "beepy": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "keyboard": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "wheel": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "distutils": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "glob": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "mimetypes": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "ConfigParser as configparser": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "setproctitle": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "mattersend": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "localconfig": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "heroku_config": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "groupy": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "cryptography": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "getpass": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "openai": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "aiosqlite": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "sentry_sdk": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "telegram": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "magic": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "cPickle as pickle": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "eventlet": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "inspect": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "_thread as thread": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "mako": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "bjoern": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "Cheetah": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "collections": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "httplib": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "http": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "tornado": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "StringIO": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "twisted": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "gevent": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "fapws": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "signal": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "gunicorn": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "thread": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "unicodedata": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "flup": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "cherrypy": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "ujson": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "cheroot": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "imp": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "Cookie": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "jinja2": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "urlparse": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "diesel": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "aiohttp_wsgi": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "paste": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "waitress": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "meinheld": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "tempfile": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "bottle": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "ingrex": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 78.5,
-        "category": "other"
-      },
-      "kafka": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "socks": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "discord": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "conf as config": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "box": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "replicate": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pytz": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "emoji": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "azure": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "lingua": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "tuya_connector": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pandas as pd": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pdb": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "common": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "fyers": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "important": {
-        "trend": "up",
-        "count": 2,
-        "percentile": 69.6,
-        "category": "other"
-      },
-      "pafy": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "atexit": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "math": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "livejson": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "linepy": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "timeago": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "humanfriendly": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "akad": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "selfbotv2": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "filters": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "parsedatetime": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "pythonjsonlogger": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "falcon": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "helpers": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32,
-        "category": "other"
-      },
-      "zipfile": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 84.4,
-        "category": "other"
-      }
-    },
-    "packages": {},
-    "functions": {}
-  }
+  ]
 }

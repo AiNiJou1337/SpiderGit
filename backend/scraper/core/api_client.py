@@ -21,6 +21,10 @@ class GitHubAPIClient:
         self.token_manager = GitHubTokenManager()
         self.base_url = 'https://api.github.com'
         self.session = requests.Session()
+
+        # 禁用代理（如果环境中有代理配置但不可用）
+        self.session.trust_env = False
+        self.session.proxies = {}
         
     def _make_request(self, method: str, url: str, **kwargs) -> Optional[requests.Response]:
         """发送 API 请求"""
@@ -177,6 +181,10 @@ class GitHubAPIClient:
     def get_rate_limit_status(self) -> Optional[Dict[str, Any]]:
         """获取速率限制状态"""
         return self.get('rate_limit')
+
+    def get_rate_limit(self) -> Optional[Dict[str, Any]]:
+        """获取速率限制状态（别名方法）"""
+        return self.get_rate_limit_status()
     
     def test_connection(self) -> bool:
         """测试连接"""

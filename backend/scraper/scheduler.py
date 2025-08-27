@@ -42,13 +42,17 @@ class TrendingScheduler:
         """执行每日爬取任务"""
         try:
             logger.info("开始执行每日爬取任务...")
-            success = await self.scraper.run_daily_scraping()
-            
-            if success:
-                logger.info("每日爬取任务执行完成")
-            else:
-                logger.error("每日爬取任务执行失败")
-                
+
+            # 使用新的综合趋势方法获取更多数据
+            daily_repos = await self.scraper.trending_crawler.get_comprehensive_trending(
+                period='daily'
+            )
+
+            logger.info(f"每日爬取任务完成，获取 {len(daily_repos)} 个仓库")
+
+            # 保存数据到文件（这里可以根据需要调整保存逻辑）
+            await self._save_trending_data(daily_repos, 'daily')
+
         except Exception as e:
             logger.error(f"每日爬取任务异常: {e}")
     
@@ -56,15 +60,17 @@ class TrendingScheduler:
         """执行每周爬取任务"""
         try:
             logger.info("开始执行每周爬取任务...")
-            
-            # 获取每周趋势
-            weekly_repos = await self.scraper.trending_crawler.get_trending_repositories(
-                period='weekly',
-                max_results=200
+
+            # 使用综合趋势方法获取每周数据
+            weekly_repos = await self.scraper.trending_crawler.get_comprehensive_trending(
+                period='weekly'
             )
-            
+
             logger.info(f"每周爬取任务完成，获取 {len(weekly_repos)} 个仓库")
-            
+
+            # 保存数据
+            await self._save_trending_data(weekly_repos, 'weekly')
+
         except Exception as e:
             logger.error(f"每周爬取任务异常: {e}")
     
@@ -72,22 +78,108 @@ class TrendingScheduler:
         """执行每月爬取任务"""
         try:
             logger.info("开始执行每月爬取任务...")
-            
-            # 获取每月趋势
-            monthly_repos = await self.scraper.trending_crawler.get_trending_repositories(
-                period='monthly',
-                max_results=500
+
+            # 使用综合趋势方法获取每月数据
+            monthly_repos = await self.scraper.trending_crawler.get_comprehensive_trending(
+                period='monthly'
             )
-            
+
+            # 保存数据
+            await self._save_trending_data(monthly_repos, 'monthly')
+
             # 执行关键词分析
-            keywords = ['react', 'vue', 'python', 'javascript', 'machine-learning', 'ai', 'blockchain']
+            keywords = ['react', 'vue', 'python', 'javascript', 'machine-learning', 'ai', 'blockchain',
+                       'typescript', 'rust', 'go', 'docker', 'kubernetes', 'nextjs', 'tailwindcss']
             keyword_results = await self.scraper.run_keyword_analysis(keywords)
-            
+
             logger.info(f"每月爬取任务完成，获取 {len(monthly_repos)} 个仓库，分析 {len(keyword_results)} 个关键词")
-            
+
         except Exception as e:
             logger.error(f"每月爬取任务异常: {e}")
-    
+
+    async def _save_trending_data(self, repositories, period):
+        """保存趋势数据到文件"""
+        try:
+            import json
+            from pathlib import Path
+
+            # 1. 保存到数据目录（备份）
+            data_dir = Path('data/trending')
+            data_dir.mkdir(parents=True, exist_ok=True)
+
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"{period}_trending_{timestamp}.json"
+            filepath = data_dir / filename
+
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump({
+                    'period': period,
+                    'timestamp': datetime.now().isoformat(),
+                    'count': len(repositories),
+                    'repositories': repositories
+                }, f, ensure_ascii=False, indent=2)
+
+            logger.info(f"趋势数据已保存到: {filepath}")
+
+            # 2. 更新API使用的trends.json文件
+            await self._update_trends_json(repositories, period)
+
+        except Exception as e:
+            logger.error(f"保存趋势数据失败: {e}")
+
+    async def _update_trends_json(self, repositories, period):
+        """更新API使用的trends.json文件"""
+        try:
+            import json
+            from pathlib import Path
+
+            # API数据文件路径
+            api_data_dir = Path('public/analytics')
+            api_data_dir.mkdir(parents=True, exist_ok=True)
+            trends_file = api_data_dir / 'trends.json'
+
+            # 读取现有数据
+            existing_data = {}
+            if trends_file.exists():
+                try:
+                    with open(trends_file, 'r', encoding='utf-8') as f:
+                        existing_data = json.load(f)
+                except Exception as e:
+                    logger.warning(f"读取现有trends.json失败: {e}")
+
+            # 转换数据格式以匹配API期望的格式
+            formatted_repos = []
+            for repo in repositories:
+                formatted_repo = {
+                    'id': repo.get('id'),
+                    'name': repo.get('name'),
+                    'owner': repo.get('owner', {}).get('login') if isinstance(repo.get('owner'), dict) else repo.get('owner'),
+                    'fullName': repo.get('full_name'),
+                    'description': repo.get('description'),
+                    'language': repo.get('language'),
+                    'stars': repo.get('stargazers_count', 0),
+                    'forks': repo.get('forks_count', 0),
+                    'todayStars': repo.get('today_stars', 0),
+                    'url': repo.get('html_url'),
+                    'createdAt': repo.get('created_at'),
+                    'updatedAt': repo.get('updated_at'),
+                    'trendPeriod': period
+                }
+                formatted_repos.append(formatted_repo)
+
+            # 更新对应时间段的数据
+            existing_data[period] = formatted_repos
+            existing_data['lastUpdated'] = datetime.now().isoformat()
+
+            # 保存更新后的数据
+            with open(trends_file, 'w', encoding='utf-8') as f:
+                json.dump(existing_data, f, ensure_ascii=False, indent=2)
+
+            logger.info(f"API趋势数据已更新: {trends_file} ({len(formatted_repos)} 个{period}项目)")
+
+        except Exception as e:
+            logger.error(f"更新API趋势数据失败: {e}")
+
     def job_wrapper(self, job_func):
         """异步任务包装器"""
         def wrapper():

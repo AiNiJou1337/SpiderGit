@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils/helpers"
-import { Home, BarChart2, Search, Info, Settings, TrendingUp } from "lucide-react"
+import { Home, BarChart2, Search, Info, Settings, TrendingUp, TestTube } from "lucide-react"
 import Image from "next/image"
 import { LucideIcon } from "lucide-react"
 
@@ -27,14 +27,9 @@ const navigation: NavItem[] = [
     icon: Home,
   },
   {
-    name: "Trending",
-    href: "/trending",
+    name: "Trends",
+    href: "/trends",
     icon: TrendingUp,
-    subItems: [
-      { name: "Daily", href: "/daily", icon: BarChart2 },
-      { name: "Weekly", href: "/weekly", icon: BarChart2 },
-      { name: "Monthly", href: "/monthly", icon: BarChart2 },
-    ]
   },
   {
     name: "Keywords",
@@ -45,6 +40,11 @@ const navigation: NavItem[] = [
     name: "About",
     href: "/about",
     icon: Info,
+  },
+  {
+    name: "项目测试",
+    href: "/testing",
+    icon: TestTube,
   },
 ]
 

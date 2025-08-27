@@ -1,31 +1,89 @@
-# 🚀 SpiderGit - 部署指南
+# 🚀 GitHub趋势爬虫平台 - 部署指南
+
+<div align="center">
+  <img src="../public/logo.png" alt="GitHub趋势爬虫" width="120" height="120" />
+  <h1>部署指南</h1>
+  <p><strong>完整的部署方案和配置说明</strong></p>
+</div>
 
 ## 📋 概述
 
-本文档详细介绍了 SpiderGit 项目的部署方案，包括开发环境、测试环境和生产环境的部署步骤。
+本文档详细介绍GitHub趋势爬虫平台的部署方案，包括本地开发、生产环境和云平台部署的完整步骤。
 
 ## 🛠️ 环境要求
 
 ### 基础要求
-- **Node.js**: 20.0+
-- **Python**: 3.12+
-- **Python**: 3.8+
-- **PostgreSQL**: 13.0+
+- **Node.js**: 18.0+ (推荐 20+)
+- **Python**: 3.8+ (推荐 3.9+)
 - **Git**: 2.30+
+- **GitHub Token**: Personal Access Token
 
 ### 推荐配置
 - **CPU**: 2核心以上
 - **内存**: 4GB 以上
-- **存储**: 20GB 以上可用空间
+- **存储**: 10GB 以上可用空间
 - **网络**: 稳定的互联网连接
+
+### 轻量级特性
+- ✅ **无数据库依赖**: 使用JSON文件存储
+- ✅ **轻量部署**: 无需复杂的数据库配置
+- ✅ **快速启动**: 几分钟内完成部署
 
 ## 🏠 本地开发环境
 
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/AiNiJou1337/github-trending-spider.git
-cd github-trending-spider
+git clone https://github.com/AiNiJou1337/SpiderGit.git
+cd SpiderGit
+```
+
+### 2. 安装依赖
+
+```bash
+# 安装前端依赖
+npm install
+
+# 安装Python依赖
+cd backend
+pip install -r requirements/base.txt
+cd ..
+```
+
+### 3. 环境配置
+
+```bash
+# 创建环境变量文件
+cp .env.example .env
+
+# 编辑 .env 文件，添加GitHub Token
+# GITHUB_TOKEN_GMAIL=your_github_token_here
+# GITHUB_TOKEN_QQ=your_second_token_here
+```
+
+### 4. 启动应用
+
+```bash
+# 启动前端开发服务器
+npm run dev
+
+# 访问应用
+# 首页: http://localhost:3000
+# Dashboard: http://localhost:3000/dashboard
+# Trends: http://localhost:3000/trends
+```
+
+### 5. 数据采集（可选）
+
+```bash
+# 进入后端目录
+cd backend
+
+# 采集GitHub趋势数据
+python scraper/trending_manager.py
+
+# 收集时间序列数据
+python scraper/time_series_trending_manager.py
 ```
 
 ### 2. 安装依赖

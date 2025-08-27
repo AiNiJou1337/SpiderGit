@@ -19,7 +19,7 @@ sys.path.insert(0, str(project_root))
 
 from backend.scraper.core.api_client import GitHubAPIClient
 from backend.scraper.core.token_manager import GitHubTokenManager
-from backend.scraper.crawlers.trending_crawler import TrendingCrawler
+from backend.scraper.crawlers.github_trending_html import GitHubTrendingHTMLCrawler
 from backend.scraper.analyzers.code_analyzer import CodeAnalyzer
 
 # 配置日志
@@ -39,7 +39,7 @@ class GitHubTrendingScraper:
     def __init__(self):
         self.api_client = GitHubAPIClient()
         self.token_manager = GitHubTokenManager()
-        self.trending_crawler = TrendingCrawler(self.api_client)
+        self.trending_crawler = GitHubTrendingHTMLCrawler()
         self.code_analyzer = CodeAnalyzer()
         
     async def run_daily_scraping(self):
@@ -53,7 +53,7 @@ class GitHubTrendingScraper:
                 return False
             
             # 获取趋势仓库
-            trending_repos = await self.trending_crawler.get_trending_repositories(
+            trending_repos = self.trending_crawler.fetch(
                 period='daily',
                 language=None
             )
@@ -66,7 +66,7 @@ class GitHubTrendingScraper:
             
             # 分析仓库代码
             analyzed_count = 0
-            for repo in trending_repos[:10]:  # 限制分析前10个仓库
+            for repo in trending_repos[:100]:  # 限制分析前100个仓库
                 try:
                     analysis = await self.analyze_repository(repo)
                     if analysis:

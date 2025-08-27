@@ -1,33 +1,55 @@
-# 🚀 SpiderGit - 快速开始指南
+# 🚀 GitHub趋势爬虫平台 - 快速开始指南
 
-本指南帮助你快速设置和运行 SpiderGit 项目的开发环境。
+<div align="center">
+  <img src="../public/logo.png" alt="GitHub趋势爬虫" width="120" height="120" />
+  <h1>快速开始指南</h1>
+  <p><strong>5分钟内启动GitHub趋势爬虫与分析平台</strong></p>
+</div>
+
+本指南帮助您快速设置和运行GitHub趋势爬虫与分析平台，体验完整的数据采集和分析功能。
 
 ## 📋 前置要求
 
-确保你的系统已安装：
+确保您的系统已安装：
 
-- **Node.js 20+** - [下载地址](https://nodejs.org/)
-- **Python 3.12+** - [下载地址](https://www.python.org/)
+- **Node.js 18+** - [下载地址](https://nodejs.org/) (推荐 20+)
+- **Python 3.8+** - [下载地址](https://www.python.org/) (推荐 3.9+)
 - **Git** - [下载地址](https://git-scm.com/)
-- **PostgreSQL 13+** - [下载地址](https://www.postgresql.org/)
-- **Git** - [下载地址](https://git-scm.com/)
+- **GitHub Token** - [获取地址](https://github.com/settings/tokens)
 
-## ⚡ 一键启动（推荐）
+## ⚡ 快速启动（推荐）
 
-### 🎯 方法一：使用自动化脚本
+### 🎯 方法一：标准安装流程
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/AiNiJou1337/github-trending-spider.git
-cd github-trending-spider
+git clone https://github.com/AiNiJou1337/SpiderGit.git
+cd SpiderGit
 
-# 2. 运行一键设置脚本
-npm run setup:all
+# 2. 安装前端依赖
+npm install
+
+# 3. 安装Python依赖
+cd backend
+pip install -r requirements/base.txt
+cd ..
+
+# 4. 配置环境变量
+cp .env.example .env
+# 编辑 .env 文件，添加您的GitHub Token
 ```
 
-这个脚本会自动：
-- ✅ 安装 Node.js 依赖
-- ✅ 安装 Python 依赖
+### 🚀 立即体验
+
+```bash
+# 启动应用
+npm run dev
+
+# 访问应用
+# 首页: http://localhost:3000
+# Dashboard: http://localhost:3000/dashboard
+# Trends: http://localhost:3000/trends
+```
 - ✅ 设置数据库
 - ✅ 配置环境变量
 - ✅ 运行初始测试

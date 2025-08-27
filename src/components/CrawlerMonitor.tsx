@@ -30,7 +30,7 @@ export default function CrawlerMonitor({ className }: CrawlerMonitorProps) {
   const [tasks, setTasks] = useState<CrawlTask[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [autoRefresh, setAutoRefresh] = useState(true)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const [notifications, setNotifications] = useState<Array<{id: string, type: 'success' | 'error', message: string, keyword: string}>>([])
   const [retryingTasks, setRetryingTasks] = useState<Set<number>>(new Set())
@@ -414,13 +414,15 @@ export default function CrawlerMonitor({ className }: CrawlerMonitorProps) {
                     </div>
                   )}
                   <div>
-                    <span className="text-gray-500">总仓库:</span>
-                    <span className="ml-1">{task.totalRepositories}</span>
+                    <span className="text-gray-500">仓库总数:</span>
+                    <span className="ml-1">{task.totalRepositories || 0}</span>
                   </div>
-                  <div>
-                    <span className="text-gray-500">Python:</span>
-                    <span className="ml-1">{task.pythonRepositories}</span>
-                  </div>
+                  {task.completedAt && (
+                    <div>
+                      <span className="text-gray-500">完成时间:</span>
+                      <span className="ml-1">{formatTime(task.completedAt)}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* 消息 */}

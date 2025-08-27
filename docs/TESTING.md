@@ -1,20 +1,25 @@
-# 🧪 测试指南
+# 🧪 GitHub趋势爬虫平台 - 测试指南
 
-本文档详细说明如何在 SpiderGit 项目中执行测试，包括前端测试、后端测试和 CI/CD 集成。
+<div align="center">
+  <img src="../public/logo.png" alt="GitHub趋势爬虫" width="120" height="120" />
+  <h1>测试指南</h1>
+  <p><strong>完整的测试策略和执行指南</strong></p>
+</div>
+
+本文档详细说明GitHub趋势爬虫平台的测试方法，包括功能测试、API测试和系统验证。
 
 ## 📋 目录
 
 - [测试概述](#测试概述)
-- [CI/CD 测试流水线](#cicd-测试流水线)
-- [前端测试](#前端测试)
-- [后端测试](#后端测试)
+- [功能测试](#功能测试)
+- [API测试](#api测试)
+- [系统验证](#系统验证)
 - [测试执行指南](#测试执行指南)
-- [测试最佳实践](#测试最佳实践)
 - [故障排除](#故障排除)
 
 ## 🎯 测试概述
 
-SpiderGit 项目采用**多层次测试体系**，确保代码质量和系统稳定性：
+GitHub趋势爬虫平台采用**全面测试验证体系**，确保系统功能完整性和稳定性：
 
 ### 🏗️ 测试架构
 
@@ -214,7 +219,7 @@ safety        # 安全漏洞检查
 ```
 
 **核心模块：**
-- `backend/scraper/keyword_scraper.py` - 关键词爬虫
+- `backend/scraper/crawlers/keyword_scraper.py` - 关键词爬虫
 - `backend/scraper/analyzers/data_analysis.py` - 数据分析器
 - `backend/scraper/core/` - 核心功能模块
 - `backend/scraper/crawlers/` - 爬虫实现

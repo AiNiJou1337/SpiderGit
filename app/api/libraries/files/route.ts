@@ -25,16 +25,45 @@ export async function GET(request: Request) {
       );
     }
     
-    // 获取关键词ID
-    const keywordRecord = await prisma.keyword.findUnique({
+    // 获取关键词ID - 尝试多种匹配方式
+    let keywordRecord = await prisma.keyword.findUnique({
       where: {
         text: keyword
       }
     });
-    
+
+    // 如果直接匹配失败，尝试其他格式
+    if (!keywordRecord) {
+      // 尝试下划线格式
+      const keywordUnderscore = keyword.replace(/ /g, '_');
+      keywordRecord = await prisma.keyword.findUnique({
+        where: {
+          text: keywordUnderscore
+        }
+      });
+    }
+
+    // 如果还是找不到，尝试模糊匹配
+    if (!keywordRecord) {
+      const keywordRecords = await prisma.keyword.findMany({
+        where: {
+          OR: [
+            { text: { contains: keyword, mode: 'insensitive' } },
+            { text: { contains: keyword.replace(/ /g, '_'), mode: 'insensitive' } },
+            { text: { contains: keyword.replace(/_/g, ' '), mode: 'insensitive' } }
+          ]
+        },
+        take: 1
+      });
+
+      if (keywordRecords.length > 0) {
+        keywordRecord = keywordRecords[0];
+      }
+    }
+
     if (!keywordRecord) {
       return NextResponse.json(
-        { error: '未找到指定关键词' },
+        { error: `未找到指定关键词: ${keyword}` },
         { status: 404 }
       );
     }

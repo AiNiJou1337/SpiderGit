@@ -1,7 +1,7 @@
 {
   "keyword": "Financial API",
   "repository_count": 80,
-  "analysis_date": "2025-08-21T17:38:37.963369",
+  "analysis_date": "2025-08-26T23:09:09.790248",
   "charts": {
     "language_distribution": {
       "data": {
@@ -28,7 +28,7 @@
             30
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:37.891362"
+        "analyzed_at": "2025-08-26T23:09:09.703757"
       }
     },
     "stars_distribution": {
@@ -402,131 +402,131 @@
             3
           ]
         ],
-        "analyzed_at": "2025-08-21T17:38:37.891362"
+        "analyzed_at": "2025-08-26T23:09:09.704776"
       }
     }
   },
   "trends": {
     "libraries": {
       "setuptools": {
-        "trend": "up",
-        "count": 13,
-        "percentile": 97.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 13,
+        "popularity": "高"
       },
       "os": {
-        "trend": "up",
-        "count": 9,
-        "percentile": 92.5,
-        "category": "other"
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 9,
+        "popularity": "高"
       },
       "eodhd": {
-        "trend": "up",
-        "count": 4,
-        "percentile": 87.5,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 4,
+        "popularity": "中"
       },
       "sys": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 80.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "config as cfg": {
-        "trend": "up",
-        "count": 3,
-        "percentile": 80.0,
-        "category": "other"
+        "trend": "稳定",
+        "growth": "+5%",
+        "usage_count": 3,
+        "popularity": "中"
       },
       "codecs": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "dotenv": {
-        "trend": "stable",
-        "count": 2,
-        "percentile": 70.0,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 2,
+        "popularity": "低"
       },
       "sec_api": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "finnhub": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "pkg_resources": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "io": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "json": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "httpx": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "mcp": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "logging": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "typing": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "fmpsdk": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "argparse": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "src": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       },
       "ast": {
-        "trend": "stable",
-        "count": 1,
-        "percentile": 32.5,
-        "category": "other"
+        "trend": "新兴",
+        "growth": "+25%",
+        "usage_count": 1,
+        "popularity": "低"
       }
     },
     "packages": {},
