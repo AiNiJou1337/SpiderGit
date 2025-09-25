@@ -1,4 +1,4 @@
-name:  CI
+name: CI
 
 on:
   push:
@@ -7,91 +7,91 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  # 前端质量检查和构建
+  # Frontend quality check and build
   frontend:
     runs-on: ubuntu-latest
     name: Frontend Build & Quality Check
 
     steps:
-    - name: 检出代码
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 设置 Node.js 20.x
+    - name: Setup Node.js 20.x
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         cache: 'npm'
 
-    - name: 安装依赖
+    - name: Install dependencies
       run: npm ci
 
-    - name: ESLint 代码检查
+    - name: ESLint code check
       run: npm run lint
 
-    - name: TypeScript 类型检查
+    - name: TypeScript type check
       run: npm run type-check
 
-    - name: 构建应用
+    - name: Build application
       run: npm run build
       env:
         DATABASE_URL: postgresql://test:test@localhost:5432/test_db
         NODE_ENV: production
 
-    - name: 检查构建产物
+    - name: Check build artifacts
       run: |
         if [ ! -d ".next" ]; then
-          echo "构建失败：.next 目录不存在"
+          echo "Build failed: .next directory does not exist"
           exit 1
         fi
-        echo "✅ 前端构建成功"
+        echo "✅ Frontend build successful"
 
-  # Python 爬虫系统检查
+  # Python scraper system check
   python-scraper:
     runs-on: ubuntu-latest
     name: Python Scraper Quality Check
 
     steps:
-    - name: 检出代码
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 设置 Python 3.12
+    - name: Setup Python 3.12
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: 缓存 pip 依赖
+    - name: Cache pip dependencies
       uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('scraper/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('backend/scraper/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
-    - name: 安装 Python 依赖
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r scraper/requirements.txt
+        pip install -r backend/scraper/requirements.txt
         pip install flake8 black isort
 
-    - name: 代码格式检查 (Black)
-      run: black --check scraper/ --diff
+    - name: Code format check (Black)
+      run: black --check backend/scraper/ --diff
       continue-on-error: true
 
-    - name: 导入排序检查 (isort)
-      run: isort --check-only scraper/ --diff
+    - name: Import sorting check (isort)
+      run: isort --check-only backend/scraper/ --diff
       continue-on-error: true
 
-    - name: 语法和风格检查 (Flake8)
-      run: flake8 scraper/ --max-line-length=88 --extend-ignore=E203,W503,F401
+    - name: Syntax and style check (Flake8)
+      run: flake8 backend/scraper/ --max-line-length=88 --extend-ignore=E203,W503,F401
 
-    - name: 验证核心模块可导入
+    - name: Verify core modules can be imported
       run: |
-        cd scraper
-        python -c "import keyword_scraper; print('✅ keyword_scraper 模块正常')"
-        python -c "import data_analysis; print('✅ data_analysis 模块正常')"
-        python -c "import code_analyzer; print('✅ code_analyzer 模块正常')"
+        cd backend/scraper
+        python -c "import keyword_scraper; print('✅ keyword_scraper module normal')"
+        python -c "import analyzers.data_analysis; print('✅ data_analysis module normal')"
+        python -c "import analyzers.code_analyzer; print('✅ code_analyzer module normal')"
 
-  # API 路由和数据库检查
+  # API routes and database check
   api-database:
     runs-on: ubuntu-latest
     name: API Routes & Database Check
@@ -111,85 +111,87 @@ jobs:
           - 5432:5432
 
     steps:
-    - name: 检出代码
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 设置 Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         cache: 'npm'
 
-    - name: 安装依赖
+    - name: Install dependencies
       run: npm ci
 
-    - name: 生成 Prisma 客户端
+    - name: Generate Prisma client
       run: npx prisma generate
       env:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
-    - name: 推送数据库模式
+    - name: Push database schema
       run: npx prisma db push
       env:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
-    - name: 验证 Prisma 模式
+    - name: Validate Prisma schema
       run: npx prisma validate
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
-    - name: 检查 API 路由文件
+    - name: Check API route files
       run: |
-        echo "检查关键 API 路由..."
-        test -f "app/api/keywords/route.ts" && echo "✅ keywords API 存在"
-        test -f "app/api/repositories/route.ts" && echo "✅ repositories API 存在"
-        test -f "app/api/stats/route.ts" && echo "✅ stats API 存在"
-        test -f "app/api/libraries/route.ts" && echo "✅ libraries API 存在"
-        echo "API 路由检查完成"
+        echo "Checking key API routes..."
+        test -f "app/api/keywords/route.ts" && echo "✅ keywords API exists"
+        test -f "app/api/repositories/route.ts" && echo "✅ repositories API exists"
+        test -f "app/api/stats/route.ts" && echo "✅ stats API exists"
+        test -f "app/api/libraries/route.ts" && echo "✅ libraries API exists"
+        echo "API route check completed"
 
-  # 安全和依赖检查
+  # Security and dependency check
   security:
     runs-on: ubuntu-latest
     name: Security & Dependency Check
 
     steps:
-    - name: 检出代码
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 设置 Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         cache: 'npm'
 
-    - name: 安装依赖
+    - name: Install dependencies
       run: npm ci
 
-    - name: npm 安全审计
+    - name: npm security audit
       run: |
-        echo "检查 npm 依赖安全性..."
-        npm audit --audit-level high || echo "⚠️ 发现高风险依赖，请检查"
+        echo "Checking npm dependency security..."
+        npm audit --audit-level high || echo "⚠️ Found high-risk dependencies, please check"
       continue-on-error: true
 
-    - name: 设置 Python
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
-    - name: Python 依赖安全检查
+    - name: Python dependency security check
       run: |
         pip install safety
-        echo "检查 Python 依赖安全性..."
-        safety check -r scraper/requirements.txt || echo "⚠️ 发现 Python 安全问题，请检查"
+        echo "Checking Python dependency security..."
+        safety check -r backend/scraper/requirements.txt || echo "⚠️ Found Python security issues, please check"
       continue-on-error: true
 
-    - name: 检查敏感文件
+    - name: Check sensitive files
       run: |
-        echo "检查是否意外提交敏感文件..."
+        echo "Checking for accidentally committed sensitive files..."
         if [ -f ".env" ]; then
-          echo "❌ 发现 .env 文件，请移除"
+          echo "❌ Found .env file, please remove"
           exit 1
         fi
         if find . -name "*.key" -o -name "*.pem" -o -name "*.p12" | grep -q .; then
-          echo "❌ 发现密钥文件，请移除"
+          echo "❌ Found key files, please remove"
           exit 1
         fi
-        echo "✅ 未发现敏感文件"
+        echo "✅ No sensitive files found"

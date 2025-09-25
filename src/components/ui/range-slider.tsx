@@ -37,7 +37,7 @@ export function RangeSlider({
   const handleValueChange = (newValue: number[]) => {
     // 确保左值不大于右值
     let leftValue = newValue[0] || actualMin
-    let rightValue = newValue[1] || actualMax
+    const rightValue = newValue[1] || actualMax
     
     if (leftValue > rightValue) {
       leftValue = rightValue

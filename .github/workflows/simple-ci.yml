@@ -1,4 +1,4 @@
-name: Simple CI 
+name: Simple CI
 
 on:
   push:
@@ -7,48 +7,48 @@ on:
     branches: [ main ]
 
 jobs:
-  # 基础检查 - 确保代码能正常构建和运行
+  # Basic checks - ensure code can build and run normally
   basic-checks:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 检出代码
+    - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: 设置 Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         cache: 'npm'
     
-    - name: 设置 Python
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
     
-    - name: 安装依赖
+    - name: Install dependencies
       run: |
         npm ci
         pip install -r backend/scraper/requirements.txt
     
-    - name: 代码格式检查
+    - name: Code format check
       run: |
         npm run lint
         npx tsc --noEmit
     
-    - name: 构建检查
+    - name: Build check
       run: npm run build
       env:
         DATABASE_URL: postgresql://test:test@localhost:5432/test_db
     
-    - name: Python 语法检查
+    - name: Python syntax check
       run: |
         pip install flake8
-        flake8 scraper/ --max-line-length=88 --extend-ignore=E203,W503
+        flake8 backend/scraper/ --max-line-length=88 --extend-ignore=E203,W503
     
-    - name: 安全检查（非阻塞）
+    - name: Security check (non-blocking)
       run: |
-        npm audit --audit-level high || echo "发现安全问题，请检查"
+        npm audit --audit-level high || echo "Found security issues, please check"
         pip install safety
-        safety check -r scraper/requirements.txt || echo "发现 Python 安全问题，请检查"
+        safety check -r backend/scraper/requirements.txt || echo "Found Python security issues, please check"
       continue-on-error: true

@@ -1837,8 +1837,7 @@ function KeywordsPage() {
                 <Tabs key="analysis-tabs" defaultValue="overview" value={activeTab} onValueChange={(value) => {
                   React.startTransition(() => {
                     setActiveTab(value);
-                  });
-                }} className="w-full">
+                  });                }} className="w-full">
                   <TabsList className="grid w-full md:w-auto grid-cols-4 mb-6">
                     <TabsTrigger value="overview">概览</TabsTrigger>
                     <TabsTrigger value="repositories">项目列表</TabsTrigger>
