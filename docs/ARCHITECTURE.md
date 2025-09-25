@@ -135,7 +135,6 @@ SpiderGit/
 │   ├── next.config.js              # Next.js配置
 │   ├── .env.example                # 环境变量示例
 │   └── README.md                   # 项目说明文档
-```
 │
 ├── 📁 public/                        # 📦 静态资源和数据存储
 │   ├── logo.png                      # 项目Logo

@@ -1,4 +1,4 @@
-name: Simple CI (个人开发版)
+name: Simple CI 
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
     - name: 安装依赖
       run: |
         npm ci
-        pip install -r scraper/requirements.txt
+        pip install -r backend/scraper/requirements.txt
     
     - name: 代码格式检查
       run: |
