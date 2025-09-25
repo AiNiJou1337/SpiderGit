@@ -112,3 +112,4 @@ temp_*.py
 
 # AIDE
 .augment/
+.fitten/

@@ -44,7 +44,7 @@ jobs:
 
     - name: Setup Python (for Python analysis)
       if: matrix.language == 'python'
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 

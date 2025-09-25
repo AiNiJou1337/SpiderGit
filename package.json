@@ -95,7 +95,7 @@
       "<rootDir>/node_modules/",
       "<rootDir>/scraper/"
     ],
-    "moduleNameMapping": {
+    "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/$1"
     },
     "collectCoverageFrom": [
