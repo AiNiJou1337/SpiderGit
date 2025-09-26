@@ -270,7 +270,7 @@ export async function GET(request: Request) {
     const libraryByLanguage: Record<string, Record<string, number>> = {};
     
     // 如果需要包含文件详情，则保存文件信息
-    let libraryFiles: Record<string, any[]> = {};
+    const libraryFiles: Record<string, any[]> = {};
     
     codeFiles.forEach(file => {
       const repoLanguage = file.repository.language || 'unknown';

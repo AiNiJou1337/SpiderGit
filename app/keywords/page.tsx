@@ -236,7 +236,7 @@ function KeywordsPage() {
   const longPressTimersRef = useRef<Map<string, number>>(new Map())
 
   // 防抖函数
-  const debounce = (func: Function, delay: number) => {
+  const debounce = (func: () => void, delay: number) => {
     if (debounceTimerRef.current !== null) {
       window.clearTimeout(debounceTimerRef.current)
     }
@@ -1420,7 +1420,7 @@ function KeywordsPage() {
   }, [selectedKeyword, analysisNames])
 
   // 简化的安全点击处理函数
-  const safeClickHandler = (handler: Function, ...args: any[]) => {
+  const safeClickHandler = (handler: (...args: any[]) => void, ...args: any[]) => {
     try {
       handler(...args)
     } catch (error: any) {
