@@ -1,0 +1,982 @@
+{
+  "keyword": "mcp",
+  "repository_count": 40,
+  "analysis_date": "2025-09-28T17:17:37.549005",
+  "charts": {
+    "language_distribution": {
+      "data": {
+        "total_languages": 4,
+        "language_distribution": {
+          "JavaScript": 10,
+          "Python": 10,
+          "Go": 10,
+          "Rust": 10
+        },
+        "language_stars": {
+          "JavaScript": 0,
+          "Python": 0,
+          "Go": 0,
+          "Rust": 0
+        },
+        "language_avg_stars": {
+          "JavaScript": 0.0,
+          "Python": 0.0,
+          "Go": 0.0,
+          "Rust": 0.0
+        },
+        "top_languages": [
+          [
+            "JavaScript",
+            10
+          ],
+          [
+            "Python",
+            10
+          ],
+          [
+            "Go",
+            10
+          ],
+          [
+            "Rust",
+            10
+          ]
+        ],
+        "analyzed_at": "2025-09-28T17:17:37.378829"
+      }
+    },
+    "stars_distribution": {
+      "data": {
+        "mean": 16429.65,
+        "min": 356,
+        "max": 111125,
+        "total": 0
+      }
+    },
+    "common_packages": {
+      "data": {
+        "npm": 30,
+        "pip": 30,
+        "yarn": 20,
+        "node": 20,
+        "setuptools": 20,
+        "wheel": 20
+      }
+    },
+    "imported_libraries": {
+      "data": {
+        "react": 30,
+        "requests": 30,
+        "lodash": 20,
+        "axios": 20,
+        "numpy": 20,
+        "pandas": 20,
+        "express": 10,
+        "vue": 10,
+        "webpack": 10,
+        "babel": 10,
+        "flask": 10,
+        "django": 10,
+        "tensorflow": 10,
+        "scikit-learn": 10
+      }
+    },
+    "common_functions": {
+      "data": {}
+    },
+    "tag_analysis": {
+      "data": {
+        "total_topics": 14,
+        "topic_distribution": {
+          "ai": 17,
+          "web": 8,
+          "go": 6,
+          "tool": 4,
+          "api": 3,
+          "docker": 2,
+          "database": 2,
+          "framework": 2,
+          "cloud": 1,
+          "library": 1,
+          "python": 1,
+          "sql": 1,
+          "rust": 1,
+          "graphql": 1
+        },
+        "top_topics": [
+          [
+            "ai",
+            17
+          ],
+          [
+            "web",
+            8
+          ],
+          [
+            "go",
+            6
+          ],
+          [
+            "tool",
+            4
+          ],
+          [
+            "api",
+            3
+          ],
+          [
+            "docker",
+            2
+          ],
+          [
+            "database",
+            2
+          ],
+          [
+            "framework",
+            2
+          ],
+          [
+            "cloud",
+            1
+          ],
+          [
+            "library",
+            1
+          ],
+          [
+            "python",
+            1
+          ],
+          [
+            "sql",
+            1
+          ],
+          [
+            "rust",
+            1
+          ],
+          [
+            "graphql",
+            1
+          ]
+        ],
+        "analyzed_at": "2025-09-28T17:17:37.379827"
+      }
+    }
+  },
+  "trends": {
+    "libraries": {
+      "react": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 30,
+        "popularity": "高"
+      },
+      "requests": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 30,
+        "popularity": "高"
+      },
+      "lodash": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "axios": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "numpy": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "pandas": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "express": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "vue": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "webpack": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "babel": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "flask": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "django": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "tensorflow": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      },
+      "scikit-learn": {
+        "trend": "上升",
+        "growth": "+15%",
+        "usage_count": 10,
+        "popularity": "高"
+      }
+    },
+    "packages": {
+      "npm": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 30,
+        "popularity": "高"
+      },
+      "pip": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 30,
+        "popularity": "高"
+      },
+      "yarn": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "node": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "setuptools": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 20,
+        "popularity": "高"
+      },
+      "wheel": {
+        "trend": "稳定",
+        "growth": "+8%",
+        "usage_count": 20,
+        "popularity": "高"
+      }
+    },
+    "functions": {}
+  },
+  "repositories": [
+    {
+      "id": 1757,
+      "name": "open-webui",
+      "full_name": "open-webui/open-webui",
+      "owner": "open-webui",
+      "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+      "url": "https://github.com/open-webui/open-webui",
+      "language": "JavaScript",
+      "stars": 111125,
+      "forks": 15294,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.905000",
+      "updated_at": "2025-09-28T17:17:31.905000",
+      "trend_date": "2025-09-28T17:17:31.905000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.905000"
+    },
+    {
+      "id": 1758,
+      "name": "anything-llm",
+      "full_name": "Mintplex-Labs/anything-llm",
+      "owner": "Mintplex-Labs",
+      "description": "The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, No-code agent builder, MCP compatibility,  and more.",
+      "url": "https://github.com/Mintplex-Labs/anything-llm",
+      "language": "JavaScript",
+      "stars": 49496,
+      "forks": 5151,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.905000",
+      "updated_at": "2025-09-28T17:17:31.905000",
+      "trend_date": "2025-09-28T17:17:31.905000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.906000"
+    },
+    {
+      "id": 1727,
+      "name": "mem0",
+      "full_name": "mem0ai/mem0",
+      "owner": "mem0ai",
+      "description": "Universal memory layer for AI Agents; Announcing OpenMemory MCP - local and secure memory management.",
+      "url": "https://github.com/mem0ai/mem0",
+      "language": "Python",
+      "stars": 40586,
+      "forks": 4286,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.875000",
+      "updated_at": "2025-09-28T17:17:31.875000",
+      "trend_date": "2025-09-28T17:17:31.875000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.881000"
+    },
+    {
+      "id": 1728,
+      "name": "chatgpt-on-wechat",
+      "full_name": "zhayujie/chatgpt-on-wechat",
+      "owner": "zhayujie",
+      "description": "基于大模型搭建的聊天机器人，同时支持 微信公众号、企业微信应用、飞书、钉钉 等接入，可选择ChatGPT/Claude/DeepSeek/文心一言/讯飞星火/通义千问/ Gemini/GLM-4/Kimi/LinkAI，能处理文本、语音和图片，访问操作系统和互联网，支持基于自有知识库进行定制企业智能客服。",
+      "url": "https://github.com/zhayujie/chatgpt-on-wechat",
+      "language": "Python",
+      "stars": 39222,
+      "forks": 9440,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.885000",
+      "updated_at": "2025-09-28T17:17:31.885000",
+      "trend_date": "2025-09-28T17:17:31.885000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.886000"
+    },
+    {
+      "id": 1729,
+      "name": "mindsdb",
+      "full_name": "mindsdb/mindsdb",
+      "owner": "mindsdb",
+      "description": "AI Analytics Engine that can answer questions over large scale data. - The only MCP Server you'll ever need",
+      "url": "https://github.com/mindsdb/mindsdb",
+      "language": "Python",
+      "stars": 36195,
+      "forks": 5805,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.887000",
+      "updated_at": "2025-09-28T17:17:31.887000",
+      "trend_date": "2025-09-28T17:17:31.887000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.887000"
+    },
+    {
+      "id": 1759,
+      "name": "context7",
+      "full_name": "upstash/context7",
+      "owner": "upstash",
+      "description": "Context7 MCP Server -- Up-to-date code documentation for LLMs and AI code editors",
+      "url": "https://github.com/upstash/context7",
+      "language": "JavaScript",
+      "stars": 31831,
+      "forks": 1580,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.906000",
+      "updated_at": "2025-09-28T17:17:31.906000",
+      "trend_date": "2025-09-28T17:17:31.906000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.906000"
+    },
+    {
+      "id": 1737,
+      "name": "1Panel",
+      "full_name": "1Panel-dev/1Panel",
+      "owner": "1Panel-dev",
+      "description": "🔥 1Panel provides an intuitive web interface and MCP Server to manage websites, files, containers, databases, and LLMs on a Linux server.",
+      "url": "https://github.com/1Panel-dev/1Panel",
+      "language": "Go",
+      "stars": 31462,
+      "forks": 2766,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.892000",
+      "updated_at": "2025-09-28T17:17:31.892000",
+      "trend_date": "2025-09-28T17:17:31.892000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.892000"
+    },
+    {
+      "id": 1730,
+      "name": "PDFMathTranslate",
+      "full_name": "Byaidu/PDFMathTranslate",
+      "owner": "Byaidu",
+      "description": "PDF scientific paper translation with preserved formats - 基于 AI 完整保留排版的 PDF 文档全文双语翻译，支持 Google/DeepL/Ollama/OpenAI 等服务，提供 CLI/GUI/MCP/Docker/Zotero",
+      "url": "https://github.com/Byaidu/PDFMathTranslate",
+      "language": "Python",
+      "stars": 27810,
+      "forks": 2449,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.887000",
+      "updated_at": "2025-09-28T17:17:31.887000",
+      "trend_date": "2025-09-28T17:17:31.887000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.888000"
+    },
+    {
+      "id": 1738,
+      "name": "kratos",
+      "full_name": "go-kratos/kratos",
+      "owner": "go-kratos",
+      "description": "Your ultimate Go microservices framework for the cloud-native era.",
+      "url": "https://github.com/go-kratos/kratos",
+      "language": "Go",
+      "stars": 24928,
+      "forks": 4115,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.893000",
+      "updated_at": "2025-09-28T17:17:31.893000",
+      "trend_date": "2025-09-28T17:17:31.893000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.893000"
+    },
+    {
+      "id": 1731,
+      "name": "gpt-researcher",
+      "full_name": "assafelovic/gpt-researcher",
+      "owner": "assafelovic",
+      "description": "LLM based autonomous agent that conducts deep local and web research on any topic and generates a long report with citations.",
+      "url": "https://github.com/assafelovic/gpt-researcher",
+      "language": "Python",
+      "stars": 23638,
+      "forks": 3128,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.888000",
+      "updated_at": "2025-09-28T17:17:31.888000",
+      "trend_date": "2025-09-28T17:17:31.888000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.888000"
+    },
+    {
+      "id": 1739,
+      "name": "github-mcp-server",
+      "full_name": "github/github-mcp-server",
+      "owner": "github",
+      "description": "GitHub's official MCP Server",
+      "url": "https://github.com/github/github-mcp-server",
+      "language": "Go",
+      "stars": 23049,
+      "forks": 2625,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.894000",
+      "updated_at": "2025-09-28T17:17:31.894000",
+      "trend_date": "2025-09-28T17:17:31.894000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.894000"
+    },
+    {
+      "id": 1747,
+      "name": "goose",
+      "full_name": "block/goose",
+      "owner": "block",
+      "description": "an open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM",
+      "url": "https://github.com/block/goose",
+      "language": "Rust",
+      "stars": 19944,
+      "forks": 1762,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.900000",
+      "updated_at": "2025-09-28T17:17:31.900000",
+      "trend_date": "2025-09-28T17:17:31.900000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.900000"
+    },
+    {
+      "id": 1740,
+      "name": "excelize",
+      "full_name": "qax-os/excelize",
+      "owner": "qax-os",
+      "description": "Go language library for reading and writing Microsoft Excel™ (XLAM / XLSM / XLSX / XLTM / XLTX) spreadsheets",
+      "url": "https://github.com/qax-os/excelize",
+      "language": "Go",
+      "stars": 19669,
+      "forks": 1834,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.896000",
+      "updated_at": "2025-09-28T17:17:31.896000",
+      "trend_date": "2025-09-28T17:17:31.896000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.896000"
+    },
+    {
+      "id": 1732,
+      "name": "fastmcp",
+      "full_name": "jlowin/fastmcp",
+      "owner": "jlowin",
+      "description": "🚀 The fast, Pythonic way to build MCP servers and clients",
+      "url": "https://github.com/jlowin/fastmcp",
+      "language": "Python",
+      "stars": 18312,
+      "forks": 1294,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.889000",
+      "updated_at": "2025-09-28T17:17:31.889000",
+      "trend_date": "2025-09-28T17:17:31.889000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.889000"
+    },
+    {
+      "id": 1733,
+      "name": "blender-mcp",
+      "full_name": "ahujasid/blender-mcp",
+      "owner": "ahujasid",
+      "description": "",
+      "url": "https://github.com/ahujasid/blender-mcp",
+      "language": "Python",
+      "stars": 13626,
+      "forks": 1289,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.890000",
+      "updated_at": "2025-09-28T17:17:31.890000",
+      "trend_date": "2025-09-28T17:17:31.890000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.890000"
+    },
+    {
+      "id": 1734,
+      "name": "LangBot",
+      "full_name": "langbot-app/LangBot",
+      "owner": "langbot-app",
+      "description": "🤩 Easy-to-use global IM bot platform designed for LLM era / 简单易用的大模型即时通信机器人开发平台 ⚡️ Bots for QQ / QQ频道 / Discord / LINE / WeChat(微信, 企业微信)/ Telegram / 飞书 / 钉钉 / Slack 🧩 Integrated with ChatGPT(GPT), DeepSeek, Dify, n8n, Langflow, Claude, Google Gemini, xAI, PPIO, Ollama, 阿里云百炼, SiliconFlow, Qwen, Moonshot, SillyTraven, MCP etc. LLM & Agent & RAG",
+      "url": "https://github.com/langbot-app/LangBot",
+      "language": "Python",
+      "stars": 13616,
+      "forks": 1105,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.890000",
+      "updated_at": "2025-09-28T17:17:31.890000",
+      "trend_date": "2025-09-28T17:17:31.890000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.890000"
+    },
+    {
+      "id": 1735,
+      "name": "serena",
+      "full_name": "oraios/serena",
+      "owner": "oraios",
+      "description": "A powerful coding agent toolkit providing semantic retrieval and editing capabilities (MCP server & other integrations)",
+      "url": "https://github.com/oraios/serena",
+      "language": "Python",
+      "stars": 13259,
+      "forks": 896,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.891000",
+      "updated_at": "2025-09-28T17:17:31.891000",
+      "trend_date": "2025-09-28T17:17:31.891000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.891000"
+    },
+    {
+      "id": 1760,
+      "name": "filestash",
+      "full_name": "mickael-kerjean/filestash",
+      "owner": "mickael-kerjean",
+      "description": ":file_folder: The Dropbox like web client for SFTP, S3, FTP, WebDAV, Git, Minio, LDAP, CalDAV, CardDAV, Mysql, Backblaze, ...",
+      "url": "https://github.com/mickael-kerjean/filestash",
+      "language": "JavaScript",
+      "stars": 12750,
+      "forks": 911,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.906000",
+      "updated_at": "2025-09-28T17:17:31.906000",
+      "trend_date": "2025-09-28T17:17:31.906000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.907000"
+    },
+    {
+      "id": 1736,
+      "name": "agentscope",
+      "full_name": "agentscope-ai/agentscope",
+      "owner": "agentscope-ai",
+      "description": "AgentScope: Agent-Oriented Programming for Building LLM Applications",
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "language": "Python",
+      "stars": 12662,
+      "forks": 992,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.891000",
+      "updated_at": "2025-09-28T17:17:31.891000",
+      "trend_date": "2025-09-28T17:17:31.891000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.891000"
+    },
+    {
+      "id": 1761,
+      "name": "Fay",
+      "full_name": "xszyou/Fay",
+      "owner": "xszyou",
+      "description": "fay是一个帮助数字人（2.5d、3d、移动、pc、网页）或大语言模型（openai兼容、deepseek）连通业务系统的mcp框架。",
+      "url": "https://github.com/xszyou/Fay",
+      "language": "JavaScript",
+      "stars": 11886,
+      "forks": 2155,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.907000",
+      "updated_at": "2025-09-28T17:17:31.907000",
+      "trend_date": "2025-09-28T17:17:31.907000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.907000"
+    },
+    {
+      "id": 1741,
+      "name": "genai-toolbox",
+      "full_name": "googleapis/genai-toolbox",
+      "owner": "googleapis",
+      "description": "MCP Toolbox for Databases is an open source MCP server for databases.",
+      "url": "https://github.com/googleapis/genai-toolbox",
+      "language": "Go",
+      "stars": 10721,
+      "forks": 866,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.896000",
+      "updated_at": "2025-09-28T17:17:31.896000",
+      "trend_date": "2025-09-28T17:17:31.896000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.897000"
+    },
+    {
+      "id": 1742,
+      "name": "nginx-ui",
+      "full_name": "0xJacky/nginx-ui",
+      "owner": "0xJacky",
+      "description": "Yet another WebUI for Nginx",
+      "url": "https://github.com/0xJacky/nginx-ui",
+      "language": "Go",
+      "stars": 9638,
+      "forks": 695,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.897000",
+      "updated_at": "2025-09-28T17:17:31.897000",
+      "trend_date": "2025-09-28T17:17:31.897000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.897000"
+    },
+    {
+      "id": 1762,
+      "name": "claude-flow",
+      "full_name": "ruvnet/claude-flow",
+      "owner": "ruvnet",
+      "description": "🌊 The leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems. Features    enterprise-grade architecture, distributed swarm intelligence, RAG integration, and native Claude Code support via MCP protocol. Ranked #1 in agent-based frameworks.",
+      "url": "https://github.com/ruvnet/claude-flow",
+      "language": "JavaScript",
+      "stars": 8299,
+      "forks": 1121,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.907000",
+      "updated_at": "2025-09-28T17:17:31.907000",
+      "trend_date": "2025-09-28T17:17:31.907000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.908000"
+    },
+    {
+      "id": 1743,
+      "name": "mcp-go",
+      "full_name": "mark3labs/mcp-go",
+      "owner": "mark3labs",
+      "description": "A Go implementation of the Model Context Protocol (MCP), enabling seamless integration between LLM applications and external data sources and tools.",
+      "url": "https://github.com/mark3labs/mcp-go",
+      "language": "Go",
+      "stars": 7288,
+      "forks": 742,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.898000",
+      "updated_at": "2025-09-28T17:17:31.898000",
+      "trend_date": "2025-09-28T17:17:31.898000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.898000"
+    },
+    {
+      "id": 1763,
+      "name": "browser-tools-mcp",
+      "full_name": "AgentDeskAI/browser-tools-mcp",
+      "owner": "AgentDeskAI",
+      "description": "Monitor browser logs directly from Cursor and other MCP compatible IDEs.",
+      "url": "https://github.com/AgentDeskAI/browser-tools-mcp",
+      "language": "JavaScript",
+      "stars": 6625,
+      "forks": 495,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.909000",
+      "updated_at": "2025-09-28T17:17:31.909000",
+      "trend_date": "2025-09-28T17:17:31.909000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.909000"
+    },
+    {
+      "id": 1764,
+      "name": "cursor-talk-to-figma-mcp",
+      "full_name": "grab/cursor-talk-to-figma-mcp",
+      "owner": "grab",
+      "description": "CTTF: MCP integration between Cursor AI and Figma, allowing Cursor to communicate with Figma like agentic ai for reading designs and modifying them programmatically.",
+      "url": "https://github.com/grab/cursor-talk-to-figma-mcp",
+      "language": "JavaScript",
+      "stars": 5430,
+      "forks": 556,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.909000",
+      "updated_at": "2025-09-28T17:17:31.909000",
+      "trend_date": "2025-09-28T17:17:31.909000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.909000"
+    },
+    {
+      "id": 1744,
+      "name": "registry",
+      "full_name": "modelcontextprotocol/registry",
+      "owner": "modelcontextprotocol",
+      "description": "A community driven registry service for Model Context Protocol (MCP) servers.",
+      "url": "https://github.com/modelcontextprotocol/registry",
+      "language": "Go",
+      "stars": 5239,
+      "forks": 387,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.898000",
+      "updated_at": "2025-09-28T17:17:31.898000",
+      "trend_date": "2025-09-28T17:17:31.898000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.898000"
+    },
+    {
+      "id": 1745,
+      "name": "whatsapp-mcp",
+      "full_name": "lharries/whatsapp-mcp",
+      "owner": "lharries",
+      "description": "WhatsApp MCP server",
+      "url": "https://github.com/lharries/whatsapp-mcp",
+      "language": "Go",
+      "stars": 4924,
+      "forks": 743,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.899000",
+      "updated_at": "2025-09-28T17:17:31.899000",
+      "trend_date": "2025-09-28T17:17:31.899000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.899000"
+    },
+    {
+      "id": 1765,
+      "name": "firecrawl-mcp-server",
+      "full_name": "firecrawl/firecrawl-mcp-server",
+      "owner": "firecrawl",
+      "description": "🔥 Official Firecrawl MCP Server - Adds powerful web scraping and search to Cursor, Claude and any other LLM clients.",
+      "url": "https://github.com/firecrawl/firecrawl-mcp-server",
+      "language": "JavaScript",
+      "stars": 4616,
+      "forks": 481,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.909000",
+      "updated_at": "2025-09-28T17:17:31.909000",
+      "trend_date": "2025-09-28T17:17:31.909000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.910000"
+    },
+    {
+      "id": 1746,
+      "name": "xiaohongshu-mcp",
+      "full_name": "xpzouying/xiaohongshu-mcp",
+      "owner": "xpzouying",
+      "description": "MCP for xiaohongshu.com",
+      "url": "https://github.com/xpzouying/xiaohongshu-mcp",
+      "language": "Go",
+      "stars": 4552,
+      "forks": 636,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.899000",
+      "updated_at": "2025-09-28T17:17:31.899000",
+      "trend_date": "2025-09-28T17:17:31.899000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.900000"
+    },
+    {
+      "id": 1766,
+      "name": "deep-research",
+      "full_name": "u14app/deep-research",
+      "owner": "u14app",
+      "description": "Use any LLMs (Large Language Models) for Deep Research. Support SSE API and MCP server.",
+      "url": "https://github.com/u14app/deep-research",
+      "language": "JavaScript",
+      "stars": 4079,
+      "forks": 989,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.910000",
+      "updated_at": "2025-09-28T17:17:31.910000",
+      "trend_date": "2025-09-28T17:17:31.910000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.910000"
+    },
+    {
+      "id": 1748,
+      "name": "microsandbox",
+      "full_name": "microsandbox/microsandbox",
+      "owner": "microsandbox",
+      "description": "Self-hosted plaform for secure execution of untrusted user/AI code",
+      "url": "https://github.com/microsandbox/microsandbox",
+      "language": "Rust",
+      "stars": 3789,
+      "forks": 155,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.900000",
+      "updated_at": "2025-09-28T17:17:31.900000",
+      "trend_date": "2025-09-28T17:17:31.900000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.901000"
+    },
+    {
+      "id": 1749,
+      "name": "amazon-q-developer-cli",
+      "full_name": "aws/amazon-q-developer-cli",
+      "owner": "aws",
+      "description": "✨ Agentic chat experience in your terminal. Build applications using natural language.",
+      "url": "https://github.com/aws/amazon-q-developer-cli",
+      "language": "Rust",
+      "stars": 1633,
+      "forks": 303,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.901000",
+      "updated_at": "2025-09-28T17:17:31.901000",
+      "trend_date": "2025-09-28T17:17:31.901000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.902000"
+    },
+    {
+      "id": 1750,
+      "name": "grafbase",
+      "full_name": "grafbase/grafbase",
+      "owner": "grafbase",
+      "description": "The Grafbase GraphQL Federation Gateway",
+      "url": "https://github.com/grafbase/grafbase",
+      "language": "Rust",
+      "stars": 1169,
+      "forks": 59,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.902000",
+      "updated_at": "2025-09-28T17:17:31.902000",
+      "trend_date": "2025-09-28T17:17:31.902000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.902000"
+    },
+    {
+      "id": 1751,
+      "name": "agentgateway",
+      "full_name": "agentgateway/agentgateway",
+      "owner": "agentgateway",
+      "description": "Next Generation Agentic Proxy for AI Agents and MCP servers",
+      "url": "https://github.com/agentgateway/agentgateway",
+      "language": "Rust",
+      "stars": 970,
+      "forks": 147,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.902000",
+      "updated_at": "2025-09-28T17:17:31.902000",
+      "trend_date": "2025-09-28T17:17:31.902000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.902000"
+    },
+    {
+      "id": 1752,
+      "name": "cunzhi",
+      "full_name": "imhuso/cunzhi",
+      "owner": "imhuso",
+      "description": "告别AI提前终止烦恼，助力AI更加持久",
+      "url": "https://github.com/imhuso/cunzhi",
+      "language": "Rust",
+      "stars": 855,
+      "forks": 85,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.903000",
+      "updated_at": "2025-09-28T17:17:31.903000",
+      "trend_date": "2025-09-28T17:17:31.903000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.903000"
+    },
+    {
+      "id": 1753,
+      "name": "hyper-mcp",
+      "full_name": "tuananh/hyper-mcp",
+      "owner": "tuananh",
+      "description": "📦️ A fast, secure MCP server that extends its capabilities through WebAssembly plugins.",
+      "url": "https://github.com/tuananh/hyper-mcp",
+      "language": "Rust",
+      "stars": 794,
+      "forks": 57,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.903000",
+      "updated_at": "2025-09-28T17:17:31.903000",
+      "trend_date": "2025-09-28T17:17:31.903000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.903000"
+    },
+    {
+      "id": 1754,
+      "name": "wassette",
+      "full_name": "microsoft/wassette",
+      "owner": "microsoft",
+      "description": "Wassette: A security-oriented runtime that runs WebAssembly Components via MCP",
+      "url": "https://github.com/microsoft/wassette",
+      "language": "Rust",
+      "stars": 660,
+      "forks": 43,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.904000",
+      "updated_at": "2025-09-28T17:17:31.904000",
+      "trend_date": "2025-09-28T17:17:31.904000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.904000"
+    },
+    {
+      "id": 1755,
+      "name": "mcp-server-elasticsearch",
+      "full_name": "elastic/mcp-server-elasticsearch",
+      "owner": "elastic",
+      "description": "",
+      "url": "https://github.com/elastic/mcp-server-elasticsearch",
+      "language": "Rust",
+      "stars": 483,
+      "forks": 98,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.904000",
+      "updated_at": "2025-09-28T17:17:31.904000",
+      "trend_date": "2025-09-28T17:17:31.904000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.904000"
+    },
+    {
+      "id": 1756,
+      "name": "echokit_server",
+      "full_name": "second-state/echokit_server",
+      "owner": "second-state",
+      "description": "Open Source Voice Agent Platform",
+      "url": "https://github.com/second-state/echokit_server",
+      "language": "Rust",
+      "stars": 356,
+      "forks": 64,
+      "tags": [],
+      "created_at": "2025-09-28T17:17:31.904000",
+      "updated_at": "2025-09-28T17:17:31.904000",
+      "trend_date": "2025-09-28T17:17:31.904000",
+      "keyword": "mcp",
+      "scraped_at": "2025-09-28T17:17:31.905000"
+    }
+  ],
+  "insights": [
+    "最受欢迎的编程语言是 JavaScript，占 10 个仓库",
+    "平均星数为 16429.7",
+    "最热门的主题是 'ai'，出现在 17 个仓库中"
+  ]
+}

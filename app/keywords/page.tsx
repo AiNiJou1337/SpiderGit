@@ -418,7 +418,7 @@ function KeywordsPage() {
         } catch (processError) {
           console.error('数据处理失败:', processError);
           setAnalysisResults(null);
-          setSearchMessage(`数据处理失败: ${processError.message}`);
+          setSearchMessage(`数据处理失败: ${processError instanceof Error ? processError.message : '未知错误'}`);
         }
       }, 0); // 使用setTimeout(0)让数据处理异步执行
 
@@ -873,7 +873,7 @@ function KeywordsPage() {
     try {
       // 准备分析数据
       const repoData = analysisResults.repositories.slice(0, 10); // 只分析前10个仓库
-      const languageStats = prepareChartData();
+      const languageStats = prepareChartData(analysisResults.languageStats || {});
       const qualityStats = prepareQualityData();
 
       const analysisData = {

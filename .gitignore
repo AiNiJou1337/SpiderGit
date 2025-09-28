@@ -114,3 +114,4 @@ temp_*.py
 .augment/
 .fitten/
 .qoder/
+.cursor/

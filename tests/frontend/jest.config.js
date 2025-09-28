@@ -7,13 +7,14 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const customJestConfig = {
-  setupFilesAfterEnv: ['<rootDir>/tests/frontend/jest.setup.js'],
-  moduleNameMapping: {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you based on your tsconfig.json paths)
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
-    '^@/types/(.*)$': '<rootDir>/src/types/$1',
+    '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
+    '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
+    '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
+    '^@/app/(.*)$': '<rootDir>/../../app/$1',
+    '^@/(.*)$': '<rootDir>/../../src/$1'
   },
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [

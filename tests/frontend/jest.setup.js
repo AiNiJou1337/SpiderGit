@@ -43,6 +43,58 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 // Mock fetch
 global.fetch = jest.fn()
 
+// Define Response and Request for the test environment
+if (typeof Response === 'undefined') {
+  global.Response = class Response {
+    body;
+    status;
+    headers;
+    
+    constructor(body, options) {
+      this.body = body;
+      this.status = options?.status || 200;
+      this.headers = {
+        getSetCookie: () => []
+      };
+    }
+    
+    json() {
+      return Promise.resolve(this.body);
+    }
+    
+    static error() {
+      return new Response(null, { status: 0 });
+    }
+    
+    static json(data, init) {
+      return new Response(JSON.stringify(data), init);
+    }
+    
+    static redirect(url, status) {
+      return new Response(null, { status: status || 302 });
+    }
+  };
+}
+
+if (typeof Request === 'undefined') {
+  global.Request = class Request {
+    url;
+    nextUrl;
+    
+    constructor(url, options) {
+      this.url = url;
+      // Add nextUrl for Next.js compatibility
+      this.nextUrl = {
+        searchParams: {
+          get: (key) => {
+            return null;
+          }
+        }
+      };
+    }
+  };
+}
+
 // Setup cleanup
 afterEach(() => {
   jest.clearAllMocks()
