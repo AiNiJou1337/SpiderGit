@@ -38,6 +38,13 @@ jest.mock('@/lib/python-resolver', () => ({
   resolvePythonBin: jest.fn().mockResolvedValue('python'),
 }))
 
+// 创建一个模拟的 NextRequest 对象
+const createMockNextRequest = (url: string, init?: RequestInit) => {
+  const request = new Request(url, init) as any;
+  request.nextUrl = new URL(url);
+  return request;
+};
+
 describe('Keywords API 测试', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -59,7 +66,7 @@ describe('Keywords API 测试', () => {
 
       // 动态导入 API 路由
       const { GET } = await import('@/app/api/keywords/route')
-      const request = new Request('http://localhost:3000/api/keywords')
+      const request = createMockNextRequest('http://localhost:3000/api/keywords')
       const response = await GET(request)
       const data = await response.json()
 
@@ -75,7 +82,7 @@ describe('Keywords API 测试', () => {
       prisma.keyword.findMany.mockRejectedValue(new Error('Database connection failed'))
 
       const { GET } = await import('@/app/api/keywords/route')
-      const request = new Request('http://localhost:3000/api/keywords')
+      const request = createMockNextRequest('http://localhost:3000/api/keywords')
       const response = await GET(request)
       const data = await response.json()
 
@@ -90,7 +97,7 @@ describe('Keywords API 测试', () => {
       prisma.repositoryKeyword.count.mockResolvedValue(0)
 
       const { GET } = await import('@/app/api/keywords/route')
-      const request = new Request('http://localhost:3000/api/keywords')
+      const request = createMockNextRequest('http://localhost:3000/api/keywords')
       const response = await GET(request)
       const data = await response.json()
 
@@ -111,7 +118,7 @@ describe('Keywords API 测试', () => {
       prisma.crawlTask.create.mockResolvedValue(mockTask)
 
       const { POST } = await import('@/app/api/keywords/search/route')
-      const request = new Request('http://localhost:3000/api/keywords/search', {
+      const request = createMockNextRequest('http://localhost:3000/api/keywords/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -131,7 +138,7 @@ describe('Keywords API 测试', () => {
 
     it('应该验证必填字段', async () => {
       const { POST } = await import('@/app/api/keywords/search/route')
-      const request = new Request('http://localhost:3000/api/keywords/search', {
+      const request = createMockNextRequest('http://localhost:3000/api/keywords/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
@@ -154,7 +161,7 @@ describe('Keywords API 测试', () => {
       prisma.crawlTask.create.mockResolvedValue(mockTask)
 
       const { POST } = await import('@/app/api/keywords/search/route')
-      const request = new Request('http://localhost:3000/api/keywords/search', {
+      const request = createMockNextRequest('http://localhost:3000/api/keywords/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: 'react' }),

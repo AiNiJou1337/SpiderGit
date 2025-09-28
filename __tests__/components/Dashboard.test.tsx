@@ -4,29 +4,31 @@
  */
 
 import { render, screen, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import React from 'react';
 
 // Mock fetch API
 global.fetch = jest.fn()
 
 // Mock Recharts 图表组件
 jest.mock('recharts', () => ({
-  ResponsiveContainer: ({ children }: any) => (
-    <div data-testid="responsive-container">{children}</div>
-  ),
-  BarChart: ({ children }: any) => (
-    <div data-testid="bar-chart">{children}</div>
-  ),
-  Bar: () => <div data-testid="bar" />,
-  XAxis: () => <div data-testid="x-axis" />,
-  YAxis: () => <div data-testid="y-axis" />,
-  CartesianGrid: () => <div data-testid="cartesian-grid" />,
-  Tooltip: () => <div data-testid="tooltip" />,
-  Legend: () => <div data-testid="legend" />,
-  PieChart: ({ children }: any) => (
-    <div data-testid="pie-chart">{children}</div>
-  ),
-  Pie: () => <div data-testid="pie" />,
-  Cell: () => <div data-testid="cell" />,
+  ResponsiveContainer: ({ children }: { children: React.ReactNode }) => {
+    return React.createElement('div', { 'data-testid': 'responsive-container' }, children);
+  },
+  BarChart: ({ children }: { children: React.ReactNode }) => {
+    return React.createElement('div', { 'data-testid': 'bar-chart' }, children);
+  },
+  Bar: () => React.createElement('div', { 'data-testid': 'bar' }),
+  XAxis: () => React.createElement('div', { 'data-testid': 'x-axis' }),
+  YAxis: () => React.createElement('div', { 'data-testid': 'y-axis' }),
+  CartesianGrid: () => React.createElement('div', { 'data-testid': 'cartesian-grid' }),
+  Tooltip: () => React.createElement('div', { 'data-testid': 'tooltip' }),
+  Legend: () => React.createElement('div', { 'data-testid': 'legend' }),
+  PieChart: ({ children }: { children: React.ReactNode }) => {
+    return React.createElement('div', { 'data-testid': 'pie-chart' }, children);
+  },
+  Pie: () => React.createElement('div', { 'data-testid': 'pie' }),
+  Cell: () => React.createElement('div', { 'data-testid': 'cell' }),
 }))
 
 // Mock Next.js 主题
