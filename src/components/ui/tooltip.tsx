@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { cn } from '@/src/lib/utils/helpers'
+import { cn } from '@/lib/utils/helpers'
 
 interface TooltipProps {
   children: React.ReactNode
