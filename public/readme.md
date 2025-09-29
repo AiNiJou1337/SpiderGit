@@ -70,9 +70,9 @@ public/trends/
 ### 主数据文件结构 (trends.json)
 ```json
 {
-  "daily": [...],     # 日度热门仓库列表
-  "weekly": [...],    # 周度热门仓库列表
-  "monthly": [...],   # 月度热门仓库列表
+  "daily": ["..."],     
+  "weekly": ["..."],    
+  "monthly": ["..."],   
   "lastUpdated": "2025-08-26T12:56:03.126447"
 }
 ```

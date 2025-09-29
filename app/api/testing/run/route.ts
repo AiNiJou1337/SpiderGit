@@ -239,7 +239,7 @@ function calculateCoverage(testResults: any): number {
 function extractPytestCoverage(output: string): number {
   // 从pytest输出中提取覆盖率
   const coverageMatch = output.match(/TOTAL\s+\d+\s+\d+\s+(\d+)%/)
-  if (coverageMatch) {
+  if (coverageMatch && coverageMatch[1]) {
     return parseInt(coverageMatch[1])
   }
   return 0

@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     
     // 为每个时间段生成数据
     const periods = ['daily', 'weekly', 'monthly']
-    const newData = { ...existingData }
+    const newData: any = { ...existingData }
     
     periods.forEach(period => {
       const multiplier = period === 'daily' ? 0.8 : period === 'weekly' ? 1.2 : 1.8
@@ -65,30 +65,32 @@ export async function POST(request: NextRequest) {
       // 生成新数据
       for (let i = 0; i < Math.max(0, targetCount - existingRepos.length); i++) {
         const template = popularRepos[i % popularRepos.length]
+        if (!template) continue; // 添加检查以避免undefined错误
+        
         const variation = Math.random() * 0.4 + 0.8 // 0.8-1.2的变化
         const timeVariation = Math.random() * 0.3 + 0.85 // 时间相关变化
         
-        const stars = Math.floor(template.baseStars * variation * multiplier * timeVariation)
+        const stars = Math.floor((template.baseStars || 0) * variation * multiplier * timeVariation)
         const forks = Math.floor(stars * (0.1 + Math.random() * 0.1)) // 10-20%的fork率
         const todayStars = Math.floor(stars * (0.005 + Math.random() * 0.015)) // 0.5-2%的日增长
         
         const repo = {
           id: existingRepos.length + i + 1,
-          name: i < popularRepos.length ? template.name : `${template.name}-${period}-${i + 1}`,
-          owner: template.owner,
+          name: i < popularRepos.length ? (template.name || '') : `${template.name || ''}-${period}-${i + 1}`,
+          owner: template.owner || '',
           fullName: i < popularRepos.length ? 
-            `${template.owner}/${template.name}` : 
-            `${template.owner}/${template.name}-${period}-${i + 1}`,
-          description: template.description,
-          language: template.language,
+            `${template.owner || ''}/${template.name || ''}` : 
+            `${template.owner || ''}/${template.name || ''}-${period}-${i + 1}`,
+          description: template.description || '',
+          language: template.language || '',
           stars: stars,
           stargazers_count: stars,
           forks: forks,
           forks_count: forks,
           todayStars: todayStars,
           url: i < popularRepos.length ? 
-            `https://github.com/${template.owner}/${template.name}` :
-            `https://github.com/${template.owner}/${template.name}-${period}-${i + 1}`,
+            `https://github.com/${template.owner || ''}/${template.name || ''}` :
+            `https://github.com/${template.owner || ''}/${template.name || ''}-${period}-${i + 1}`,
           updated_at: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
           trendPeriod: period
         }

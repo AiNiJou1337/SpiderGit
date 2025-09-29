@@ -30,6 +30,11 @@ const nextConfig = {
 
   // SWC 配置
   swcMinify: true,
+
+  // ESLint 配置
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig

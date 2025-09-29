@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       .reverse()
 
     let latestResults = null
-    if (files.length > 0) {
+    if (files.length > 0 && files[0]) {
       const latestFile = path.join(resultsDir, files[0])
       const content = fs.readFileSync(latestFile, 'utf8')
       latestResults = JSON.parse(content)

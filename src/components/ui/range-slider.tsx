@@ -4,14 +4,19 @@ import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cn } from "@/lib/utils/helpers"
 
+// 修改接口，移除不可序列化的函数
 interface RangeSliderProps {
   value: [number, number]
-  onValueChange: (value: [number, number]) => void
   min: number
   max: number
   step?: number
   className?: string
   disabled?: boolean
+}
+
+// 创建一个包装组件来处理值变化
+interface RangeSliderWrapperProps extends RangeSliderProps {
+  onValueChange?: (value: [number, number]) => void
 }
 
 export function RangeSlider({
@@ -23,7 +28,7 @@ export function RangeSlider({
   className,
   disabled = false,
   ...props
-}: RangeSliderProps) {
+}: RangeSliderWrapperProps) {
   // 新思路：固定最小值为0，确保左端点可以拖动到0
   const actualMin = 0
   const actualMax = max
@@ -44,7 +49,10 @@ export function RangeSlider({
     }
     
     const finalValue: [number, number] = [leftValue, rightValue]
-    onValueChange(finalValue)
+    // 只有当onValueChange存在时才调用
+    if (onValueChange) {
+      onValueChange(finalValue)
+    }
   }
 
   return (
@@ -79,6 +87,6 @@ export function RangeSlider({
 }
 
 // 简化版本，保持原有接口兼容性
-export function SimpleRangeSlider(props: RangeSliderProps) {
+export function SimpleRangeSlider(props: RangeSliderWrapperProps) {
   return <RangeSlider {...props} />
 }

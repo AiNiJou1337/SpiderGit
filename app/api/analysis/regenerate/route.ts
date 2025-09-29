@@ -20,8 +20,11 @@ async function resolvePythonBin(requiredMajor = 3, requiredMinor = 12): Promise<
     try {
       const { stdout } = await execAsync(`${bin} -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"`);
       const ver = (stdout || '').trim();
-      const [maj, min] = ver.split('.').map(v => parseInt(v, 10));
-      if (!isNaN(maj) && !isNaN(min)) {
+      const [majStr, minStr] = ver.split('.');
+      const maj = majStr ? parseInt(majStr, 10) : undefined;
+      const min = minStr ? parseInt(minStr, 10) : undefined;
+      
+      if (maj !== undefined && min !== undefined && !isNaN(maj) && !isNaN(min)) {
         if (maj > requiredMajor || (maj === requiredMajor && min >= requiredMinor)) {
           return bin;
         }

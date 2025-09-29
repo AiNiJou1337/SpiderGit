@@ -303,7 +303,7 @@ export default function RepositoryList({
                       {repo.full_name ?
                         repo.full_name.split('/')[0] :
                         (typeof repo.owner === 'string' ? repo.owner :
-                         typeof repo.owner === 'object' && repo.owner?.login ? repo.owner.login :
+                         typeof repo.owner === 'object' && repo.owner && (repo.owner as any).login ? (repo.owner as any).login :
                          'Unknown')
                       }
                     </span>

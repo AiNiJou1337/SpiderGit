@@ -20,23 +20,23 @@ async function main() {
       
       // 创建初始关键词
       const initialKeywords = [
-        { name: 'react', category: 'frontend' },
-        { name: 'vue', category: 'frontend' },
-        { name: 'angular', category: 'frontend' },
-        { name: 'nodejs', category: 'backend' },
-        { name: 'python', category: 'backend' },
-        { name: 'javascript', category: 'language' },
-        { name: 'typescript', category: 'language' },
-        { name: 'machine-learning', category: 'ai' },
-        { name: 'artificial-intelligence', category: 'ai' },
-        { name: 'docker', category: 'devops' },
-        { name: 'kubernetes', category: 'devops' },
-        { name: 'microservices', category: 'architecture' },
+        { text: 'react', category: 'frontend' },
+        { text: 'vue', category: 'frontend' },
+        { text: 'angular', category: 'frontend' },
+        { text: 'nodejs', category: 'backend' },
+        { text: 'python', category: 'backend' },
+        { text: 'javascript', category: 'language' },
+        { text: 'typescript', category: 'language' },
+        { text: 'machine-learning', category: 'ai' },
+        { text: 'artificial-intelligence', category: 'ai' },
+        { text: 'docker', category: 'devops' },
+        { text: 'kubernetes', category: 'devops' },
+        { text: 'microservices', category: 'architecture' },
       ];
       
       for (const keyword of initialKeywords) {
         await prisma.keyword.upsert({
-          where: { name: keyword.name },
+          where: { text: keyword.text },
           update: {},
           create: keyword,
         });
@@ -61,8 +61,20 @@ async function main() {
       repositories: await prisma.repository.count(),
       keywords: await prisma.keyword.count(),
       crawlTasks: await prisma.crawlTask.count(),
-      importedLibraries: await prisma.importedLibrary.count(),
+      importedLibraries: 0 // 暂时设置为0，因为可能不存在这个模型
     };
+    
+    // 尝试获取importedLibrary的数量，如果模型不存在则忽略
+    try {
+      // 检查prisma客户端是否有importedLibrary模型
+      if ('importedLibrary' in prisma) {
+        finalStats.importedLibraries = await (prisma as any).importedLibrary.count();
+      } else {
+        console.log('注意: importedLibrary模型不存在，跳过统计');
+      }
+    } catch (error) {
+      console.log('注意: importedLibrary模型不存在，跳过统计');
+    }
     
     console.log('数据库统计:');
     console.log(`- 仓库: ${finalStats.repositories}`);

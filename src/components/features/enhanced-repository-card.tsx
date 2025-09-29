@@ -168,7 +168,7 @@ export function EnhancedRepositoryCard({
             <CardDescription className="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center space-x-2">
               <span>
                 {typeof repository.owner === 'string' ? repository.owner :
-                 typeof repository.owner === 'object' && repository.owner?.login ? repository.owner.login :
+                 typeof repository.owner === 'object' && repository.owner && (repository.owner as any).login ? (repository.owner as any).login :
                  'Unknown'}
               </span>
               {repository.createdAt && (

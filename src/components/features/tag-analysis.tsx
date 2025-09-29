@@ -178,7 +178,7 @@ export function TagAnalysis({
                 <div className="flex flex-wrap gap-2">
                   {chartData.slice(0, 20).map((tag, index) => {
                     const isSelected = selectedTag === tag.fullName
-                    const size = Math.max(12, Math.min(16, 12 + (tag.count / chartData[0].count) * 4))
+                    const size = Math.max(12, Math.min(16, 12 + (chartData[0] ? (tag.count / chartData[0].count) * 4 : 0)))
                     
                     return (
                       <Badge

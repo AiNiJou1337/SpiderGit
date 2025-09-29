@@ -39,7 +39,7 @@ export async function GET() {
     });
     
     // 格式化最近任务数据
-    const formattedRecentTasks = recentTasks.map(task => ({
+    const formattedRecentTasks = recentTasks.map((task: any) => ({
       id: task.id,
       keyword: task.keyword.text,
       status: task.status,

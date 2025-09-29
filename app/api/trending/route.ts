@@ -30,7 +30,10 @@ export async function GET(request: NextRequest) {
 
           if (files.length > 0) {
             // 获取最新的时间序列数据
-            const latestFile = path.join(timeSeriesDir, files[0])
+            const latestFile = files[0] ? path.join(timeSeriesDir, files[0]) : '';
+            if (!latestFile) {
+              throw new Error('No latest file found');
+            }
             const timeSeriesData = JSON.parse(fs.readFileSync(latestFile, 'utf8'))
 
             let repositories = timeSeriesData.repositories || []

@@ -41,21 +41,45 @@ interface FileUsageInfo {
   apiEndpoints?: number
 }
 
+// 修改props接口，移除不可序列化的函数
 interface LibraryFileUsageDialogProps {
   open: boolean
-  onOpenChange: (open: boolean) => void
   keyword: string
   library: string
   libraryDisplayName?: string
 }
 
+// 添加一个hook来处理对话框的打开/关闭状态
+interface UseDialogStateProps {
+  open: boolean
+  onOpenChangeProp?: ((open: boolean) => void) | null
+}
+
+function useDialogState({ open, onOpenChangeProp }: UseDialogStateProps) {
+  const [isOpen, setIsOpen] = useState(open)
+  
+  useEffect(() => {
+    setIsOpen(open)
+  }, [open])
+  
+  const handleOpenChange = (newOpen: boolean) => {
+    setIsOpen(newOpen)
+    if (onOpenChangeProp) {
+      onOpenChangeProp(newOpen)
+    }
+  }
+  
+  return { isOpen, handleOpenChange }
+}
+
 export function LibraryFileUsageDialog({
   open,
-  onOpenChange,
   keyword,
   library,
-  libraryDisplayName
-}: LibraryFileUsageDialogProps) {
+  libraryDisplayName,
+  onOpenChange
+}: LibraryFileUsageDialogProps & { onOpenChange?: (open: boolean) => void }) {
+  const { isOpen, handleOpenChange } = useDialogState({ open, onOpenChangeProp: onOpenChange || null })
   const [files, setFiles] = useState<FileUsageInfo[]>([])
   const [filteredFiles, setFilteredFiles] = useState<FileUsageInfo[]>([])
   const [loading, setLoading] = useState(false)
@@ -102,10 +126,10 @@ export function LibraryFileUsageDialog({
 
   // 当对话框打开时获取数据
   useEffect(() => {
-    if (open) {
+    if (isOpen) {
       fetchFileUsage(1)
     }
-  }, [open, keyword, library, selectedLanguage])
+  }, [isOpen, keyword, library, selectedLanguage])
 
   // 搜索过滤
   useEffect(() => {
@@ -125,7 +149,7 @@ export function LibraryFileUsageDialog({
   const availableLanguages = Array.from(new Set(files.map(f => f.repository.language).filter(Boolean)))
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-6xl max-h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">

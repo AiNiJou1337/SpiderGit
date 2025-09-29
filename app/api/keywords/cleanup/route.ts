@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
     }
     
     // 4. 检查数据一致性
-    const inconsistencies = []
+    const inconsistencies: any[] = []
     
     // 检查孤立的分析文件（没有对应关键词记录）
     for (const file of analysisFiles) {
       const keywordName = file.replace('analysis_', '').replace('.json', '').replace(/_/g, ' ')
-      const keywordExists = allKeywords.some(kw => kw.text === keywordName)
+      const keywordExists = allKeywords.some((kw: any) => kw.text === keywordName)
       
       if (!keywordExists) {
         inconsistencies.push({
@@ -67,28 +67,28 @@ export async function POST(request: NextRequest) {
     
     // 检查孤立的关键词记录（没有对应分析文件）
     for (const keyword of allKeywords) {
-      const expectedFile = `analysis_${keyword.text.replace(/ /g, '_')}.json`
+      const expectedFile = `analysis_${(keyword as any).text.replace(/ /g, '_')}.json`
       const fileExists = analysisFiles.includes(expectedFile)
       
       if (!fileExists) {
         // 检查是否有相关的数据库记录
         const hasAnalytics = await prisma.analytics.count({
-          where: { keywordId: keyword.id }
+          where: { keywordId: (keyword as any).id }
         })
         
         const hasRepoKeywords = await prisma.repositoryKeyword.count({
-          where: { keywordId: keyword.id }
+          where: { keywordId: (keyword as any).id }
         })
         
         const hasCrawlTasks = await prisma.crawlTask.count({
-          where: { keywordId: keyword.id }
+          where: { keywordId: (keyword as any).id }
         })
         
         if (hasAnalytics === 0 && hasRepoKeywords === 0 && hasCrawlTasks === 0) {
           inconsistencies.push({
             type: 'orphan_keyword',
-            keyword: keyword.text,
-            keywordId: keyword.id,
+            keyword: (keyword as any).text,
+            keywordId: (keyword as any).id,
             action: 'delete_keyword'
           })
         }
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     // 检查 all_keywords_analysis.json 中的孤立数据
     for (const item of allKeywordsData) {
       if (item.keyword) {
-        const keywordExists = allKeywords.some(kw => kw.text === item.keyword)
+        const keywordExists = allKeywords.some((kw: any) => kw.text === item.keyword)
         if (!keywordExists) {
           inconsistencies.push({
             type: 'orphan_all_keywords_data',

@@ -64,12 +64,14 @@ export async function GET() {
     // 按日期分组处理趋势数据
     const trendData = trendingRepos.reduce<TrendData>((acc, repo) => {
       const date = repo.trend_date.toISOString().split('T')[0]
-      if (!acc[date]) {
-        acc[date] = {}
+      if (date) {
+        if (!acc[date]) {
+          acc[date] = {}
+        }
+        acc[date][repo.name] = repo.stars
       }
-      acc[date][repo.name] = repo.stars
       return acc
-    }, {})
+    }, {} as Record<string, Record<string, number>>)
 
     // 转换为前端需要的格式
     const processedTrendData = Object.entries(trendData).map(([date, data]) => ({

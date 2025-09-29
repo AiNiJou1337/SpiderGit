@@ -217,9 +217,13 @@ export default function Dashboard() {
       
       // 初始化每种语言每天的数据为0
       last30Days.forEach(date => {
-        top5Languages.forEach(language => {
-          trendDataByDate[date][language] = 0
-        })
+        if (trendDataByDate[date]) {
+          top5Languages.forEach(language => {
+            if (trendDataByDate[date]) {
+              trendDataByDate[date][language] = 0
+            }
+          })
+        }
       })
       
       // 填充实际数据
@@ -308,7 +312,7 @@ export default function Dashboard() {
 
         if (data.success) {
           // 从列表中移除已删除的任务
-          setTasksList(prev => prev.filter(task => task.id !== taskId))
+          setTasksList((prev: TaskDetail[]) => prev.filter((task: TaskDetail) => task.id !== taskId))
           alert('任务删除成功')
         } else {
           alert('删除失败: ' + (data.error || '未知错误'))
@@ -374,13 +378,19 @@ export default function Dashboard() {
   }
 
   // 格式化数字
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M'
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K'
+  const formatNumber = (num: number | undefined) => {
+    if (num === undefined || num === null) {
+      return '0'
     }
-    return num.toString()
+    
+    const numValue = Number(num)
+    
+    if (numValue >= 1000000) {
+      return (numValue / 1000000).toFixed(1) + 'M'
+    } else if (numValue >= 1000) {
+      return (numValue / 1000).toFixed(1) + 'K'
+    }
+    return numValue.toString()
   }
 
   // 自定义 Tooltip 渲染函数（参考其他模块的成功实现）

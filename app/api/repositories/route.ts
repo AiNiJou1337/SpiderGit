@@ -25,7 +25,7 @@ export async function GET(request: Request) {
       };
     }
     
-    const orderBy = {};
+    const orderBy: any = {};
     orderBy[sort] = order;
     
     const repositories = await prisma.repository.findMany({
@@ -42,7 +42,7 @@ export async function GET(request: Request) {
     });
     
     // 格式化仓库数据
-    const formattedRepos = repositories.map(repo => ({
+    const formattedRepos = repositories.map((repo: any) => ({
       id: repo.id,
       name: repo.name,
       owner: repo.owner,
@@ -51,7 +51,7 @@ export async function GET(request: Request) {
       stars: repo.stars,
       forks: repo.forks,
       url: repo.url,
-      tags: repo.keywords.map(k => k.keyword.text)
+      tags: repo.keywords.map((k: any) => k.keyword.text)
     }));
     
     return NextResponse.json({ repositories: formattedRepos });

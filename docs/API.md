@@ -102,12 +102,7 @@ GET /api/trends/stats?period=monthly
     ],
     "totalRepositories": 454,
     "totalLanguages": 26
-  }
-}
-    "TypeScript": 250,
-    "Java": 200,
-    "Go": 150
-  },
+},
   "lastUpdated": "2024-08-21T10:30:00Z"
 }
 ```

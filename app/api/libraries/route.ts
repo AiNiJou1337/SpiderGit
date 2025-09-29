@@ -66,7 +66,7 @@ export async function GET(request: Request) {
     const allLibraries: Record<string, number> = {};
     
     // 处理每个代码文件的库引用
-    codeFiles.forEach(file => {
+    codeFiles.forEach((file: any) => {
       const repoLanguage = file.repository.language || 'unknown';
       
       // 初始化语言条目
@@ -75,10 +75,12 @@ export async function GET(request: Request) {
       }
       
       // 统计库使用情况
-      file.importedLibraries.forEach(library => {
+      file.importedLibraries.forEach((library: string) => {
         // 按语言统计
-        librariesByLanguage[repoLanguage][library] = 
-          (librariesByLanguage[repoLanguage][library] || 0) + 1;
+        if (librariesByLanguage[repoLanguage]) {
+          librariesByLanguage[repoLanguage][library] = 
+            (librariesByLanguage[repoLanguage][library] || 0) + 1;
+        }
           
         // 总体统计
         allLibraries[library] = (allLibraries[library] || 0) + 1;
@@ -110,9 +112,10 @@ export async function GET(request: Request) {
       }, {} as Record<string, number>);
       
     // 获取所有可用语言
-    const availableLanguages = Object.keys(librariesByLanguage).filter(lang => 
-      Object.keys(librariesByLanguage[lang]).length > 0
-    );
+    const availableLanguages = Object.keys(librariesByLanguage).filter(lang => {
+      const libraries = librariesByLanguage[lang];
+      return libraries && Object.keys(libraries).length > 0;
+    });
     
     return NextResponse.json({
       keyword,

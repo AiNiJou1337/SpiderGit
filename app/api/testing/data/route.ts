@@ -181,7 +181,7 @@ function parseDataManagerOutput(output: string) {
       // 解析总计信息
       if (line.includes('总计:')) {
         const match = line.match(/总计:\s*(\d+)/)
-        if (match) {
+        if (match && match[1]) {
           stats.summary.totalTests += parseInt(match[1])
         }
       }
@@ -189,7 +189,7 @@ function parseDataManagerOutput(output: string) {
       // 解析通过信息
       if (line.includes('通过:')) {
         const match = line.match(/通过:\s*(\d+)/)
-        if (match) {
+        if (match && match[1]) {
           stats.summary.passedTests += parseInt(match[1])
         }
       }
@@ -197,7 +197,7 @@ function parseDataManagerOutput(output: string) {
       // 解析失败信息
       if (line.includes('失败:')) {
         const match = line.match(/失败:\s*(\d+)/)
-        if (match) {
+        if (match && match[1]) {
           stats.summary.failedTests += parseInt(match[1])
         }
       }

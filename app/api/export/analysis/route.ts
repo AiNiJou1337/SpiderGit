@@ -93,7 +93,7 @@ export async function GET(request: Request) {
         const libraryUsage: Record<string, number> = {};
         const libraryByLanguage: Record<string, Record<string, number>> = {};
         
-        codeFiles.forEach(file => {
+        codeFiles.forEach((file: any) => {
           const repoLanguage = file.repository.language || 'unknown';
           
           // 初始化语言条目
@@ -102,13 +102,15 @@ export async function GET(request: Request) {
           }
           
           // 统计库使用情况
-          file.importedLibraries.forEach(lib => {
+          file.importedLibraries.forEach((lib: string) => {
             // 总体统计
             libraryUsage[lib] = (libraryUsage[lib] || 0) + 1;
             
             // 按语言统计
-            libraryByLanguage[repoLanguage][lib] = 
-              (libraryByLanguage[repoLanguage][lib] || 0) + 1;
+            if (libraryByLanguage[repoLanguage]) {
+              libraryByLanguage[repoLanguage][lib] = 
+                (libraryByLanguage[repoLanguage][lib] || 0) + 1;
+            }
           });
         });
         
@@ -121,9 +123,11 @@ export async function GET(request: Request) {
         const languageDistribution: Record<string, number> = {};
         
         Object.keys(libraryByLanguage).forEach(lang => {
-          const librariesCount = Object.keys(libraryByLanguage[lang]).length;
-          if (librariesCount > 0) {
-            languageDistribution[lang] = librariesCount;
+          if (libraryByLanguage[lang]) {
+            const librariesCount = Object.keys(libraryByLanguage[lang]).length;
+            if (librariesCount > 0) {
+              languageDistribution[lang] = librariesCount;
+            }
           }
         });
         
@@ -145,10 +149,7 @@ export async function GET(request: Request) {
               }
             },
             imported_libraries: {
-              data: sortedLibraries.reduce((acc, lib) => {
-                acc[lib.name] = lib.count;
-                return acc;
-              }, {} as Record<string, number>)
+              data: {} as Record<string, number>
             },
             common_packages: {
               data: {}
@@ -272,7 +273,7 @@ export async function GET(request: Request) {
     // 如果需要包含文件详情，则保存文件信息
     const libraryFiles: Record<string, any[]> = {};
     
-    codeFiles.forEach(file => {
+    codeFiles.forEach((file: any) => {
       const repoLanguage = file.repository.language || 'unknown';
       
       // 初始化语言条目
@@ -281,13 +282,15 @@ export async function GET(request: Request) {
       }
       
       // 统计库使用情况
-      file.importedLibraries.forEach(lib => {
+      file.importedLibraries.forEach((lib: string) => {
         // 总体统计
         libraryUsage[lib] = (libraryUsage[lib] || 0) + 1;
         
         // 按语言统计
-        libraryByLanguage[repoLanguage][lib] = 
-          (libraryByLanguage[repoLanguage][lib] || 0) + 1;
+        if (libraryByLanguage[repoLanguage]) {
+          libraryByLanguage[repoLanguage][lib] = 
+            (libraryByLanguage[repoLanguage][lib] || 0) + 1;
+        }
         
         // 如果需要包含文件详情，保存文件信息
         if (includeFiles && (!library || library === lib)) {
@@ -326,9 +329,11 @@ export async function GET(request: Request) {
     const languageDistribution: Record<string, number> = {};
     
     Object.keys(libraryByLanguage).forEach(lang => {
-      const librariesCount = Object.keys(libraryByLanguage[lang]).length;
-      if (librariesCount > 0) {
-        languageDistribution[lang] = librariesCount;
+      if (libraryByLanguage[lang]) {
+        const librariesCount = Object.keys(libraryByLanguage[lang]).length;
+        if (librariesCount > 0) {
+          languageDistribution[lang] = librariesCount;
+        }
       }
     });
     

@@ -14,23 +14,28 @@ interface TimeSeriesData {
   }
 }
 
+// 修复类型定义，允许undefined值
 interface TimeSeriesQuery {
-  period?: 'daily' | 'weekly' | 'monthly'
-  startDate?: string
-  endDate?: string
-  limit?: number
-  language?: string
+  period?: 'daily' | 'weekly' | 'monthly' | undefined
+  startDate?: string | undefined
+  endDate?: string | undefined
+  limit?: number | undefined
+  language?: string | undefined
 }
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     
+    // 修复类型错误：为可选属性提供默认值
+    const limitParam = searchParams.get('limit')
+    const limit = limitParam ? parseInt(limitParam, 10) : 10
+    
     const query: TimeSeriesQuery = {
       period: (searchParams.get('period') as 'daily' | 'weekly' | 'monthly') || 'daily',
       startDate: searchParams.get('startDate') || undefined,
       endDate: searchParams.get('endDate') || undefined,
-      limit: parseInt(searchParams.get('limit') || '10'),
+      limit: limit || 10,
       language: searchParams.get('language') || undefined
     }
 
@@ -38,7 +43,7 @@ export async function GET(request: NextRequest) {
 
     // 构建数据目录路径
     const timeSeriesDir = path.join(process.cwd(), 'public', 'trends', 'time_series')
-    const periodDir = path.join(timeSeriesDir, query.period)
+    const periodDir = path.join(timeSeriesDir, query.period || 'daily')
 
     // 检查目录是否存在
     if (!fs.existsSync(periodDir)) {
@@ -72,7 +77,7 @@ export async function GET(request: NextRequest) {
     let processedCount = 0
 
     for (const file of files) {
-      if (processedCount >= query.limit) break
+      if (processedCount >= (query.limit || 10)) break
 
       try {
         // 从文件名解析时间戳
@@ -91,7 +96,7 @@ export async function GET(request: NextRequest) {
         // 语言过滤
         if (query.language) {
           data.repositories = data.repositories.filter(repo => 
-            repo.language && repo.language.toLowerCase() === query.language.toLowerCase()
+            repo.language && repo.language.toLowerCase() === (query.language || '').toLowerCase()
           )
           data.count = data.repositories.length
         }
@@ -109,8 +114,8 @@ export async function GET(request: NextRequest) {
     const statistics = {
       totalSnapshots: timeSeriesData.length,
       dateRange: {
-        start: timeSeriesData.length > 0 ? timeSeriesData[timeSeriesData.length - 1].timestamp : null,
-        end: timeSeriesData.length > 0 ? timeSeriesData[0].timestamp : null
+        start: timeSeriesData.length > 0 ? timeSeriesData[timeSeriesData.length - 1]?.timestamp || null : null,
+        end: timeSeriesData.length > 0 ? timeSeriesData[0]?.timestamp || null : null
       },
       totalRepositories: timeSeriesData.reduce((sum, data) => sum + data.count, 0),
       averageRepositoriesPerSnapshot: timeSeriesData.length > 0 
@@ -137,7 +142,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: `成功获取 ${query.period} 时间序列数据`,
+      message: `成功获取 ${(query.period || 'daily')} 时间序列数据`,
       data: timeSeriesData,
       statistics,
       topLanguages,

@@ -31,7 +31,7 @@ import {
 } from 'recharts'
 import { TrendingUp, BarChart3, PieChart as PieChartIcon, Download } from 'lucide-react'
 import { getLanguageColor } from '@/lib/utils/language-colors'
-import { formatNumber } from '@/lib/utils/helpers'
+import { formatNumber } from '@/lib/utils'
 
 interface Repository {
   id?: number
@@ -372,8 +372,8 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                 <YAxis />
                 <Tooltip 
                   content={(props) => {
-                    if (props.active && props.payload && props.payload.length) {
-                      const data = props.payload[0].payload
+                    if (props.active && props.payload && props.payload.length > 0 && props.payload[0] && props.payload[0].payload) {
+                      const data = props.payload[0].payload as any
                       return (
                         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
                           <p className="font-medium">{data.fullName}</p>
@@ -421,8 +421,8 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                   />
                   <Tooltip
                     content={(props) => {
-                      if (props.active && props.payload && props.payload.length) {
-                        const data = props.payload[0].payload as any
+                      if (props.active && props.payload && props.payload.length > 0 && props.payload[0] && props.payload[0].payload) {
+                        const data = props.payload[0].payload
                         return (
                           <div className="bg-white dark:bg-gray-800 p-3 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                             <p className="font-medium">{data.fullName}</p>
@@ -565,8 +565,8 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                   <Legend />
                   <Tooltip
                     content={(props) => {
-                      if (props.active && props.payload && props.payload.length) {
-                        const data = props.payload[0].payload as any
+                      if (props.active && props.payload && props.payload.length > 0 && props.payload[0] && props.payload[0].payload) {
+                        const data = props.payload[0].payload
                         return (
                           <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
                             <p className="font-medium">{data.language}</p>
@@ -613,7 +613,7 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                           </p>
                           <p className="text-xs text-gray-500 truncate">
                             {typeof repo.owner === 'string' ? repo.owner :
-                             typeof repo.owner === 'object' && repo.owner?.login ? repo.owner.login :
+                             typeof repo.owner === 'object' && repo.owner && (repo.owner as any).login ? (repo.owner as any).login :
                              'Unknown'}
                           </p>
                         </div>
@@ -652,7 +652,11 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                         todayStars: repo.todayStars,
                         totalStars: repo.stars
                       }))
-                      .sort((a, b) => parseFloat(b.growthRate) - parseFloat(a.growthRate))
+                      .sort((a, b) => {
+                        const aRate = typeof a.growthRate === 'number' ? a.growthRate : parseFloat(a.growthRate as string);
+                        const bRate = typeof b.growthRate === 'number' ? b.growthRate : parseFloat(b.growthRate as string);
+                        return bRate - aRate;
+                      })
                       .slice(0, 15)
                     }
                   >
@@ -667,7 +671,7 @@ export function TrendingCharts({ repositories, period, className }: TrendingChar
                     <YAxis label={{ value: '增长率 (%)', angle: -90, position: 'insideLeft' }} />
                     <Tooltip
                       content={(props) => {
-                        if (props.active && props.payload && props.payload.length) {
+                        if (props.active && props.payload && props.payload.length > 0 && props.payload[0] && props.payload[0].payload) {
                           const data = props.payload[0].payload
                           return (
                             <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">

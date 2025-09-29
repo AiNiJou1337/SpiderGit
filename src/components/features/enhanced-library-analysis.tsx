@@ -139,13 +139,13 @@ export function EnhancedLibraryAnalysis({
           )
 
           // 计算统计指标用于趋势判断
-          const calculatedMetrics = calculateTrendMetrics(basicLibraries.map(lib => lib.count))
+          const calculatedMetrics = calculateTrendMetrics(basicLibraries.map(lib => lib.count || 0))
           setTrendMetrics(calculatedMetrics)
 
           // 为每个库计算趋势
           const enhancedLibraries: LibraryInfo[] = basicLibraries.map(lib => ({
             ...lib,
-            trend: calculateTrendWithMetrics(lib.count, calculatedMetrics)
+            trend: calculateTrendWithMetrics(lib.count || 0, calculatedMetrics)
           }))
 
           setLibraries(enhancedLibraries)
@@ -374,35 +374,35 @@ export function EnhancedLibraryAnalysis({
 
     // 计算中位数
     const median = n % 2 === 0
-      ? (sorted[n/2 - 1] + sorted[n/2]) / 2
-      : sorted[Math.floor(n/2)]
+      ? ((sorted[n/2 - 1] || 0) + (sorted[n/2] || 0)) / 2
+      : sorted[Math.floor(n/2)] || 0
 
     // 计算四分位数
     const q1Index = Math.floor(n * 0.25)
     const q3Index = Math.floor(n * 0.75)
-    const q1 = sorted[q1Index]
-    const q3 = sorted[q3Index]
-    const iqr = q3 - q1
+    const q1 = sorted[q1Index] || 0
+    const q3 = sorted[q3Index] || 0
+    const iqr = (q3 || 0) - (q1 || 0)
 
     // 计算平均值
-    const mean = counts.reduce((sum, val) => sum + val, 0) / n
+    const mean = counts.reduce((sum, val) => sum + (val || 0), 0) / n
 
     // 计算标准差
-    const variance = counts.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n
+    const variance = counts.reduce((sum, val) => sum + Math.pow((val || 0) - mean, 2), 0) / n
     const stdDev = Math.sqrt(variance)
 
     // 计算异常值阈值 (使用IQR方法)
     const outlierThreshold = {
-      lower: q1 - 1.5 * iqr,
-      upper: q3 + 1.5 * iqr
+      lower: (q1 || 0) - 1.5 * (iqr || 0),
+      upper: (q3 || 0) + 1.5 * (iqr || 0)
     }
 
     return {
       mean,
       median,
-      q1,
-      q3,
-      iqr,
+      q1: q1 || 0,
+      q3: q3 || 0,
+      iqr: iqr || 0,
       stdDev,
       outlierThreshold
     }

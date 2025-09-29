@@ -102,14 +102,12 @@ export function TimeSeriesAnalysis({ className }: TimeSeriesAnalysisProps) {
     const languageChartData: LanguageData[] = sortedLanguages.map(([name, value], index) => ({
       name,
       value,
-      color: COLORS[index % COLORS.length]
+      color: COLORS[index % COLORS.length] || '#000000'
     }))
 
     setTimeSeriesData(processedData)
     setLanguageData(languageChartData)
   }
-
-
 
   useEffect(() => {
     fetchTimeSeriesData()
@@ -223,7 +221,7 @@ export function TimeSeriesAnalysis({ className }: TimeSeriesAnalysisProps) {
                         dataKey="value"
                       >
                         {languageData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
+                          <Cell key={`cell-${index}`} fill={entry.color || '#000000'} />
                         ))}
                       </Pie>
                       <Tooltip />

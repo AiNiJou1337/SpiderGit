@@ -80,7 +80,7 @@ export async function GET(request: Request) {
     });
     
     // 格式化仓库数据
-    const formattedRepos = repositories.map(repo => ({
+    const formattedRepos = repositories.map((repo: any) => ({
       id: repo.id,
       name: repo.name,
       owner: repo.owner,

@@ -21,8 +21,11 @@ interface CalendarData {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const year = parseInt(searchParams.get('year') || new Date().getFullYear().toString())
-    const month = parseInt(searchParams.get('month') || (new Date().getMonth() + 1).toString())
+    const yearParam = searchParams.get('year')
+    const monthParam = searchParams.get('month')
+    
+    const year = yearParam ? parseInt(yearParam, 10) : new Date().getFullYear()
+    const month = monthParam ? parseInt(monthParam, 10) : (new Date().getMonth() + 1)
 
     console.log(`获取日历数据: ${year}年${month}月`)
 
@@ -54,10 +57,10 @@ export async function GET(request: NextRequest) {
       
       // 文件名格式: YYYY-MM-DD_HH-MM-SS.json
       const dateMatch = file.match(/^(\d{4})-(\d{2})-(\d{2})_/)
-      if (!dateMatch) return false
+      if (!dateMatch || !dateMatch[1] || !dateMatch[2]) return false
       
-      const fileYear = parseInt(dateMatch[1])
-      const fileMonth = parseInt(dateMatch[2])
+      const fileYear = parseInt(dateMatch[1], 10)
+      const fileMonth = parseInt(dateMatch[2], 10)
       
       return fileYear === year && fileMonth === month
     })
@@ -75,7 +78,7 @@ export async function GET(request: NextRequest) {
         const dateMatch = file.match(/^(\d{4}-\d{2}-\d{2})_/)
         if (!dateMatch) continue
         
-        const dateKey = dateMatch[1]
+        const dateKey = dateMatch[1] || ''
         const repositories = data.repositories || []
 
         // 分析语言分布
@@ -90,7 +93,7 @@ export async function GET(request: NextRequest) {
         const topLanguages = Object.entries(languageCount)
           .sort(([, a], [, b]) => b - a)
           .slice(0, 5)
-          .map(([lang]) => lang)
+          .map(([lang]) => lang) as string[]
 
         // 获取热门项目（按今日新增stars排序）
         const topProjects = repositories
@@ -98,7 +101,7 @@ export async function GET(request: NextRequest) {
           .sort((a: any, b: any) => (b.today_stars || b.todayStars || 0) - (a.today_stars || a.todayStars || 0))
           .slice(0, 10)
           .map((repo: any) => ({
-            name: repo.full_name || repo.name,
+            name: repo.full_name || repo.name || '',
             stars: repo.stargazers_count || repo.stars || 0,
             growth: repo.today_stars || repo.todayStars || 0
           }))
@@ -156,8 +159,6 @@ export async function GET(request: NextRequest) {
     }, { status: 500 })
   }
 }
-
-
 
 // POST方法用于触发数据收集
 export async function POST(request: NextRequest) {

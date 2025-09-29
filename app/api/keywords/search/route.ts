@@ -30,7 +30,7 @@ async function resolvePythonBin(requiredMajor = 3, requiredMinor = 12): Promise<
       const { stdout } = await execAsync(`${bin} -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"`);
       const ver = (stdout || '').trim();
       const [maj, min] = ver.split('.').map(v => parseInt(v, 10));
-      if (!isNaN(maj) && !isNaN(min)) {
+      if (maj !== undefined && min !== undefined && !isNaN(maj) && !isNaN(min)) {
         if (maj > requiredMajor || (maj === requiredMajor && min >= requiredMinor)) {
           return bin;
         }
@@ -48,7 +48,7 @@ async function resolvePythonBin(requiredMajor = 3, requiredMinor = 12): Promise<
 
 // 提交关键词搜索请求
 export async function POST(request: Request) {
-  let crawlTaskId: number | null = null;
+  let crawlTaskId: number | undefined = undefined;
   try {
     const data = await request.json();
     const {
@@ -109,7 +109,9 @@ export async function POST(request: Request) {
       PYTHON_BIN = await resolvePythonBin(3, 12);
     } catch (e: any) {
       console.error('Python 解析/校验失败:', e?.message || e);
-      await updateTaskStatus(crawlTaskId, 'failed', 0, `Python 不可用: ${e?.message || e}`);
+      if (crawlTaskId !== undefined) {
+        await updateTaskStatus(crawlTaskId, 'failed', 0, `Python 不可用: ${e?.message || e}`);
+      }
       return NextResponse.json(
         { error: 'Python 解释器不可用（需 3.12+），请检查 PYTHON_BIN 或安装 Python 3.12+' },
         { status: 500 }
@@ -188,7 +190,7 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error('提交关键词搜索请求失败:', error?.message || error);
     // 若已创建任务但发生异常，标记失败，避免卡在 pending
-    if (crawlTaskId) {
+    if (crawlTaskId !== undefined) {
       try { await updateTaskStatus(crawlTaskId, 'failed', 0, `服务异常: ${error?.message || error}`) } catch {}
     }
     return NextResponse.json(

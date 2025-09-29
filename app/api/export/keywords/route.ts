@@ -62,7 +62,7 @@ export async function GET(request: Request) {
     });
     
     // 格式化关键词数据
-    const formattedKeywords = await Promise.all(keywords.map(async (keyword) => {
+    const formattedKeywords = await Promise.all(keywords.map(async (keyword: any) => {
       // 获取最近的爬虫任务
       const latestTask = await prisma.crawlTask.findFirst({
         where: {

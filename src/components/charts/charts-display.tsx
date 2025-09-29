@@ -164,13 +164,13 @@ export default function ChartsDisplay({ className }: ChartsDisplayProps) {
       
       <CardContent>
         {filteredCharts.length === 0 ? (
-          <Alert>
-            <Info className="h-4 w-4" />
-            <AlertTitle>暂无图表</AlertTitle>
-            <AlertDescription>
+          <div className="border rounded-lg p-6 text-center text-muted-foreground">
+            <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <h3 className="font-medium mb-1">暂无图表</h3>
+            <p className="text-sm">
               当前筛选条件下没有找到图表，请尝试其他筛选条件或刷新数据。
-            </AlertDescription>
-          </Alert>
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredCharts.map((chart, index) => (

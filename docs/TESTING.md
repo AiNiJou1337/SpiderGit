@@ -189,22 +189,6 @@ npm test -- --testNamePattern="Navbar"
 - **函数覆盖率**：≥ 85%
 - **行覆盖率**：≥ 80%
 
-### 🧪 测试示例
-
-**组件测试示例：**
-```typescript
-// __tests__/components/navbar.test.tsx
-import { render, screen } from '@testing-library/react'
-import Navbar from '@/components/navbar'
-
-describe('Navbar', () => {
-  it('renders navigation links', () => {
-    render(<Navbar />)
-    expect(screen.getByText('Dashboard')).toBeInTheDocument()
-    expect(screen.getByText('Keywords')).toBeInTheDocument()
-  })
-})
-```
 
 ## 🐍 后端测试
 

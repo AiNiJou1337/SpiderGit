@@ -57,7 +57,7 @@ export async function GET(request: Request) {
     });
     
     // 格式化任务数据
-    const formattedTasks = tasks.map(task => ({
+    const formattedTasks = tasks.map((task: any) => ({
       id: task.id,
       keyword: task.keyword.text,
       status: task.status,

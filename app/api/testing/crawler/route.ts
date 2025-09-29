@@ -6,6 +6,31 @@ import fs from 'fs'
 
 const execAsync = promisify(exec)
 
+// 定义结果接口以修复类型错误
+interface CrawlerTestResults {
+  timestamp: string
+  status: string
+  config: {
+    keyword: string
+    language: string
+    maxResults: number
+    includeAnalysis: boolean
+  }
+  data: {
+    totalRepositories: number
+    successfulParsing: number
+    failedParsing: number
+    dataQuality: number
+    executionTime: number
+    outputFiles: Array<{
+      name: string
+      path: string
+      size: number
+    }>
+    errors: string[]
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -13,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     console.log(`🕷️ 开始运行爬虫测试: ${keyword} (${language})`)
 
-    const results = {
+    const results: CrawlerTestResults = {
       timestamp: new Date().toISOString(),
       status: 'success',
       config: { keyword, language, maxResults, includeAnalysis },
@@ -118,27 +143,27 @@ async function parseCrawlerTestOutput(stdout: string, stderr: string, executionT
     failedParsing: 0,
     dataQuality: 0,
     executionTime,
-    outputFiles: [],
-    errors: []
+    outputFiles: [] as Array<{ name: string; path: string; size: number }>,
+    errors: [] as string[]
   }
 
   try {
     // 解析仓库数量
     const repoCountMatch = stdout.match(/成功爬取\s*(\d+)\s*个仓库/)
-    if (repoCountMatch) {
-      results.totalRepositories = parseInt(repoCountMatch[1])
+    if (repoCountMatch && repoCountMatch[1]) {
+      results.totalRepositories = parseInt(repoCountMatch[1], 10)
     }
 
     // 解析成功解析数量
     const successMatch = stdout.match(/成功解析\s*(\d+)\s*个/)
-    if (successMatch) {
-      results.successfulParsing = parseInt(successMatch[1])
+    if (successMatch && successMatch[1]) {
+      results.successfulParsing = parseInt(successMatch[1], 10)
     }
 
     // 解析失败数量
     const failedMatch = stdout.match(/解析失败\s*(\d+)\s*个/)
-    if (failedMatch) {
-      results.failedParsing = parseInt(failedMatch[1])
+    if (failedMatch && failedMatch[1]) {
+      results.failedParsing = parseInt(failedMatch[1], 10)
     }
 
     // 计算数据质量分数
@@ -169,7 +194,7 @@ async function parseCrawlerTestOutput(stdout: string, stderr: string, executionT
     )
     results.errors.push(...errorLines)
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('解析爬虫测试输出失败:', error)
     results.errors.push('解析测试结果失败')
   }
@@ -177,7 +202,7 @@ async function parseCrawlerTestOutput(stdout: string, stderr: string, executionT
   return results
 }
 
-async function saveCrawlerTestResults(results: any) {
+async function saveCrawlerTestResults(results: CrawlerTestResults) {
   try {
     const resultsDir = path.join(process.cwd(), 'tests', 'results')
     
@@ -238,7 +263,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    const latestFile = path.join(resultsDir, files[0])
+    const latestFile = path.join(resultsDir, files[0] || '')
     const content = fs.readFileSync(latestFile, 'utf8')
     const results = JSON.parse(content)
 

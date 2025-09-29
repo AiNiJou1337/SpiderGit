@@ -115,7 +115,7 @@ export async function GET(request: Request) {
     });
     
     // 格式化文件数据
-    const formattedFiles = codeFiles.map(file => ({
+    const formattedFiles = codeFiles.map((file: any) => ({
       id: file.id,
       filename: file.filename,
       path: file.path,

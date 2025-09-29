@@ -13,7 +13,7 @@
 
 ### 2. 获取API密钥
 - 登录后访问：https://console.groq.com/keys
-- 点击"Create API Key"
+- 点击Create API Key
 - 复制生成的API密钥（格式：gsk_xxxxxx）
 
 ### 3. 配置环境变量

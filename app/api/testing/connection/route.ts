@@ -73,18 +73,18 @@ export async function POST(request: NextRequest) {
 }
 
 function parseConnectionTestOutput(output: string) {
-  const results = {
+  const results: any = {
     tokenLoading: false,
     apiConnection: false,
     simpleSearch: false,
-    rateLimit: null,
-    error: null
+    rateLimit: null as { remaining: number; limit: number } | null,
+    error: null as string | null
   }
 
   try {
     // 首先尝试解析JSON结果
     const jsonMatch = output.match(/📋 JSON结果:\s*(\{[\s\S]*?\})\s*(?:\n|$)/)
-    if (jsonMatch) {
+    if (jsonMatch && jsonMatch[1]) {
       try {
         const jsonResult = JSON.parse(jsonMatch[1])
         results.tokenLoading = jsonResult.tokenLoading || false
@@ -117,7 +117,7 @@ function parseConnectionTestOutput(output: string) {
 
     // 解析API速率限制
     const rateLimitMatch = output.match(/API速率限制:\s*(\d+)\/(\d+)\s*剩余/)
-    if (rateLimitMatch) {
+    if (rateLimitMatch && rateLimitMatch[1] && rateLimitMatch[2]) {
       results.rateLimit = {
         remaining: parseInt(rateLimitMatch[1]),
         limit: parseInt(rateLimitMatch[2])
@@ -133,7 +133,6 @@ function parseConnectionTestOutput(output: string) {
         results.error = errorLines.slice(0, 3).join('; ') // 只取前3个错误
       }
     }
-
   } catch (error) {
     console.error('解析连接测试输出失败:', error)
     results.error = '解析测试结果失败'

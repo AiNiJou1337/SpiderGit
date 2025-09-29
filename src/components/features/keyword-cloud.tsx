@@ -111,7 +111,7 @@ export function KeywordCloud({
           ))}
         </div>
         
-        {keywordArray.length > 0 && (
+        {keywordArray.length > 0 && keywordArray[0] && (
           <div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
             <div className="flex items-center justify-between">
               <span>最热门: {keywordArray[0].word} ({keywordArray[0].count})</span>
