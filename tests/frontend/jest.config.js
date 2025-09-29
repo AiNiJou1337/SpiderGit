@@ -10,13 +10,13 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
     // Handle module aliases with more specific mappings to avoid conflicts
-    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
+    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma.ts',
     '^@/lib/db/prisma(.*)$': '<rootDir>/../../src/lib/db/prisma$1',
-    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index',
+    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index.ts',
     '^@/lib/utils/(.*)$': '<rootDir>/../../src/lib/utils/$1',
-    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
-    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
-    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client',
+    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers.ts',
+    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors.ts',
+    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client.ts',
     '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
     '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
     '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
