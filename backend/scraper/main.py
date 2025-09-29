@@ -95,10 +95,10 @@ class GitHubTrendingScraper:
                 return None
             
             # 获取仓库内容
-            contents = self.api_client.get_repository_contents(
-                repo_data['owner'],
-                repo_data['name']
-            )
+            # contents = self.api_client.get_repository_contents(  # 已注释：变量定义但未使用
+            #     repo_data['owner'],
+            #     repo_data['name']
+            # )
             
             # 分析代码结构
             analysis_result = {

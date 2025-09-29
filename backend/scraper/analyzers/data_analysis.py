@@ -601,7 +601,7 @@ class GitHubDataAnalyzer:
         # 计算平均值和标准差
         mean = sum(counts) / n
         variance = sum((x - mean) ** 2 for x in counts) / n
-        std_dev = variance ** 0.5
+        # std_dev = variance ** 0.5  # 已注释：标准差变量定义但未使用
 
         # 计算异常值阈值
         iqr = q3 - q1

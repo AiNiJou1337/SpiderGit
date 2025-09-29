@@ -14,7 +14,13 @@ const customJestConfig = {
     '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
     '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
     '^@/app/(.*)$': '<rootDir>/../../app/$1',
-    '^@/(.*)$': '<rootDir>/../../src/$1'
+    '^@/(.*)$': '<rootDir>/../../src/$1',
+    // 添加特定的路径映射来解决GitHub CI中的问题
+    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
+    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index',
+    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
+    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
+    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client',
   },
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [
