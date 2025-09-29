@@ -9,13 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
-    // Handle module aliases (this will be automatically configured for you based on your tsconfig.json paths)
-    '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
-    '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
-    '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
-    '^@/app/(.*)$': '<rootDir>/../../app/$1',
-    '^@/(.*)$': '<rootDir>/../../src/$1',
-    // 添加特定的路径映射来解决GitHub CI中的问题
+    // Handle module aliases with more specific mappings to avoid conflicts
     '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
     '^@/lib/db/prisma(.*)$': '<rootDir>/../../src/lib/db/prisma$1',
     '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index',
@@ -23,6 +17,11 @@ const customJestConfig = {
     '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
     '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
     '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client',
+    '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
+    '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
+    '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
+    '^@/app/(.*)$': '<rootDir>/../../app/$1',
+    '^@/(.*)$': '<rootDir>/../../src/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [
