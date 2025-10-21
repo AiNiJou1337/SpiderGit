@@ -9,11 +9,12 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   moduleNameMapper: {
     // Handle module aliases - let Jest resolve file extensions automatically
     '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
     '^@/lib/db/(.*)$': '<rootDir>/../../src/lib/db/$1',
-    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index',
+    '^@/lib/utils$': '<rootDir>/../../src/lib/utils',
     '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
     '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
     '^@/lib/utils/(.*)$': '<rootDir>/../../src/lib/utils/$1',
