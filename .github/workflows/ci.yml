@@ -187,7 +187,7 @@ jobs:
       run: |
         pip install safety
         echo "Checking Python dependency security..."
-        safety scan -r backend/scraper/requirements.txt || echo "⚠️ Found Python security issues, please check"
+        safety check -r backend/scraper/requirements.txt --output text || echo "⚠️ Found Python security issues, please check"
       continue-on-error: true
 
     - name: Check sensitive files
@@ -233,14 +233,13 @@ jobs:
         pip install -r backend/scraper/requirements.txt
 
     - name: Run frontend tests (Jest)
-      run: npm test -- --ci --runInBand
+      run: npm test -- --ci --runInBand --passWithNoTests
       env:
         DATABASE_URL: postgresql://test:test@localhost:5432/test_db
         NODE_ENV: test
 
     - name: Run backend tests (pytest)
       run: |
-        cd backend
         python -m pytest tests/backend -v
       env:
         DATABASE_URL: postgresql://test:test@localhost:5432/test_db

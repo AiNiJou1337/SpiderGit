@@ -1,27 +1,29 @@
+const path = require('path')
 const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files
-  dir: './',
+  dir: path.resolve(__dirname, '../../'),
 })
 
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
-    // Handle module aliases with more specific mappings to avoid conflicts
-    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma.ts',
-    '^@/lib/db/prisma(.*)$': '<rootDir>/../../src/lib/db/prisma$1',
-    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index.ts',
+    // Handle module aliases - let Jest resolve file extensions automatically
+    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
+    '^@/lib/db/(.*)$': '<rootDir>/../../src/lib/db/$1',
+    '^@/lib/utils$': '<rootDir>/../../src/lib/utils/index',
+    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
+    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
     '^@/lib/utils/(.*)$': '<rootDir>/../../src/lib/utils/$1',
-    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers.ts',
-    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors.ts',
-    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client.ts',
+    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client',
+    '^@/lib/api/(.*)$': '<rootDir>/../../src/lib/api/$1',
     '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
     '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
     '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
     '^@/app/(.*)$': '<rootDir>/../../app/$1',
-    '^@/(.*)$': '<rootDir>/../../src/$1',
+    '^@/(.*)$': '<rootDir>/../../$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: [
