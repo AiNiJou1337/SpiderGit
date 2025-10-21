@@ -26,12 +26,7 @@
       "@/app/*": ["./app/*"],
       "@/config/*": ["./config/*"],
       "@/database/*": ["./database/*"],
-      "@/tools/*": ["./tools/*"],
-      "@/lib/db/prisma": ["./src/lib/db/prisma.ts"],
-      "@/lib/utils": ["./src/lib/utils/index.ts"],
-      "@/lib/utils/helpers": ["./src/lib/utils/helpers.ts"],
-      "@/lib/utils/language-colors": ["./src/lib/utils/language-colors.ts"],
-      "@/lib/api/client": ["./src/lib/api/client.ts"]
+      "@/tools/*": ["./tools/*"]
     },
     "target": "es2017",
     "forceConsistentCasingInFileNames": true,

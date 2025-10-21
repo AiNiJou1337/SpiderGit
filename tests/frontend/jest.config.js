@@ -9,21 +9,11 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
-    // Handle module aliases - let Jest resolve file extensions automatically
-    '^@/lib/db/prisma$': '<rootDir>/../../src/lib/db/prisma',
-    '^@/lib/db/(.*)$': '<rootDir>/../../src/lib/db/$1',
-    '^@/lib/utils$': '<rootDir>/../../src/lib/utils',
-    '^@/lib/utils/helpers$': '<rootDir>/../../src/lib/utils/helpers',
-    '^@/lib/utils/language-colors$': '<rootDir>/../../src/lib/utils/language-colors',
-    '^@/lib/utils/(.*)$': '<rootDir>/../../src/lib/utils/$1',
-    '^@/lib/api/client$': '<rootDir>/../../src/lib/api/client',
-    '^@/lib/api/(.*)$': '<rootDir>/../../src/lib/api/$1',
-    '^@/lib/(.*)$': '<rootDir>/../../src/lib/$1',
-    '^@/components/(.*)$': '<rootDir>/../../src/components/$1',
-    '^@/types/(.*)$': '<rootDir>/../../src/types/$1',
-    '^@/app/(.*)$': '<rootDir>/../../app/$1',
+    // Handle CSS imports
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    // Handle module aliases - simplified to match tsconfig
     '^@/(.*)$': '<rootDir>/../../$1',
   },
   testEnvironment: 'jest-environment-jsdom',
