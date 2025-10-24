@@ -116,6 +116,11 @@ export function LibraryFileUsageDialog({
       setTotalFiles(data.totalFiles || 0)
       setCurrentPage(data.page || 1)
       setTotalPages(data.totalPages || 1)
+      
+      // 记录数据来源
+      if (data.dataSource) {
+        console.log(`📊 数据来源: ${data.dataSource}`)
+      }
     } catch (error) {
       console.error('获取文件使用数据失败:', error)
       setFiles([])
@@ -139,7 +144,8 @@ export function LibraryFileUsageDialog({
       const filtered = files.filter(file =>
         file.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
         file.path.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        file.repository.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+        file.repository.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        file.repository.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
       setFilteredFiles(filtered)
     }
@@ -217,8 +223,8 @@ export function LibraryFileUsageDialog({
               <TableHeader>
                 <TableRow>
                   <TableHead>文件名</TableHead>
-                  <TableHead>路径</TableHead>
-                  <TableHead>仓库</TableHead>
+                  <TableHead>文件路径</TableHead>
+                  <TableHead>所属仓库</TableHead>
                   <TableHead>语言</TableHead>
                   <TableHead>星标</TableHead>
                   <TableHead>操作</TableHead>
@@ -230,7 +236,7 @@ export function LibraryFileUsageDialog({
                     <TableCell className="font-medium">
                       {file.filename}
                     </TableCell>
-                    <TableCell className="text-sm text-gray-600 max-w-xs truncate">
+                    <TableCell className="text-sm text-gray-600 max-w-xs truncate" title={file.path}>
                       {file.path}
                     </TableCell>
                     <TableCell>
@@ -268,8 +274,23 @@ export function LibraryFileUsageDialog({
           )}
 
           {!loading && filteredFiles.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              {searchQuery ? '没有找到匹配的文件' : '没有找到使用该库的文件'}
+            <div className="text-center py-12 text-gray-500">
+              <FileText className="w-16 h-16 mx-auto mb-4 opacity-20" />
+              <p className="text-lg font-semibold mb-2">
+                {searchQuery ? '没有找到匹配的文件' : '暂无文件级别的数据'}
+              </p>
+              <p className="text-sm mb-4">
+                该关键词的数据中不包含详细的代码文件分析信息
+              </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 max-w-md mx-auto">
+                <p className="text-amber-800 font-medium mb-2">📌 如何获取准确数据？</p>
+                <ol className="text-sm text-amber-700 text-left list-decimal list-inside space-y-1">
+                  <li>返回Keywords页面</li>
+                  <li>选择该关键词并点击"重新爬取"</li>
+                  <li>等待爬取完成（会自动分析代码文件）</li>
+                  <li>刷新页面查看详细的文件级别数据</li>
+                </ol>
+              </div>
             </div>
           )}
         </div>

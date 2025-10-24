@@ -13,70 +13,9 @@ export async function GET(request: NextRequest) {
     const period = searchParams.get('period') || 'daily' // 默认为每日趋势
     const language = searchParams.get('language')
     const refresh = searchParams.get('refresh') === 'true'
-    const useTimeSeries = searchParams.get('timeSeries') === 'true'
     const limit = parseInt(searchParams.get('limit') || '100')
 
-    console.log(`获取 ${period} 趋势数据, 语言: ${language || '全部'}, 限制: ${limit}, 时间序列: ${useTimeSeries}`)
-
-    // 如果启用时间序列，尝试从时间序列数据获取最新数据
-    if (useTimeSeries) {
-      try {
-        const timeSeriesDir = path.join(process.cwd(), 'public', 'analytics', 'time_series', period)
-
-        if (fs.existsSync(timeSeriesDir)) {
-          const files = fs.readdirSync(timeSeriesDir)
-            .filter(file => file.endsWith('.json'))
-            .sort((a, b) => b.localeCompare(a)) // 按时间倒序排列
-
-          if (files.length > 0) {
-            // 获取最新的时间序列数据
-            const latestFile = files[0] ? path.join(timeSeriesDir, files[0]) : '';
-            if (!latestFile) {
-              throw new Error('No latest file found');
-            }
-            const timeSeriesData = JSON.parse(fs.readFileSync(latestFile, 'utf8'))
-
-            let repositories = timeSeriesData.repositories || []
-
-            // 语言过滤
-            if (language && language !== 'all') {
-              repositories = repositories.filter((repo: any) =>
-                repo.language && repo.language.toLowerCase() === language.toLowerCase()
-              )
-            }
-
-            // 限制数量
-            repositories = repositories.slice(0, limit)
-
-            // 提取语言列表
-            const allLanguages = new Set<string>()
-            timeSeriesData.repositories?.forEach((repo: any) => {
-              if (repo.language) {
-                allLanguages.add(repo.language)
-              }
-            })
-
-            console.log(`从时间序列数据返回 ${repositories.length} 个仓库`)
-
-            return NextResponse.json({
-              repositories,
-              languages: Array.from(allLanguages).sort(),
-              metadata: {
-                lastUpdated: timeSeriesData.timestamp,
-                count: repositories.length,
-                period: period,
-                totalCount: timeSeriesData.count,
-                isDemo: false,
-                dataSource: 'time_series',
-                collectionTime: timeSeriesData.metadata?.collectionTime
-              }
-            })
-          }
-        }
-      } catch (error) {
-        console.warn('获取时间序列数据失败，回退到主数据文件:', error)
-      }
-    }
+    console.log(`获取 ${period} 趋势数据, 语言: ${language || '全部'}, 限制: ${limit}`)
 
     // 读取趋势数据
     const dataPath = path.join(process.cwd(), 'public', 'trends', 'data', 'trends.json')
@@ -86,10 +25,9 @@ export async function GET(request: NextRequest) {
       console.log('🔄 开始获取最新趋势数据...')
 
       try {
-        // 优先使用时间序列数据管理器
+        // 使用趋势数据管理器
         const pythonPath = process.env.PYTHON_BIN || 'python'
-        const timeSeriesScriptPath = path.join(process.cwd(), 'backend', 'scraper', 'time_series_trending_manager.py')
-        const fallbackScriptPath = path.join(process.cwd(), 'backend', 'scraper', 'trending_manager.py')
+        const scriptPath = path.join(process.cwd(), 'backend', 'scraper', 'trending_manager.py')
 
         const childEnv = {
           ...process.env,
@@ -101,33 +39,13 @@ export async function GET(request: NextRequest) {
 
         // 异步执行，不等待完成（避免超时）
         if (refresh) {
-          // 优先尝试时间序列管理器
-          if (fs.existsSync(timeSeriesScriptPath)) {
-            exec(`${pythonPath} "${timeSeriesScriptPath}"`, { env: childEnv }, (error, stdout, stderr) => {
-              if (error) {
-                console.error(`时间序列数据更新错误: ${error.message}`)
-                // 回退到原始管理器
-                exec(`${pythonPath} "${fallbackScriptPath}"`, { env: childEnv }, (fallbackError, fallbackStdout, fallbackStderr) => {
-                  if (fallbackError) {
-                    console.error(`回退数据更新错误: ${fallbackError.message}`)
-                  } else {
-                    console.log('✅ 回退趋势数据更新完成')
-                  }
-                })
-              } else {
-                console.log('✅ 时间序列趋势数据更新完成')
-              }
-            })
-          } else {
-            // 使用原始管理器
-            exec(`${pythonPath} "${fallbackScriptPath}"`, { env: childEnv }, (error, stdout, stderr) => {
-              if (error) {
-                console.error(`趋势数据更新错误: ${error.message}`)
-              } else {
-                console.log('✅ 趋势数据更新完成')
-              }
-            })
-          }
+          exec(`${pythonPath} "${scriptPath}"`, { env: childEnv }, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`趋势数据更新错误: ${error.message}`)
+            } else {
+              console.log('✅ 趋势数据更新完成')
+            }
+          })
         }
 
       } catch (error) {

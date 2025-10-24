@@ -27,7 +27,7 @@ export async function GET(request: Request) {
           _count: {
             select: {
               repositories: true,
-              crawlTasks: true
+              crawl_tasks: true
             }
           }
         }
@@ -200,7 +200,7 @@ export async function GET(request: Request) {
         _count: {
           select: {
             repositories: true,
-            crawlTasks: true
+            crawl_tasks: true
           }
         }
       }
@@ -251,7 +251,7 @@ export async function GET(request: Request) {
         importedLibraries: true,
         functions: includeFiles ? true : undefined,
         components: includeFiles ? true : undefined,
-        apiEndpoints: includeFiles ? true : undefined,
+        api_endpoints: includeFiles ? true : undefined,
         repository: {
           select: {
             id: true,
@@ -314,7 +314,7 @@ export async function GET(request: Request) {
             // 其他可能有用的信息
             functions: file.functions?.length || 0,
             components: file.components?.length || 0,
-            apiEndpoints: file.apiEndpoints?.length || 0
+            apiEndpoints: file.api_endpoints?.length || 0
           });
         }
       });

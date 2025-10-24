@@ -218,6 +218,17 @@ function KeywordsPage() {
   const [isDeleting, setIsDeleting] = useState(false)
   const [aiSummary, setAiSummary] = useState('')
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false)
+  const [showRecrawlConfirm, setShowRecrawlConfirm] = useState(false)
+  const [crawlParamsCache, setCrawlParamsCache] = useState<Record<string, { languages: string[], limits: Record<string, number> }>>({})
+  const [recrawlLanguages, setRecrawlLanguages] = useState<string[]>([])
+  const [recrawlLimits, setRecrawlLimits] = useState<Record<string, number>>({})
+  const [showExportDialog, setShowExportDialog] = useState(false)
+  const [exportOptions, setExportOptions] = useState({
+    includeFiles: false,
+    specificLibrary: '',
+    format: 'json' as 'json' | 'csv'
+  })
+  const [isExporting, setIsExporting] = useState(false)
 
   // 使用ref存储当前爬取的关键词，避免闭包问题
   const currentTaskKeyword = useRef('')
@@ -298,6 +309,7 @@ function KeywordsPage() {
     java: 30
   })
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
+  const [codeAnalysisLimit, setCodeAnalysisLimit] = useState<number>(100) // 代码分析数量限制
 
   // 可选语言列表
   const availableLanguages = [
@@ -651,7 +663,8 @@ function KeywordsPage() {
     const requestData = {
       keyword,
       languages: selectedLanguages,
-      limits: languageLimits
+      limits: languageLimits,
+      codeAnalysisLimit // 代码分析数量限制
     }
 
     try {
@@ -668,6 +681,15 @@ function KeywordsPage() {
       if (data.success) {
         setSearchMessage(`爬取请求已提交! ${data.message || ''}`)
         addNotification('info', `关键词 "${keyword}" 爬取任务已开始，请等待完成通知`, keyword);
+
+        // 保存爬取参数以便后续重新爬取使用
+        setCrawlParamsCache(prev => ({
+          ...prev,
+          [keyword]: {
+            languages: selectedLanguages,
+            limits: languageLimits
+          }
+        }))
 
         // 更新当前选中的关键词
         setSelectedKeyword(keyword)
@@ -954,6 +976,61 @@ function KeywordsPage() {
   // 判断是否有任务正在运行
   const isTaskRunning = taskStatus && (taskStatus.status === 'pending' || taskStatus.status === 'running');
 
+  // 导出分析数据功能
+  async function handleExport() {
+    if (!selectedKeyword || isExporting) return
+
+    setIsExporting(true)
+    try {
+      // 构建查询参数
+      const params = new URLSearchParams({
+        keyword: selectedKeyword,
+        includeFiles: exportOptions.includeFiles.toString()
+      })
+
+      if (exportOptions.specificLibrary) {
+        params.append('library', exportOptions.specificLibrary)
+      }
+
+      // 调用导出API
+      const response = await fetch(`/api/export/analysis?${params.toString()}`)
+      
+      if (!response.ok) {
+        throw new Error('导出失败')
+      }
+
+      // 获取文件内容
+      const blob = await response.blob()
+      
+      // 创建下载链接
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `analysis_${selectedKeyword}${exportOptions.specificLibrary ? '_' + exportOptions.specificLibrary : ''}.json`
+      document.body.appendChild(a)
+      a.click()
+      
+      // 清理
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+      
+      addNotification('success', `关键词 "${selectedKeyword}" 的数据已成功导出`, selectedKeyword)
+      setShowExportDialog(false)
+      
+      // 重置导出选项
+      setExportOptions({
+        includeFiles: false,
+        specificLibrary: '',
+        format: 'json'
+      })
+    } catch (error) {
+      console.error('导出数据失败:', error)
+      addNotification('error', '导出数据失败，请稍后重试', selectedKeyword)
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   // 添加重新爬取功能
   async function recrawlRepository() {
     if (!selectedKeyword || isRecrawling) return
@@ -962,11 +1039,15 @@ function KeywordsPage() {
     setSearchMessage('正在提交重新爬取请求...')
 
     try {
+      // 使用对话框中编辑的参数
       const requestData = {
         keyword: selectedKeyword,
-        languages: selectedLanguages,
-        limits: languageLimits
+        languages: recrawlLanguages,
+        limits: recrawlLimits,
+        codeAnalysisLimit // 代码分析数量限制
       }
+
+      console.log('🔄 重新爬取参数:', requestData)
 
       const response = await fetch('/api/keywords/recrawl', {
         method: 'POST',
@@ -984,6 +1065,9 @@ function KeywordsPage() {
 
         // 开始轮询任务状态（统一控制）
         startPolling(selectedKeyword, 3000)
+        
+        // 关闭确认对话框
+        setShowRecrawlConfirm(false)
       } else {
         setSearchMessage(`重新爬取请求失败: ${data.error || '未知错误'}`)
         addNotification('error', `关键词 "${selectedKeyword}" 重新爬取请求失败: ${data.error || '未知错误'}`, selectedKeyword);
@@ -1514,10 +1598,10 @@ function KeywordsPage() {
             </div>
 
             {showAdvancedOptions && (
-              <div className="mt-4 border rounded-md p-4">
-                <h3 className="text-lg font-medium mb-2">配置爬取选项</h3>
+              <div className="mt-4 border rounded-md p-4 space-y-6">
+                <h3 className="text-lg font-medium">配置爬取选项</h3>
 
-                <div className="mb-4">
+                <div>
                   <h4 className="text-sm font-medium mb-2">选择编程语言</h4>
                   <div className="flex flex-wrap gap-2">
                     {availableLanguages.map(language => (
@@ -1554,6 +1638,81 @@ function KeywordsPage() {
                     </div>
                   </div>
                 )}
+
+                <div className="border-t pt-4">
+                  <h4 className="text-sm font-medium mb-2">代码分析数量</h4>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    控制爬取后分析多少个仓库的代码文件。分析越多数据越完整，但耗时越长。
+                  </p>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <Input
+                          type="number"
+                          min="-1"
+                          max="1000"
+                          value={codeAnalysisLimit === 0 ? '' : codeAnalysisLimit}
+                          onChange={(e) => {
+                            const val = e.target.value
+                            if (val === '' || val === '0') {
+                              setCodeAnalysisLimit(0)
+                            } else {
+                              setCodeAnalysisLimit(Math.max(-1, parseInt(val) || 100))
+                            }
+                          }}
+                          placeholder="输入数量或0表示全部"
+                          className="w-32"
+                        />
+                        <span className="text-sm text-muted-foreground">个仓库</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        variant={codeAnalysisLimit === 0 ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCodeAnalysisLimit(0)}
+                      >
+                        全部
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={codeAnalysisLimit === 50 ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCodeAnalysisLimit(50)}
+                      >
+                        50个
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={codeAnalysisLimit === 100 ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCodeAnalysisLimit(100)}
+                      >
+                        100个
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={codeAnalysisLimit === -1 ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCodeAnalysisLimit(-1)}
+                      >
+                        不分析
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    {codeAnalysisLimit === 0 && (
+                      <span className="text-green-600">✓ 将分析所有爬取的仓库（耗时较长）</span>
+                    )}
+                    {codeAnalysisLimit > 0 && (
+                      <span className="text-blue-600">✓ 将分析前 {codeAnalysisLimit} 个仓库（推荐）</span>
+                    )}
+                    {codeAnalysisLimit === -1 && (
+                      <span className="text-gray-600">⊗ 不分析代码，仅获取仓库元数据（最快）</span>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
 
@@ -1772,9 +1931,9 @@ function KeywordsPage() {
             <CardDescription>选择分析主题查看结果</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              {/* 使用原生select替代复杂的Select组件，避免DOM冲突 */}
-              <div className="relative md:w-[280px] w-full">
+            <div className="space-y-4">
+              {/* 关键词选择器 */}
+              <div className="relative md:w-[320px] w-full">
                 <select
                   value={analysisNames.includes(selectedKeyword) ? selectedKeyword : ""}
                   onChange={(e) => {
@@ -1783,7 +1942,7 @@ function KeywordsPage() {
                       handleKeywordChange(value);
                     }
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white hover:border-gray-400 transition-colors text-base"
                 >
                   <option value="">选择分析主题</option>
                   {analysisFiles.map((item) => (
@@ -1794,39 +1953,68 @@ function KeywordsPage() {
                 </select>
               </div>
 
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => forceRefreshResults()}
-                disabled={isLoading || !selectedKeyword}
-                className="bg-blue-500 hover:bg-blue-600"
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                刷新分析结果
-              </Button>
+              {/* 操作按钮组 - 美化布局和配色 */}
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => forceRefreshResults()}
+                  disabled={isLoading || !selectedKeyword}
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-md hover:shadow-lg transition-all"
+                >
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                  刷新结果
+                </Button>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const file = analysisFiles.find(f => f.name === selectedKeyword)?.file
-                  if (file) fetchAnalysisByFile(file)
-                }}
-                disabled={isLoading || !selectedKeyword}
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                刷新缓存数据
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const file = analysisFiles.find(f => f.name === selectedKeyword)?.file
+                    if (file) fetchAnalysisByFile(file)
+                  }}
+                  disabled={isLoading || !selectedKeyword}
+                  className="border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all"
+                >
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                  刷新缓存
+                </Button>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={regenerateCharts}
-                disabled={isRegenerating || !selectedKeyword}
-              >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isRegenerating ? 'animate-spin' : ''}`} />
-                重新生成分析
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={regenerateCharts}
+                  disabled={isRegenerating || !selectedKeyword}
+                  className="border-2 border-emerald-400 hover:border-emerald-500 hover:bg-emerald-50 text-emerald-700 hover:text-emerald-800 transition-all"
+                >
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isRegenerating ? 'animate-spin' : ''}`} />
+                  重新生成
+                </Button>
+
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => setShowRecrawlConfirm(true)}
+                  disabled={isRecrawling || !selectedKeyword || isTaskRunning}
+                  className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all"
+                >
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isRecrawling ? 'animate-spin' : ''}`} />
+                  重新爬取
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowExportDialog(true)}
+                  disabled={!selectedKeyword}
+                  className="border-2 border-amber-400 hover:border-amber-500 hover:bg-amber-50 text-amber-700 hover:text-amber-800 transition-all"
+                >
+                  <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  导出数据
+                </Button>
+              </div>
             </div>
 
             {selectedKeyword && (
@@ -1847,40 +2035,85 @@ function KeywordsPage() {
 
                   <TabsContent value="overview" className="space-y-6">
                     {analysisResults ? (
-                      <div key="overview-content" className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-                        {analysisResults.charts && analysisResults.charts.language_distribution && (
-                          <Card>
-                            <CardHeader>
-                              <CardTitle>编程语言分布</CardTitle>
-                            </CardHeader>
-                            <CardContent className="h-64">
-                                <ResponsiveContainer key="lang-container" width="100%" height="100%">
-                                  <PieChart key="language-pie-chart">
-                                    <Pie
-                                      data={adjustPercentages(prepareLanguageData())}
-                                      nameKey="name"
-                                      dataKey="count"
-                                      cx="50%"
-                                      cy="50%"
-                                      outerRadius={80}
-                                      fill="#8884d8"
-                                      label={({ name, displayPercent }) => `${name}: ${displayPercent?.toFixed(2) || 0}%`}
-                                    >
-                                      {adjustPercentages(prepareLanguageData()).map((entry, index) => (
-                                        <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
-                                      ))}
-                                    </Pie>
-                                    <Tooltip formatter={(value: any, name: string, props: any) => [`${props.payload.count} 个项目`, name]} />
-                                    <Legend formatter={(value) => `${value}`} />
-                                  </PieChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                          </Card>
-                        )}
+                      <div key="overview-content" className="space-y-6 py-4">
+                        {/* 第一行：编程语言分布 和 仓库质量评估 */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {/* 编程语言分布 */}
+                          {analysisResults.charts && analysisResults.charts.language_distribution && (
+                            <Card>
+                              <CardHeader>
+                                <CardTitle>编程语言分布</CardTitle>
+                              </CardHeader>
+                              <CardContent className="h-64">
+                                  <ResponsiveContainer key="lang-container" width="100%" height="100%">
+                                    <PieChart key="language-pie-chart">
+                                      <Pie
+                                        data={adjustPercentages(prepareLanguageData())}
+                                        nameKey="name"
+                                        dataKey="count"
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={80}
+                                        fill="#8884d8"
+                                        label={({ name, displayPercent }) => `${name}: ${displayPercent?.toFixed(2) || 0}%`}
+                                      >
+                                        {adjustPercentages(prepareLanguageData()).map((entry, index) => (
+                                          <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                      </Pie>
+                                      <Tooltip formatter={(value: any, name: string, props: any) => [`${props.payload.count} 个项目`, name]} />
+                                      <Legend formatter={(value) => `${value}`} />
+                                    </PieChart>
+                                  </ResponsiveContainer>
+                              </CardContent>
+                            </Card>
+                          )}
 
-                        {/* AI总结分析 */}
+                          {/* 仓库质量评估 - 移到右上角 */}
+                          {analysisResults.repositories && (
+                            <Card key="quality-assessment-card">
+                              <CardHeader>
+                                <CardTitle>仓库质量评估</CardTitle>
+                              </CardHeader>
+                              <CardContent className="h-64">
+                                {prepareQualityData().length === 0 ? (
+                                  <div className="flex items-center justify-center h-full text-gray-500">
+                                    <div className="text-center">
+                                      <div className="text-4xl mb-2">⭐</div>
+                                      <div>暂无质量数据</div>
+                                      <div className="text-sm mt-1">无法评估仓库质量</div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <ResponsiveContainer key="quality-container" width="100%" height="100%">
+                                    <PieChart key="quality-pie-chart">
+                                      <Pie
+                                        data={prepareQualityData()}
+                                        nameKey="name"
+                                        dataKey="count"
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={80}
+                                        fill="#8884d8"
+                                        label={({ name, count }) => `${name}: ${count}`}
+                                      >
+                                        {prepareQualityData().map((entry, index) => (
+                                          <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                      </Pie>
+                                      <Tooltip formatter={(value: any, name: string) => [value, '仓库数量']} />
+                                      <Legend />
+                                    </PieChart>
+                                  </ResponsiveContainer>
+                                )}
+                              </CardContent>
+                            </Card>
+                          )}
+                        </div>
+
+                        {/* 第二行：AI智能总结 - 全宽 */}
                         {analysisResults.repositories && (
-                          <Card>
+                          <Card className="col-span-1">
                             <CardHeader className="flex flex-row items-center justify-between">
                               <CardTitle>AI智能总结</CardTitle>
                               <Button
@@ -1904,7 +2137,7 @@ function KeywordsPage() {
                                 )}
                               </Button>
                             </CardHeader>
-                            <CardContent className="h-64 overflow-y-auto">
+                            <CardContent className="min-h-[16rem] overflow-y-auto">
                               {aiSummary ? (
                                 <div className="prose prose-sm max-w-none">
                                   <div className="whitespace-pre-wrap text-sm leading-relaxed">
@@ -1912,7 +2145,7 @@ function KeywordsPage() {
                                   </div>
                                 </div>
                               ) : (
-                                <div className="flex items-center justify-center h-full text-gray-500">
+                                <div className="flex items-center justify-center h-64 text-gray-500">
                                   <div className="text-center">
                                     <div className="text-4xl mb-2">🤖</div>
                                     <div>AI智能分析</div>
@@ -1924,84 +2157,6 @@ function KeywordsPage() {
                           </Card>
                         )}
 
-                        {/* 标签分析 - 添加回概览页面 */}
-                        {analysisResults.charts && analysisResults.charts.tag_analysis && (
-                          <Card key="tag-analysis-card">
-                            <CardHeader>
-                              <CardTitle>标签分析</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <TagAnalysis
-                                key="tag-analysis-component"
-                                data={analysisResults.charts.tag_analysis.data}
-                                isSimplified={true}
-                              />
-                            </CardContent>
-                          </Card>
-                        )}
-
-                        {/* 仓库质量评估 - 新增的第四个组件 */}
-                        {analysisResults.repositories && (
-                          <Card key="quality-assessment-card">
-                            <CardHeader>
-                              <CardTitle>仓库质量评估</CardTitle>
-                            </CardHeader>
-                            <CardContent className="h-64">
-                              {prepareQualityData().length === 0 ? (
-                                <div className="flex items-center justify-center h-full text-gray-500">
-                                  <div className="text-center">
-                                    <div className="text-4xl mb-2">⭐</div>
-                                    <div>暂无质量数据</div>
-                                    <div className="text-sm mt-1">无法评估仓库质量</div>
-                                  </div>
-                                </div>
-                              ) : (
-                                <ResponsiveContainer key="quality-container" width="100%" height="100%">
-                                  <PieChart key="quality-pie-chart">
-                                    <Pie
-                                      data={prepareQualityData()}
-                                      nameKey="name"
-                                      dataKey="count"
-                                      cx="50%"
-                                      cy="50%"
-                                      outerRadius={80}
-                                      fill="#8884d8"
-                                      label={({ name, count }) => `${name}: ${count}`}
-                                    >
-                                      {prepareQualityData().map((entry, index) => (
-                                        <Cell key={`cell-${entry.name}-${index}`} fill={COLORS[index % COLORS.length]} />
-                                      ))}
-                                    </Pie>
-                                    <Tooltip formatter={(value: any, name: string) => [value, '仓库数量']} />
-                                    <Legend />
-                                  </PieChart>
-                                </ResponsiveContainer>
-                              )}
-                            </CardContent>
-                          </Card>
-                        )}
-
-                        {/* 指标指南分析 */}
-                        {analysisResults.insights && analysisResults.insights.length > 0 && (
-                          <Card key="insights-card" className="md:col-span-2">
-                            <CardHeader>
-                              <CardTitle>指标指南分析</CardTitle>
-                              <CardDescription>基于数据分析的关键洞察</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                              <div className="space-y-3">
-                                {analysisResults.insights.map((insight: string, index: number) => (
-                                  <div key={`insight-${index}`} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
-                                    <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                                      {index + 1}
-                                    </div>
-                                    <p className="text-sm text-gray-700">{insight}</p>
-                                  </div>
-                                ))}
-                              </div>
-                            </CardContent>
-                          </Card>
-                        )}
                       </div>
                     ) : (
                       <div className="py-8 text-center">
@@ -2172,6 +2327,7 @@ function KeywordsPage() {
                       )}
                     </div>
                   </TabsContent>
+
                 </Tabs>
               </div>
             )}
@@ -2217,6 +2373,310 @@ function KeywordsPage() {
               }}
             >
               确认删除
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* 重新爬取确认对话框 */}
+      <Dialog open={showRecrawlConfirm} onOpenChange={(open) => {
+        setShowRecrawlConfirm(open)
+        if (open) {
+          // 打开对话框时初始化参数
+          const cachedParams = crawlParamsCache[selectedKeyword]
+          setRecrawlLanguages(cachedParams?.languages || selectedLanguages)
+          setRecrawlLimits(cachedParams?.limits || languageLimits)
+        }
+      }}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <RefreshCw className="w-5 h-5 text-purple-600" />
+              重新爬取关键词
+            </DialogTitle>
+            <DialogDescription>
+              关键词: "<strong className="text-purple-600">{selectedKeyword}</strong>"
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-4">
+            {/* 语言选择 */}
+            <div className="border rounded-lg p-4 bg-blue-50 border-blue-200">
+              <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                <span>📋</span>
+                <span>选择编程语言</span>
+              </h4>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {availableLanguages.map(language => (
+                  <Badge
+                    key={language}
+                    variant={recrawlLanguages.includes(language) ? "default" : "outline"}
+                    className={`cursor-pointer transition-all ${
+                      recrawlLanguages.includes(language)
+                        ? 'bg-blue-600 hover:bg-blue-700'
+                        : 'hover:bg-blue-100'
+                    }`}
+                    onClick={() => {
+                      if (recrawlLanguages.includes(language)) {
+                        setRecrawlLanguages(prev => prev.filter(lang => lang !== language))
+                        setRecrawlLimits(prev => {
+                          const newLimits = {...prev}
+                          delete newLimits[language]
+                          return newLimits
+                        })
+                      } else {
+                        setRecrawlLanguages(prev => [...prev, language])
+                        setRecrawlLimits(prev => ({
+                          ...prev,
+                          [language]: 30
+                        }))
+                      }
+                    }}
+                  >
+                    {language}
+                  </Badge>
+                ))}
+              </div>
+              {crawlParamsCache[selectedKeyword] && (
+                <p className="text-xs text-blue-600">
+                  ℹ️ 已自动加载首次爬取时的语言设置
+                </p>
+              )}
+            </div>
+
+            {/* 数量设置 */}
+            {recrawlLanguages.length > 0 && (
+              <div className="border rounded-lg p-4 bg-green-50 border-green-200">
+                <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+                  <span>🔢</span>
+                  <span>设置爬取数量</span>
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {recrawlLanguages.map(language => (
+                    <div key={language} className="flex items-center space-x-2 bg-white p-2 rounded border">
+                      <span className="text-sm font-medium w-20">{language}:</span>
+                      <Input
+                        type="number"
+                        min="1"
+                        max="200"
+                        value={recrawlLimits[language] || 30}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value, 10)
+                          if (!isNaN(value) && value > 0) {
+                            setRecrawlLimits(prev => ({
+                              ...prev,
+                              [language]: value
+                            }))
+                          }
+                        }}
+                        className="w-20 h-8 text-center"
+                      />
+                      <span className="text-xs text-gray-500">个</span>
+                    </div>
+                  ))}
+                </div>
+                {crawlParamsCache[selectedKeyword] && (
+                  <p className="text-xs text-green-600 mt-2">
+                    ℹ️ 已自动加载首次爬取时的数量设置
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* 注意事项 */}
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <h4 className="font-semibold text-amber-900 mb-2">⚠️ 注意事项</h4>
+              <ul className="text-sm text-amber-800 space-y-1">
+                <li>• 重新爬取将更新所有仓库数据</li>
+                <li>• 会重新分析代码文件和导入的库</li>
+                <li>• 过程可能需要几分钟时间</li>
+                <li>• 完成后会自动刷新分析结果</li>
+                <li>• 总计将爬取 <strong>{Object.values(recrawlLimits).reduce((sum, count) => sum + count, 0)}</strong> 个项目</li>
+              </ul>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowRecrawlConfirm(false)}
+              disabled={isRecrawling}
+            >
+              取消
+            </Button>
+            <Button
+              variant="default"
+              onClick={recrawlRepository}
+              disabled={isRecrawling || recrawlLanguages.length === 0}
+              className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
+            >
+              {isRecrawling ? (
+                <>
+                  <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                  爬取中...
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  确认重新爬取
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* 导出数据对话框 */}
+      <Dialog open={showExportDialog} onOpenChange={setShowExportDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              导出分析数据
+            </DialogTitle>
+            <DialogDescription>
+              关键词: "<strong className="text-amber-600">{selectedKeyword}</strong>"
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4 space-y-4">
+            {/* 导出选项 */}
+            <div className="border rounded-lg p-4 bg-blue-50 border-blue-200">
+              <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                <span>⚙️</span>
+                <span>导出选项</span>
+              </h4>
+              
+              {/* 包含文件详情选项 */}
+              <div className="space-y-3">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={exportOptions.includeFiles}
+                    onChange={(e) => setExportOptions(prev => ({
+                      ...prev,
+                      includeFiles: e.target.checked
+                    }))}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium text-blue-900">包含文件级别详情</span>
+                </label>
+                {exportOptions.includeFiles && (
+                  <p className="text-xs text-blue-600 ml-6">
+                    ℹ️ 将包含每个库的具体使用文件、路径、所属仓库等详细信息
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* 特定库导出 */}
+            <div className="border rounded-lg p-4 bg-green-50 border-green-200">
+              <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+                <span>📦</span>
+                <span>特定库导出（可选）</span>
+              </h4>
+              
+              <Input
+                type="text"
+                placeholder="输入库名称，如: requests, react, numpy（留空则导出所有）"
+                value={exportOptions.specificLibrary}
+                onChange={(e) => setExportOptions(prev => ({
+                  ...prev,
+                  specificLibrary: e.target.value.trim()
+                }))}
+                className="w-full"
+              />
+              
+              {exportOptions.specificLibrary && (
+                <p className="text-xs text-green-600 mt-2">
+                  ℹ️ 将只导出与 "{exportOptions.specificLibrary}" 相关的数据
+                </p>
+              )}
+            </div>
+
+            {/* 导出格式说明 */}
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <h4 className="font-semibold text-amber-900 mb-2">📋 导出内容说明</h4>
+              <ul className="text-sm text-amber-800 space-y-1">
+                <li>• <strong>基础数据</strong>：关键词、仓库数量、分析日期</li>
+                <li>• <strong>语言分布</strong>：各编程语言的使用情况统计</li>
+                <li>• <strong>库分析</strong>：导入的库及其使用频率</li>
+                {exportOptions.includeFiles && (
+                  <li className="text-green-700">• <strong>文件详情</strong>：每个库的具体文件路径和仓库信息</li>
+                )}
+                {exportOptions.specificLibrary && (
+                  <li className="text-green-700">• <strong>特定库</strong>：仅包含 "{exportOptions.specificLibrary}" 的相关数据</li>
+                )}
+                <li>• <strong>格式</strong>：JSON格式，便于程序化处理和分析</li>
+              </ul>
+            </div>
+
+            {/* 数据预览 */}
+            {analysisResults && (
+              <div className="border rounded-lg p-4 bg-gray-50">
+                <h4 className="font-semibold text-gray-900 mb-2">📊 数据概览</h4>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-white p-2 rounded border">
+                    <span className="text-gray-600">仓库数量：</span>
+                    <span className="font-semibold">{analysisResults.repositories?.length || 0}</span>
+                  </div>
+                  <div className="bg-white p-2 rounded border">
+                    <span className="text-gray-600">编程语言：</span>
+                    <span className="font-semibold">
+                      {Object.keys(analysisResults.charts?.language_distribution?.data || {}).length}
+                    </span>
+                  </div>
+                  <div className="bg-white p-2 rounded border">
+                    <span className="text-gray-600">导入的库：</span>
+                    <span className="font-semibold">
+                      {Object.keys(analysisResults.charts?.imported_libraries?.data || {}).length}
+                    </span>
+                  </div>
+                  <div className="bg-white p-2 rounded border">
+                    <span className="text-gray-600">文件大小：</span>
+                    <span className="font-semibold text-gray-500">
+                      {exportOptions.includeFiles ? '较大' : '适中'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowExportDialog(false)
+                setExportOptions({
+                  includeFiles: false,
+                  specificLibrary: '',
+                  format: 'json'
+                })
+              }}
+              disabled={isExporting}
+            >
+              取消
+            </Button>
+            <Button
+              variant="default"
+              onClick={handleExport}
+              disabled={isExporting}
+              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700"
+            >
+              {isExporting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  导出中...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  确认导出
+                </>
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

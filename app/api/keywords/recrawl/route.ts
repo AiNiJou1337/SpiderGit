@@ -57,7 +57,8 @@ export async function POST(request: Request) {
     const { 
       keyword, 
       languages, 
-      limits 
+      limits,
+      codeAnalysisLimit
     } = data;
     
     if (!keyword || typeof keyword !== 'string' || keyword.trim() === '') {
@@ -160,6 +161,7 @@ export async function POST(request: Request) {
       GITHUB_TOKEN_PQG: process.env.GITHUB_TOKEN_PQG || '',
       GITHUB_TOKEN_LR: process.env.GITHUB_TOKEN_LR || '',
       GITHUB_TOKEN_HXZ: process.env.GITHUB_TOKEN_HXZ || '',
+      CODE_ANALYSIS_LIMIT: codeAnalysisLimit !== undefined ? String(codeAnalysisLimit) : '100',
     };
 
     exec(cmd, { env: childEnv }, (error, stdout, stderr) => {

@@ -42,7 +42,8 @@ export async function POST(request: NextRequest) {
       
       exec(`${pythonPath} "${scriptPath}"`, { 
         env: childEnv,
-        timeout: 300000 // 5分钟超时
+        timeout: 600000, // 10分钟超时
+        maxBuffer: 1024 * 1024 * 10 // 增加缓冲区到10MB
       }, (error, stdout, stderr) => {
         const duration = Date.now() - startTime
         
@@ -83,7 +84,8 @@ export async function POST(request: NextRequest) {
       success: true,
       message: '趋势数据刷新已启动，请稍后查看结果',
       status: 'started',
-      estimatedTime: '2-5分钟'
+      estimatedTime: '5-10分钟',
+      note: '正在爬取daily/weekly/monthly三个时间段的数据，请耐心等待'
     })
     
   } catch (error) {

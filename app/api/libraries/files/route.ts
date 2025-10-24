@@ -143,7 +143,9 @@ export async function GET(request: Request) {
       page,
       limit,
       totalPages: Math.ceil(totalFiles / limit),
-      files: formattedFiles
+      files: formattedFiles,
+      dataSource: 'database',
+      hasData: formattedFiles.length > 0
     });
     
   } catch (error) {

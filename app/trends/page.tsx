@@ -9,7 +9,7 @@ import { TrendingCharts } from '@/components/features/trending-charts'
 // import { AdvancedFilters } from '@/components/features/advanced-filters'
 import { AdvancedExport } from '@/components/features/advanced-export'
 import { TrendingCalendar } from '@/src/components/features/trending-calendar'
-import { TimeSeriesAnalysis } from '@/src/components/features/time-series-analysis'
+import { TrendingRefreshMonitor } from '@/src/components/features/trending-refresh-monitor'
 import { TrendingPageSkeleton, ErrorState, EmptyState } from '@/components/ui/loading-skeleton'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -60,6 +60,7 @@ export default function TrendsPage() {
   const [filteredRepos, setFilteredRepos] = useState<Repository[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(100) // 可调整每页显示数量
+  const [isRefreshing, setIsRefreshing] = useState(false) // 刷新状态
 
   // 数据转换函数：将 Repository 转换为 AdvancedFilters 期望的格式
   const convertToFilterFormat = (repos: Repository[]) => {
@@ -214,6 +215,8 @@ export default function TrendsPage() {
   const handleUpdateData = async () => {
     try {
       setLoading(true)
+      setIsRefreshing(true)
+      
       const response = await fetch('/api/trending/refresh', {
         method: 'POST',
         headers: {
@@ -227,15 +230,23 @@ export default function TrendsPage() {
         // 等待一段时间后重新获取数据，因为爬虫需要时间
         setTimeout(async () => {
           await fetchTrendsData()
-        }, 3000)
+          setIsRefreshing(false)
+        }, 600000) // 10分钟后自动结束（与后端超时一致）
       } else {
         console.error('数据更新失败')
+        setIsRefreshing(false)
       }
     } catch (error) {
       console.error('数据更新错误:', error)
+      setIsRefreshing(false)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleRefreshComplete = () => {
+    // 刷新完成后重新获取数据
+    fetchTrendsData()
   }
 
   const getTabInfo = (tab: string) => {
@@ -285,6 +296,12 @@ export default function TrendsPage() {
 
   return (
     <div className="container mx-auto py-6 space-y-6 relative z-10">
+      {/* 刷新进度监控 */}
+      <TrendingRefreshMonitor 
+        isRefreshing={isRefreshing} 
+        onRefreshComplete={handleRefreshComplete}
+      />
+      
       {/* 页面标题 */}
       <Card className="glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5">
         <CardHeader>
@@ -309,7 +326,7 @@ export default function TrendsPage() {
 
       {/* 趋势Tab切换 */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="daily" className="flex items-center space-x-2">
             <Clock className="w-4 h-4" />
             <span>每日趋势</span>
@@ -322,13 +339,9 @@ export default function TrendsPage() {
             <TrendingUp className="w-4 h-4" />
             <span>每月趋势</span>
           </TabsTrigger>
-          <TabsTrigger value="calendar" className="flex items-center space-x-2">
+          <TabsTrigger value="history" className="flex items-center space-x-2">
             <Calendar className="w-4 h-4" />
-            <span>日历分析</span>
-          </TabsTrigger>
-          <TabsTrigger value="timeseries" className="flex items-center space-x-2">
-            <BarChart3 className="w-4 h-4" />
-            <span>时序分析</span>
+            <span>历史回顾</span>
           </TabsTrigger>
         </TabsList>
 
@@ -923,14 +936,9 @@ export default function TrendsPage() {
           )}
         </TabsContent>
 
-        {/* 日历分析标签页 */}
-        <TabsContent value="calendar" className="space-y-6">
+        {/* 历史回顾标签页 */}
+        <TabsContent value="history" className="space-y-6">
           <TrendingCalendar className="w-full" />
-        </TabsContent>
-
-        {/* 时序分析标签页 */}
-        <TabsContent value="timeseries" className="space-y-6">
-          <TimeSeriesAnalysis className="w-full" />
         </TabsContent>
       </Tabs>
     </div>

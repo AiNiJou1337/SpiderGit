@@ -48,7 +48,6 @@ load_env_file()
 
 from backend.scraper.core.api_client import GitHubAPIClient
 from backend.scraper.crawlers.github_trending_html import GitHubTrendingHTMLCrawler
-from backend.scraper.time_series_trending_manager import TimeSeriesTrendingManager
 
 logger = logging.getLogger(__name__)
 
@@ -258,29 +257,8 @@ class TrendingDataManager:
 
             logger.info(f"备份文件已保存到: {backup_file}")
 
-            # 同时保存时间序列数据
-            await self._save_time_series_data(data)
-
         except Exception as e:
             logger.error(f"保存趋势数据失败: {e}")
-
-    async def _save_time_series_data(self, data: Dict[str, Any]):
-        """保存时间序列数据"""
-        try:
-            time_series_manager = TimeSeriesTrendingManager()
-
-            # 为每个时间段保存时间序列数据
-            for period in ['daily', 'weekly', 'monthly']:
-                if period in data and data[period]:
-                    await time_series_manager._save_time_series_data(
-                        data[period],
-                        period,
-                        datetime.now()
-                    )
-                    logger.info(f"时间序列数据已保存: {period}")
-
-        except Exception as e:
-            logger.error(f"保存时间序列数据失败: {e}")
     
     def get_rate_limit_status(self) -> Optional[Dict[str, Any]]:
         """获取API速率限制状态"""

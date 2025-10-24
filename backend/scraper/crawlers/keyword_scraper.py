@@ -259,8 +259,8 @@ class KeywordScraper:
             
             if analysis:
                 return {
-                    'file_path': file_path,
-                    'file_name': file_name,
+                    'path': file_path,  # 修正字段名
+                    'filename': file_name,  # 修正字段名
                     'language': analysis['language'],
                     'imports': analysis['imports'],
                     'file_size': analysis['file_size'],
@@ -358,10 +358,31 @@ class KeywordScraper:
                 except Exception as e:
                     logger.error(f"保存到数据库失败: {e}")
 
-            # 然后进行代码分析（限制前几个仓库以避免API限制）
-            for i, processed in enumerate(processed_repos[:2]):  # 只分析前2个仓库
+            # 然后进行代码分析
+            # 可通过环境变量 CODE_ANALYSIS_LIMIT 控制分析数量
+            # 0 = 全部分析, -1 = 不分析, >0 = 分析指定数量
+            total_repos = len(processed_repos)
+            analysis_limit = int(os.getenv('CODE_ANALYSIS_LIMIT', '100'))
+            
+            if analysis_limit == 0:
+                # 全部分析
+                analyze_count = total_repos
+                logger.info(f"将分析所有 {total_repos} 个仓库的代码（全量分析模式）")
+            elif analysis_limit == -1:
+                # 不分析
+                analyze_count = 0
+                logger.info("跳过代码分析（已禁用）")
+            else:
+                # 限制分析数量
+                analyze_count = min(analysis_limit, total_repos)
+                logger.info(f"将分析 {analyze_count}/{total_repos} 个仓库的代码（限制模式）")
+            
+            if analyze_count == 0:
+                logger.info("跳过代码分析步骤")
+            
+            for i, processed in enumerate(processed_repos[:analyze_count]):
                 try:
-                    logger.info(f"开始分析仓库代码: {processed['full_name']}")
+                    logger.info(f"开始分析仓库代码 ({i+1}/{analyze_count}): {processed['full_name']}")
                     code_analysis = await self.analyze_repository_code(processed)
                     if code_analysis:
                         # 只保存简化的分析结果，避免循环引用
@@ -373,14 +394,22 @@ class KeywordScraper:
                         # 保存代码文件数据到数据库
                         if DB_AVAILABLE:
                             self._save_code_analysis_to_db(processed, code_analysis)
+                        logger.info(f"✅ 成功分析并保存 {processed['full_name']} 的代码数据")
+                    else:
+                        logger.warning(f"⚠️ 未获取到 {processed['full_name']} 的代码分析数据")
                 except Exception as e:
-                    logger.warning(f"代码分析失败 {processed['full_name']}: {e}")
+                    logger.warning(f"❌ 代码分析失败 {processed['full_name']}: {e}")
 
                 # 更新进度
                 if task_id:
-                    progress = 70 + ((i + 1) / len(processed_repos)) * 20
+                    progress = 70 + ((i + 1) / analyze_count) * 20
                     self.update_task_status(task_id, 'running', int(progress),
-                                          f"已分析 {i+1}/{len(processed_repos)} 个仓库")
+                                          f"已分析 {i+1}/{analyze_count} 个仓库代码")
+                
+                # 添加延时避免API限制（每分析5个仓库休息一下）
+                if (i + 1) % 5 == 0:
+                    logger.info(f"已分析 {i+1} 个仓库，休息2秒...")
+                    time.sleep(2)
 
             # 保存到文件
             self.save_results(processed_repos, keyword)
